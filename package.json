@@ -1,0 +1,25 @@
+{
+  "name": "byteandpixel",
+  "version": "0.0.1",
+  "description": "",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zwarn/byteAndPixel.git"
+  },
+  "author": "byteandpixel",
+  "homepage": "https://github.com/zwarn/byteAndPixel#readme",
+  "dependencies": {
+    "pixi.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  }
+}
