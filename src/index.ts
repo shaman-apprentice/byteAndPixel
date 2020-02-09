@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { gameState } from './gameState';
+import { Game } from './gameState';
 
 const pixiApp = new PIXI.Application({
   backgroundColor: 0x1099bb,
@@ -10,10 +10,10 @@ const pixiApp = new PIXI.Application({
 
 document.body.appendChild(pixiApp.view);
 
-gameState.board.board.forEach(row =>
+Game.state.board.board.forEach(row =>
   row.forEach(terrain => pixiApp.stage.addChild(terrain.sprite))
 );
-pixiApp.stage.addChild(gameState.dummymon.sprite);
+pixiApp.stage.addChild(Game.state.dummymon.sprite);
 
 pixiApp.ticker.add(() => {
   // game loop / should be 60 frames/s
