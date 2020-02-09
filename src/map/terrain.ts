@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import { Game } from '../gameState';
 import { yIndex2YPosi, xIndex2XPosi, isAdjacent} from './utils';
+import Polygon = PIXI.Polygon;
 
 export const types: {[key: string]: string} = {
   earth: 'Earth.png',
@@ -25,6 +26,7 @@ export class Terrain {
     this.sprite.x = xIndex2XPosi(x, y);
     this.sprite.y = yIndex2YPosi(y);
     this.sprite.interactive = true;
+    this.sprite.hitArea = new Polygon([0, 15, 0, 64, 30, 79, 33, 79, 63, 64, 63, 15, 33, 0, 30, 0] );
     this.sprite.on('click', () => {
       const dummymon = Game.state.dummymon;
       if (isAdjacent(dummymon.x, dummymon.y, this.x, this.y))
