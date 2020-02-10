@@ -20,9 +20,9 @@ export abstract class Monster {
     this.x = x;
     this.y = y;
     this.sprite = PIXI.Sprite.from(spriteName);
+    this.setBoardPosi(x, y);
     this.sprite.interactive = true;
     this.sprite.on("click", this.onClick.bind(this));
-    this.setBoardPosi(x,y);
   }
 
   onClick() {
