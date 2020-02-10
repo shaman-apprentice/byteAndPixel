@@ -28,9 +28,9 @@ export class Terrain {
     this.sprite.interactive = true;
     this.sprite.hitArea = new Polygon([0, 15, 0, 64, 30, 79, 33, 79, 63, 64, 63, 15, 33, 0, 30, 0]);
     this.sprite.on('click', () => {
-      const dummymon = Game.state.dummymon;
-      if (isAdjacent(dummymon.x, dummymon.y, this.x, this.y)) {
-        Game.state.dummymon.setBoardPosi(this.x, this.y);
+      const currentMonster = Game.state.currentMonster;
+      if (isAdjacent(currentMonster.x, currentMonster.y, this.x, this.y)) {
+        Game.state.currentMonster.setBoardPosi(this.x, this.y);
         Game.state.boardContainer.x = -xIndex2XPosi(this.x, this.y) + 4*64;
         Game.state.boardContainer.y = -yIndex2YPosi(this.y) + 4*64;
       }

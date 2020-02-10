@@ -14,7 +14,7 @@ let container = Game.state.boardContainer
 Game.state.boardData.board.forEach(row =>
   row.forEach(terrain => container.addChild(terrain.sprite))
 );
-container.addChild(Game.state.dummymon.sprite);
+Game.state.monsters.forEach(monster => container.addChild(monster.sprite))
 pixiApp.stage.addChild(container);
 
 

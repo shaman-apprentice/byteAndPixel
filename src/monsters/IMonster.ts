@@ -6,4 +6,5 @@ export interface IMonster {
   readonly x: number;
   /** y-index on board */
   readonly y: number;
+  setBoardPosi(x: number, y: number): void;
 }
