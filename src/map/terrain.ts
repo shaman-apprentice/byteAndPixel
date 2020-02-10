@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js';
 
 import { Game } from '../gameState';
-import { yIndex2YPosi, xIndex2XPosi, isAdjacent} from './utils';
+import { yIndex2YPosi, xIndex2XPosi, isAdjacent } from './utils';
 import Polygon = PIXI.Polygon;
 
-export const types: {[key: string]: string} = {
+export const types: { [key: string]: string } = {
   earth: 'Earth.png',
   fire: 'Fire.png',
   ice: 'Ice.png',
@@ -26,11 +26,14 @@ export class Terrain {
     this.sprite.x = xIndex2XPosi(x, y);
     this.sprite.y = yIndex2YPosi(y);
     this.sprite.interactive = true;
-    this.sprite.hitArea = new Polygon([0, 15, 0, 64, 30, 79, 33, 79, 63, 64, 63, 15, 33, 0, 30, 0] );
+    this.sprite.hitArea = new Polygon([0, 15, 0, 64, 30, 79, 33, 79, 63, 64, 63, 15, 33, 0, 30, 0]);
     this.sprite.on('click', () => {
       const dummymon = Game.state.dummymon;
-      if (isAdjacent(dummymon.x, dummymon.y, this.x, this.y))
+      if (isAdjacent(dummymon.x, dummymon.y, this.x, this.y)) {
         Game.state.dummymon.setBoardPosi(this.x, this.y);
+        Game.state.boardContainer.x = -xIndex2XPosi(this.x, this.y) + 4*64;
+        Game.state.boardContainer.y = -yIndex2YPosi(this.y) + 4*64;
+      }
       else
         alert('dude, chill...');
     });
