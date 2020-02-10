@@ -10,10 +10,11 @@ const pixiApp = new PIXI.Application({
 
 document.body.appendChild(pixiApp.view);
 
-Game.state.board.board.forEach(row =>
-  row.forEach(terrain => pixiApp.stage.addChild(terrain.sprite))
+Game.state.boardData.board.forEach(row =>
+  row.forEach(terrain => Game.state.boardContainer.addChild(terrain.sprite))
 );
-pixiApp.stage.addChild(Game.state.dummymon.sprite);
+Game.state.boardContainer.addChild(Game.state.dummymon.sprite);
+pixiApp.stage.addChild(Game.state.boardContainer);
 
 pixiApp.ticker.add(() => {
   // game loop / should be 60 frames/s
