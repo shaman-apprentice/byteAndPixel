@@ -1,31 +1,8 @@
-import * as PIXI from 'pixi.js';
+import { Monster } from './Monster';
 
-import { xIndex2XPosi, yIndex2YPosi } from '../map/utils';
-
-import { IMonster } from './IMonster';
-
-export class Dummymon implements IMonster {
-  public sprite: PIXI.Sprite;
-  private _x!: number;
-  private _y!: number;
+export class Dummymon extends Monster {
 
   constructor(x: number, y: number) {
-    this.sprite = PIXI.Sprite.from('Assets/Images/Dummymon.png');
-    this.setBoardPosi(x, y);
-  }
-
-  get x() {
-    return this._x;
-  }
-
-  get y() {
-    return this._y;
-  }
-
-  setBoardPosi(x: number, y: number) {
-    this._x = x;
-    this._y = y;
-    this.sprite.x = xIndex2XPosi(x, y);
-    this.sprite.y = yIndex2YPosi(y);
+    super(x, y, 'Assets/Images/Dummymon.png');
   }
 }
