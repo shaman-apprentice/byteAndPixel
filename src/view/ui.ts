@@ -3,32 +3,61 @@ import { GameState } from "../model/gameState";
 import { Point } from "../model/position";
 import { TileView } from './tileView';
 import { MonsterView } from './monsterView';
+import { StateController } from '../controller/stateController';
 
 const tileSize: number = 64;
 
 export class Ui {
+    private static instance: Ui;
+    static getInstance(): Ui {
+        if (!Ui.instance) {
+            Ui.instance = new Ui();
+        }
+        return Ui.instance;
+    }
+
+
     boardContainer: PIXI.Container
     tiles: TileView[][] = [];
     monsters: MonsterView[] = [];
+    oldState: GameState;
 
-
-    static createUi(state: GameState): Ui {
-        var ui: Ui = new Ui();
-        ui.createUi(state);
-
-        return ui;
-    }
-
-    private createUi(state: GameState) {
+    createUi(state: GameState) {
         this.boardContainer = new PIXI.Container();
         this.createBoard(state);
         this.createMonsters(state);
 
         this.boardContainer.position.set(tileSize, tileSize);
+        this.oldState = state;
+        StateController.getInstance().store.subscribe(this.onChange.bind(this))
+    }
+
+    private onChange() {
+        let state = StateController.getInstance().store.getState();
+        this.redrawBoard(state);
+        this.redrawMonster(state);
+    }
+
+    private redrawBoard(state: GameState) {
+        let size = state.map.tiles.length;
+        for (let x = 0; x < size; x++) {
+            for (let y = 0; y < size; y++) {
+                this.tiles[x][y].update(state.map.tiles[x][y])
+            }
+        }
+    }
+
+    private redrawMonster(state: GameState) {
+        for (let i = 0; i < state.monsters.length; i++) {
+            //TODO: cannot handle adding and removing monsters
+            this.monsters[i].update(state.monsters[i]);
+        }
     }
 
     private createMonsters(state: GameState) {
-        state.monsters.forEach(monster => new MonsterView(monster, this.boardContainer));
+        for (let i = 0; i < state.monsters.length; i++) {
+            this.monsters[i] = new MonsterView(state.monsters[i], this.boardContainer);
+        }
     }
 
     private createBoard(state: GameState) {

@@ -1,6 +1,6 @@
 import { Application } from 'pixi.js';
-import { GameController } from './controller/gameController'
 import { Ui } from './view/ui';
+import { StateController } from './controller/stateController';
 
 const app = new Application({
   backgroundColor: 0x1099bb
@@ -8,8 +8,8 @@ const app = new Application({
 
 document.body.appendChild(app.view);
 
-let gameController = new GameController();
-let gameState = gameController.initialState();
-let ui = Ui.createUi(gameState);
+let stateController = StateController.getInstance();
+let ui = Ui.getInstance();
+ui.createUi(stateController.store.getState());
 
 app.stage.addChild(ui.boardContainer);

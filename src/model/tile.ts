@@ -8,19 +8,11 @@ export enum TerrainType {
 }
 
 export class Tile {
-    private _terrainType: TerrainType;
-    private _position: Point;
+    terrainType: TerrainType;
+    position: Point;
 
 	constructor(name: TerrainType, position: Point) {
-		this._terrainType = name;
-		this._position = position;
+		this.terrainType = name;
+		this.position = position;
 	}
-
-    public get terrainType() {
-        return this._terrainType
-    }
-
-    public get position() {
-        return this._position;
-    }
 }

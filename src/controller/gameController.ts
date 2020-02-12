@@ -4,8 +4,15 @@ import { Monster } from "../model/monster";
 import { Tile, TerrainType } from "../model/tile";
 import { Point } from '../model/position';
 
-
 export class GameController {
+    private static instance: GameController;
+    static getInstance(): GameController {
+        if (!GameController.instance) {
+            GameController.instance = new GameController();
+        }
+        return this.instance;
+    }
+
     initialState(): GameState {
         let tiles = this.generateTiles(8);
         let map = new TileMap(tiles)
@@ -31,4 +38,5 @@ export class GameController {
         const index = Math.floor(Math.random() * terrainTypes.length);
         return terrainTypes[index] as TerrainType;
     }
+
 }
