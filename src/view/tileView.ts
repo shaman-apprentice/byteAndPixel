@@ -19,7 +19,8 @@ export class TileView {
         this.sprite.angle = 90;
         this.sprite.position.set(dc.x, dc.y);
         this.sprite.interactive = true;
-        this.sprite.hitArea = new PIXI.Polygon([0, 15, 0, 64, 30, 79, 33, 79, 63, 64, 63, 15, 33, 0, 30, 0]);
+        //hitarea und anchor arbeiten nicht gut zusammen
+        this.sprite.hitArea = new PIXI.Polygon([-32+0, -32+15, -32+0, 64, -32+30, -32+79, -32+33, -32+79, -32+63, -32+64, -32+63, -32+15, -32+33, -32+0, -32+30, -32+0]);
         this.sprite.on('click', (() => this.onClick(x, y)).bind(this));
         container.addChild(this.sprite);
     }
