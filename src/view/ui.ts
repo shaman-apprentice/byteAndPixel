@@ -4,6 +4,8 @@ import { Point } from "../model/position";
 import { TileView } from './tileView';
 import { MonsterView } from './monsterView';
 import { StateController } from '../controller/stateController';
+import { SelectionView } from './selectionView';
+import { DetailView } from './detailView';
 
 const tileSize: number = 64;
 
@@ -17,15 +19,20 @@ export class Ui {
     }
 
 
-    boardContainer: PIXI.Container
+    boardContainer: PIXI.Container;
+    guiContainer: PIXI.Container;
     tiles: TileView[][] = [];
     monsters: MonsterView[] = [];
     oldState: GameState;
+    selectionView: SelectionView;
+    detailView: DetailView;
 
     createUi(state: GameState) {
         this.boardContainer = new PIXI.Container();
+        this.guiContainer = new PIXI.Container();
         this.createBoard(state);
         this.createMonsters(state);
+        this.createSelection(state);
 
         this.boardContainer.position.set(tileSize, tileSize);
         this.oldState = state;
@@ -36,6 +43,12 @@ export class Ui {
         let state = StateController.getInstance().store.getState();
         this.redrawBoard(state);
         this.redrawMonster(state);
+        this.redrawSelection(state);
+    }
+
+    private redrawSelection(state: GameState) {
+        this.selectionView.update(state);
+        this.detailView.update(state);
     }
 
     private redrawBoard(state: GameState) {
@@ -52,6 +65,11 @@ export class Ui {
             //TODO: cannot handle adding and removing monsters
             this.monsters[i].update(state.monsters[i]);
         }
+    }
+
+    private createSelection(state: GameState) {
+        this.selectionView = new SelectionView(state, this.boardContainer);
+        this.detailView = new DetailView(state, this.guiContainer)
     }
 
     private createMonsters(state: GameState) {

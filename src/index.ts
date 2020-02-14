@@ -13,3 +13,4 @@ let ui = Ui.getInstance();
 ui.createUi(stateController.store.getState());
 
 app.stage.addChild(ui.boardContainer);
+app.stage.addChild(ui.guiContainer);
