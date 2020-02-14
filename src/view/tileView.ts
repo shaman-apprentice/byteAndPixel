@@ -2,8 +2,7 @@ import * as PIXI from 'pixi.js';
 import { Tile } from "../model/tile";
 import { Ui } from "./ui";
 import { Point } from '../model/position';
-import { StateController } from '../controller/stateController';
-import { createMoveAction } from '../model/action/action';
+import { GameController } from '../controller/gameController';
 
 export class TileView {
     sprite: PIXI.Sprite;
@@ -26,7 +25,7 @@ export class TileView {
     }
 
     onClick(x:number ,y: number) {
-        StateController.getInstance().store.dispatch(createMoveAction(new Point(x, y)))
+        GameController.getInstance().onTileClicked(new Point(x,y));
     }
 
     update(tile: Tile) {

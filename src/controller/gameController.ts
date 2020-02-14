@@ -4,8 +4,9 @@ import { TileMap } from "../model/map";
 import { Monster } from "../model/monster";
 import { Tile, TerrainType } from "../model/tile";
 import { Point } from '../model/position';
-import { MOVE, END_TURN } from "../model/action/action";
-import { isAdjacent } from "./tileHelper";
+import { MOVE, END_TURN, createSelectMonsterAction, createMoveAction, SELECT_MONSTER } from "../model/action/action";
+import { isAdjacent, getMonsterAt } from "./tileHelper";
+import { StateController } from "./stateController";
 
 export class GameController {
     private static instance: GameController;
@@ -50,8 +51,24 @@ export class GameController {
         if (action.type == END_TURN) {
             return this.endTurn(state);
         }
+        if (action.type == SELECT_MONSTER) {
+            return this.selectMonster(state, action);
+        }
 
         return state;
+    }
+
+    onTileClicked(position: Point) {
+        let state: GameState = StateController.getInstance().store.getState();
+        let monsterAt = getMonsterAt(state, position)
+        var action;
+        if (monsterAt) {
+            action = createSelectMonsterAction(state.monsters.indexOf(monsterAt));
+        } else {
+            action = createMoveAction(position);
+        }
+
+        StateController.getInstance().store.dispatch(action)
     }
 
     private computeMove(state: GameState, action: AnyAction): GameState {
@@ -74,6 +91,10 @@ export class GameController {
 
     private canMove(monster: Monster, target: Point): Boolean {
         return isAdjacent(monster.position, target) && monster.actionPoints >= 1;
+    }
+
+    private selectMonster(state: GameState, action: AnyAction): GameState {
+        return state.change(undefined, undefined, action.index);
     }
 
 }
