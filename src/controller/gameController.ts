@@ -1,8 +1,11 @@
+import { AnyAction } from "redux";
 import { GameState as GameState } from "../model/gameState";
 import { TileMap } from "../model/map";
 import { Monster } from "../model/monster";
 import { Tile, TerrainType } from "../model/tile";
 import { Point } from '../model/position';
+import { MOVE } from "../model/action/action";
+import { isAdjacent } from "./tileHelper";
 
 export class GameController {
     private static instance: GameController;
@@ -37,6 +40,32 @@ export class GameController {
         const terrainTypes = Object.keys(TerrainType);
         const index = Math.floor(Math.random() * terrainTypes.length);
         return terrainTypes[index] as TerrainType;
+    }
+
+    computeAction(state: GameState = GameController.getInstance().initialState(), action: AnyAction): GameState {
+        if (action.type == MOVE) {
+            return this.computeMove(state, action);
+        }
+
+        return state;
+    }
+
+    computeMove(state: GameState, action: AnyAction): GameState {
+        let index: number = state.currentMonster;
+        let activeMonster: Monster = state.monsters[index];
+        let moveTarget: Point = action.to;
+
+        if (this.canMove(activeMonster, moveTarget)) {
+            let movedMonster = activeMonster.change(undefined, moveTarget);
+            
+            return state.changeMonster(index, movedMonster)
+        } else {
+            return state;
+        }
+    }
+
+    private canMove(monster: Monster, target: Point): Boolean {
+        return isAdjacent(monster.position, target);
     }
 
 }
