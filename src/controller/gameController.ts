@@ -19,8 +19,9 @@ export class GameController {
     initialState(): GameState {
         let tiles = this.generateTiles(8);
         let map = new TileMap(tiles)
-        let monster = new Monster("appleman", new Point(2, 2), 2)
-        let monsters: Monster[] = [monster]
+        let appleman = new Monster("appleman", new Point(2, 2), 2)
+        let pixeldeer = new Monster("Pixeldeer", new Point(4, 1), 2)
+        let monsters: Monster[] = [appleman, pixeldeer]
         return new GameState(map, monsters, 0);
     }
 
