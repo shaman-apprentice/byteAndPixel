@@ -18,7 +18,7 @@ export class GameController {
         let map = new TileMap(tiles)
         let monster = new Monster("appleman", new Point(2, 2))
         let monsters: Monster[] = [monster]
-        return new GameState(map, monsters);
+        return new GameState(map, monsters, 0);
     }
 
     generateTiles(size: number): Tile[][] {

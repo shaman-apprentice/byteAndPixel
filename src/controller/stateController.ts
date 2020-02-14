@@ -2,6 +2,7 @@ import { createStore, Reducer, Store, AnyAction } from "redux";
 import { GameState } from "../model/gameState";
 import { GameController } from "./gameController";
 import { MOVE } from "../model/action/action";
+import { Point } from "../model/position";
 
 export class StateController {
     private static instance : StateController;
@@ -21,12 +22,11 @@ export class StateController {
 
     computeMove(state: GameState = GameController.getInstance().initialState(), action: AnyAction): GameState {
         if (action.type == MOVE) {
-            let oldMonster = state.monsters[state.currentMonster];
-            let movedMonster = Object.assign({}, oldMonster, { position: action.to });
-            let copiedMonsters = state.monsters.slice();
-            copiedMonsters[state.currentMonster] = movedMonster;
+            let index: number = state.currentMonster;
+            let moveTarget: Point = action.to;
+            let movedMonster = state.monsters[index].change(undefined, moveTarget);
             
-            return Object.assign({}, state, {monsters: copiedMonsters});
+            return state.changeMonster(index, movedMonster)
         }
 
         return state;

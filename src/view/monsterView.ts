@@ -8,9 +8,9 @@ export class MonsterView {
 
     constructor(monster: Monster, container: PIXI.Container) {
         this.data = monster;
-        this.sprite = PIXI.Sprite.from("Assets/Images/Monster/" + monster.name + ".png");
-        let x = monster.position.x;
-        let y = monster.position.y;
+        this.sprite = PIXI.Sprite.from("Assets/Images/Monster/" + monster._name + ".png");
+        let x = monster._position.x;
+        let y = monster._position.y;
         let dc = Ui.toDisplayCoords(x, y);
         this.sprite.anchor.set(0.5, 0.5);
         this.sprite.position.set(dc.x, dc.y);
@@ -19,11 +19,11 @@ export class MonsterView {
 
     update(monster: Monster) {
         if (monster === this.data) return;
-        let texure = PIXI.Texture.from("Assets/Images/Monster/" + monster.name + ".png")
+        let texure = PIXI.Texture.from("Assets/Images/Monster/" + monster._name + ".png")
         this.sprite.texture = texure;
 
-        let x = monster.position.x;
-        let y = monster.position.y;
+        let x = monster._position.x;
+        let y = monster._position.y;
         let dc = Ui.toDisplayCoords(x, y);
         this.sprite.position.set(dc.x, dc.y);
     }
