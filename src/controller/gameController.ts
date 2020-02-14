@@ -19,7 +19,7 @@ export class GameController {
     initialState(): GameState {
         let tiles = this.generateTiles(8);
         let map = new TileMap(tiles)
-        let monster = new Monster("appleman", new Point(2, 2))
+        let monster = new Monster("appleman", new Point(2, 2), 2)
         let monsters: Monster[] = [monster]
         return new GameState(map, monsters, 0);
     }
@@ -56,8 +56,7 @@ export class GameController {
         let moveTarget: Point = action.to;
 
         if (this.canMove(activeMonster, moveTarget)) {
-            let movedMonster = activeMonster.change(undefined, moveTarget);
-            
+            let movedMonster = activeMonster.change(undefined, moveTarget, activeMonster.actionPoints - 1);
             return state.changeMonster(index, movedMonster)
         } else {
             return state;
@@ -65,7 +64,7 @@ export class GameController {
     }
 
     private canMove(monster: Monster, target: Point): Boolean {
-        return isAdjacent(monster.position, target);
+        return isAdjacent(monster.position, target) && monster.actionPoints >= 1;
     }
 
 }

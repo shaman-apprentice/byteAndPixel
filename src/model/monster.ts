@@ -4,10 +4,12 @@ export class Monster {
 
     _name: string;
     _position: Point;
+    _actionPoints: number;
 
-    constructor(name: string, position: Point) {
+    constructor(name: string, position: Point, actionPoints: number) {
         this._name = name;
         this._position = position;
+        this._actionPoints = actionPoints;
     }
 
     get name(): string {
@@ -18,7 +20,11 @@ export class Monster {
         return this._position;
     }
 
-    change(name: string = this._name, position: Point = this._position) {
-        return new Monster(name, position);
+    get actionPoints(): number {
+        return this._actionPoints;
+    }
+
+    change(name: string = this._name, position: Point = this._position, actionPoints: number = this._actionPoints) {
+        return new Monster(name, position, actionPoints);
     }
 }
