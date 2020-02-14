@@ -6,6 +6,7 @@ import { MonsterView } from './monsterView';
 import { StateController } from '../controller/stateController';
 import { SelectionView } from './selectionView';
 import { DetailView } from './detailView';
+import { createEndTurnAction } from '../model/action/action';
 
 const tileSize: number = 64;
 
@@ -26,6 +27,7 @@ export class Ui {
     oldState: GameState;
     selectionView: SelectionView;
     detailView: DetailView;
+    endTurnButton: PIXI.Text;
 
     createUi(state: GameState) {
         this.boardContainer = new PIXI.Container();
@@ -33,6 +35,7 @@ export class Ui {
         this.createBoard(state);
         this.createMonsters(state);
         this.createSelection(state);
+        this.createEndTurnButton();
 
         this.boardContainer.position.set(tileSize, tileSize);
         this.oldState = state;
@@ -89,6 +92,15 @@ export class Ui {
             }
             this.tiles.push(row);
         }
+    }
+
+    private createEndTurnButton() {
+        this.endTurnButton = new PIXI.Text("End Turn");
+        this.endTurnButton.position.set(600, 20);
+        this.endTurnButton.interactive = true;
+        this.endTurnButton.buttonMode = true;
+        this.endTurnButton.on('click', () => StateController.getInstance().store.dispatch(createEndTurnAction()));
+        this.guiContainer.addChild(this.endTurnButton);
     }
 
     static toDisplayCoords(x: number, y: number): Point {

@@ -4,7 +4,7 @@ import { TileMap } from "../model/map";
 import { Monster } from "../model/monster";
 import { Tile, TerrainType } from "../model/tile";
 import { Point } from '../model/position';
-import { MOVE } from "../model/action/action";
+import { MOVE, END_TURN } from "../model/action/action";
 import { isAdjacent } from "./tileHelper";
 
 export class GameController {
@@ -46,11 +46,14 @@ export class GameController {
         if (action.type == MOVE) {
             return this.computeMove(state, action);
         }
+        if (action.type == END_TURN) {
+            return this.endTurn(state);
+        }
 
         return state;
     }
 
-    computeMove(state: GameState, action: AnyAction): GameState {
+    private computeMove(state: GameState, action: AnyAction): GameState {
         let index: number = state.currentMonster;
         let activeMonster: Monster = state.monsters[index];
         let moveTarget: Point = action.to;
@@ -61,6 +64,11 @@ export class GameController {
         } else {
             return state;
         }
+    }
+
+    private endTurn(state: GameState): GameState {
+        let refreshedMonsters = state.monsters.map(monster => monster.change(undefined, undefined, 2));
+        return state.change(undefined, refreshedMonsters, undefined);
     }
 
     private canMove(monster: Monster, target: Point): Boolean {

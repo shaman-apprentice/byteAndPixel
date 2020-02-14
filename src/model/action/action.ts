@@ -1,15 +1,17 @@
 import { Point } from "../position";
 
-export const MOVE = 'MOVE'
+export const MOVE = 'MOVE';
+export const END_TURN = "END_TURN";
 
-interface MoveAction {
-    type: typeof MOVE;
-    to: Point
-}
-
-export function createMoveAction(to: Point): MoveAction {
+export function createMoveAction(to: Point) {
     return {
         type: MOVE,
         to: to
+    }
+}
+
+export function createEndTurnAction() {
+    return {
+        type: END_TURN,
     }
 }
