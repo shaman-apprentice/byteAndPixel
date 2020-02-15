@@ -3,7 +3,7 @@ import { GameState as GameState } from "../model/gameState";
 import { TileMap } from "../model/map";
 import { Monster } from "../model/monster";
 import { Tile, TerrainType } from "../model/tile";
-import { Point } from '../model/position';
+import { Position } from '../model/position';
 import { MOVE, END_TURN, createSelectMonsterAction, createMoveAction, SELECT_MONSTER } from "../model/action/action";
 import { isAdjacent, getMonsterAt } from "./tileHelper";
 import { StateController } from "./stateController";
@@ -20,8 +20,8 @@ export class GameController {
     initialState(): GameState {
         let tiles = this.generateTiles(8);
         let map = new TileMap(tiles)
-        let appleman = new Monster("appleman", new Point(2, 2), 2)
-        let pixeldeer = new Monster("Pixeldeer", new Point(4, 1), 2)
+        let appleman = new Monster("appleman", {x: 2, y: 2}, 2)
+        let pixeldeer = new Monster("Pixeldeer",{x: 4, y: 1}, 2)
         let monsters: Monster[] = [appleman, pixeldeer]
         return new GameState(map, monsters, 0);
     }
@@ -33,7 +33,7 @@ export class GameController {
             for (let y = 0; y < size; y++) {
                 row.push({
                     terrainType: this.randomTerrainType(),
-                    position: new Point(x, y),
+                    position: {x, y},
                 });
             }
             tiles.push(row)
@@ -61,7 +61,7 @@ export class GameController {
         return state;
     }
 
-    onTileClicked(position: Point) {
+    onTileClicked(position: Position) {
         let state: GameState = StateController.getInstance().store.getState();
         let monsterAt = getMonsterAt(state, position)
         var action;
@@ -77,7 +77,7 @@ export class GameController {
     private computeMove(state: GameState, action: AnyAction): GameState {
         let index: number = state.currentMonster;
         let activeMonster: Monster = state.monsters[index];
-        let moveTarget: Point = action.to;
+        let moveTarget: Position = action.to;
 
         if (this.canMove(activeMonster, moveTarget)) {
             let movedMonster = activeMonster.change(undefined, moveTarget, activeMonster.actionPoints - 1);
@@ -92,7 +92,7 @@ export class GameController {
         return state.change(undefined, refreshedMonsters, undefined);
     }
 
-    private canMove(monster: Monster, target: Point): Boolean {
+    private canMove(monster: Monster, target: Position): Boolean {
         return isAdjacent(monster.position, target) && monster.actionPoints >= 1;
     }
 

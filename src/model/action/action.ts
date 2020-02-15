@@ -1,10 +1,10 @@
-import { Point } from "../position";
+import { Position } from "../position";
 
 export const MOVE = 'MOVE';
 export const END_TURN = "END_TURN";
 export const SELECT_MONSTER = "SELECT_MONSTER";
 
-export function createMoveAction(to: Point) {
+export function createMoveAction(to: Position) {
     return {
         type: MOVE,
         to: to

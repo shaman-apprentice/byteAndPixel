@@ -1,12 +1,12 @@
-import { Point } from "./position";
+import { Position } from "./position";
 
 export class Monster {
 
     _name: string;
-    _position: Point;
+    _position: Position;
     _actionPoints: number;
 
-    constructor(name: string, position: Point, actionPoints: number) {
+    constructor(name: string, position: Position, actionPoints: number) {
         this._name = name;
         this._position = position;
         this._actionPoints = actionPoints;
@@ -16,7 +16,7 @@ export class Monster {
         return this._name;
     }
 
-    get position(): Point {
+    get position(): Position {
         return this._position;
     }
 
@@ -24,7 +24,7 @@ export class Monster {
         return this._actionPoints;
     }
 
-    change(name: string = this._name, position: Point = this._position, actionPoints: number = this._actionPoints) {
+    change(name: string = this._name, position: Position = this._position, actionPoints: number = this._actionPoints) {
         return new Monster(name, position, actionPoints);
     }
 }

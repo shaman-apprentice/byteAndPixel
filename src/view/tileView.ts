@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { Tile } from "../model/tile";
 import { Ui } from "./ui";
-import { Point } from '../model/position';
 import { GameController } from '../controller/gameController';
 
 export class TileView {
@@ -24,7 +23,7 @@ export class TileView {
     }
 
     onClick(x:number ,y: number) {
-        GameController.getInstance().onTileClicked(new Point(x,y));
+        GameController.getInstance().onTileClicked({x,y});
     }
 
     update(tile: Tile) {

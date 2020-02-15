@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { GameState } from "../model/gameState";
-import { Point } from "../model/position";
+import { Position } from "../model/position";
 import { Ui } from "./ui";
 
 
@@ -19,7 +19,7 @@ export class SelectionView {
         container.addChild(this.sprite);
     }
 
-    updatePosition(position: Point) {
+    updatePosition(position: Position) {
         let dc = Ui.toDisplayCoords(position.x, position.y);
         this.sprite.position.set(dc.x, dc.y);
     }

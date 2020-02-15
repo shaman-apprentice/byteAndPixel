@@ -1,4 +1,4 @@
-import { Point } from "./position";
+import { Position } from "./position";
 
 export enum TerrainType {
     Earth = "Earth",
@@ -8,6 +8,6 @@ export enum TerrainType {
 } 
 
 export interface Tile {
-    position: Point;
+    position: Position;
     terrainType: TerrainType;
 }

@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { GameState } from "../model/gameState";
-import { Point } from "../model/position";
+import { Position } from "../model/position";
 import { TileView } from './tileView';
 import { MonsterView } from './monsterView';
 import { StateController } from '../controller/stateController';
@@ -103,8 +103,11 @@ export class Ui {
         this.guiContainer.addChild(this.endTurnButton);
     }
 
-    static toDisplayCoords(x: number, y: number): Point {
-        return new Point(x * tileSize + y * tileSize / 2, y * tileSize);
+    static toDisplayCoords(x: number, y: number): Position {
+        return {
+            x: x * tileSize + y * tileSize / 2, 
+            y: y * tileSize,
+        };
     }
 
 }

@@ -1,8 +1,8 @@
-import { Point } from "../model/position";
+import { Position } from "../model/position";
 import { GameState } from "../model/gameState";
 import { Monster } from "../model/monster";
 
-export function isAdjacent(a: Point, b: Point): boolean {
+export function isAdjacent(a: Position, b: Position): boolean {
     let {x: x1,y: y1} = a;
     let {x: x2,y: y2} = b;
 
@@ -18,7 +18,7 @@ export function isAdjacent(a: Point, b: Point): boolean {
     return Boolean(neighbor);
 }
 
-export function getMonsterAt(state: GameState, position : Point): Monster {
+export function getMonsterAt(state: GameState, position : Position): Monster {
     var result = state.monsters.find(monster => {
         //I do not know why monster.position===position fails here
         return monster.position.x == position.x && monster.position.y == position.y;
