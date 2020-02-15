@@ -6,6 +6,7 @@ export class MonsterView {
     sprite: PIXI.Sprite;
     data: Monster;
 
+    // todo: nasty side effect to container, which Monster shouldn't know about
     constructor(monster: Monster, container: PIXI.Container) {
         this.data = monster;
         this.sprite = PIXI.Sprite.from("Assets/Images/Monster/" + monster.name + ".png");
@@ -18,6 +19,7 @@ export class MonsterView {
     }
 
     update(monster: Monster) {
+        // todo maybe there is a better place for this optimization
         if (monster === this.data) return;
         let texture = PIXI.Texture.from("Assets/Images/Monster/" + monster.name + ".png")
         this.sprite.texture = texture;
@@ -25,6 +27,7 @@ export class MonsterView {
         let x = monster.position.x;
         let y = monster.position.y;
         let dc = Ui.toDisplayCoords(x, y);
+        // this updates the container, where the container came from and goes to :/
         this.sprite.position.set(dc.x, dc.y);
     }
 
