@@ -29,9 +29,12 @@ export class GameController {
     generateTiles(size: number): Tile[][] {
         let tiles: Tile[][] = [];
         for (let x = 0; x < size; x++) {
-            const row = []
+            const row: Tile[] = [];
             for (let y = 0; y < size; y++) {
-                row.push(new Tile(this.randomTerrainType(), new Point(x, y)))
+                row.push({
+                    terrainType: this.randomTerrainType(),
+                    position: new Point(x, y),
+                });
             }
             tiles.push(row)
         }
