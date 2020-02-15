@@ -1,34 +1,37 @@
 import * as PIXI from 'pixi.js';
-import { Monster } from "../model/monster";
-import { Ui } from "./ui";
+
+import { store } from '../store/store'
+import { toDisplayCoords } from '../model/map'
+import { Monster } from '../model/monster';
 
 export class MonsterView {
-    sprite: PIXI.Sprite;
-    data: Monster;
+    monsters: { [key: number]: PIXI.Sprite };
 
-    // todo: nasty side effect to container, which Monster shouldn't know about
-    constructor(monster: Monster, container: PIXI.Container) {
-        this.data = monster;
-        this.sprite = PIXI.Sprite.from("Assets/Images/Monster/" + monster.name + ".png");
-        let x = monster.position.x;
-        let y = monster.position.y;
-        let dc = Ui.toDisplayCoords(x, y);
-        this.sprite.anchor.set(0.5, 0.5);
-        this.sprite.position.set(dc.x, dc.y);
-        container.addChild(this.sprite);
+    constructor() {
+        const monsterDict = store.getState().monsters;
+        this.monsters = Object.keys(monsterDict).reduce((acc, monsterId) => {
+            const monsterData = monsterDict[monsterId] as Monster;
+            acc[monsterId] = this.getSprite(monsterData);
+            return acc;
+        }, {});
+
+        store.subscribe(this.onStoreUpdate.bind(this));
     }
 
-    update(monster: Monster) {
-        // todo maybe there is a better place for this optimization
-        if (monster === this.data) return;
-        let texture = PIXI.Texture.from("Assets/Images/Monster/" + monster.name + ".png")
-        this.sprite.texture = texture;
-
-        let x = monster.position.x;
-        let y = monster.position.y;
-        let dc = Ui.toDisplayCoords(x, y);
-        // this updates the container, where the container came from and goes to :/
-        this.sprite.position.set(dc.x, dc.y);
+    private getSprite(monsterData: Monster) {
+        const sprite = PIXI.Sprite.from("Assets/Images/Monster/" + monsterData.name + ".png");
+        sprite.anchor.set(0.5, 0.5);
+        const dc = toDisplayCoords(monsterData.posi);
+        sprite.position.set(dc.x, dc.y);
+        return sprite;
     }
 
+    private onStoreUpdate() {
+        const monsterDict = store.getState().monsters;
+        Object.entries(monsterDict).forEach(([monsterId, monster]) => {
+            const sprite = this.monsters[monsterId];
+            const dc = toDisplayCoords(monster.posi);
+            sprite.position.set(dc.x, dc.y);
+        });
+    }
 }

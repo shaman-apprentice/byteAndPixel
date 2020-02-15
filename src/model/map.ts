@@ -1,20 +1,58 @@
-import { Tile } from "./tile";
+import { Position } from "./position";
 
-export class TileMap {
-    
-    private _tiles: Tile[][];
+enum TerrainType {
+    Earth = "Earth",
+    Fire = "Fire",
+    Ice = "Ice",
+    Nature = "Nature",
+} 
 
-	constructor(tiles: Tile[][]) {
-		this._tiles = tiles;
+export type Map = Tile[][];
+
+export const createMap =(size: number): Map => {
+    let map: Map = [];
+    for (let x = 0; x < size; x++) {
+        const row: Tile[] = [];
+        for (let y = 0; y < size; y++) {
+            row.push({
+                terrainType: randomTerrainType(),
+                position: {x, y},
+            });
+        }
+        map.push(row)
     }
+    return map;
+}
 
-    get tiles() : Tile[][] {
-        return this._tiles
-    }
+export const isAdjacent = (a: Position, b: Position): boolean => {
+    const {x: x1, y: y1} = a;
+    const {x: x2, y: y2} = b;
 
-    changeTileAt(x: number, y: number, tile: Tile) {
-        let copiedTiles = this._tiles.slice()
-        copiedTiles[x][y] = tile;
-        new TileMap(copiedTiles);
-    }
+    const neighbors = [
+        [x1+1, y1],
+        [x1-1, y1],
+        [x1, y1+1],
+        [x1, y1-1],
+        [x1+1, y1-1],
+        [x1-1, y1+1],
+    ];
+    const neighbor = neighbors.find(([x, y]) => x === x2 && y === y2);
+    return Boolean(neighbor);
+}
+
+const tileSize: number = 64;
+export const toDisplayCoords = (posi: Position): Position => ({
+    x: posi.x * tileSize + posi.y * tileSize / 2, 
+    y: posi.y * tileSize,
+})
+
+const randomTerrainType = (): TerrainType => {
+    const terrainTypes = Object.keys(TerrainType);
+    const index = Math.floor(Math.random() * terrainTypes.length);
+    return terrainTypes[index] as TerrainType;
+}
+
+interface Tile {
+    position: Position;
+    terrainType: TerrainType;
 }

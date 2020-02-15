@@ -1,14 +1,15 @@
 import { Position } from "./position";
 
+let idCounter = 0;
+
 export class Monster {
+    readonly id;
 
     constructor(
-        readonly name: string, 
-        readonly position: Position, 
-        readonly actionPoints: number
-    ) {}
-
-    change(name: string = this.name, position: Position = this.position, actionPoints: number = this.actionPoints) {
-        return new Monster(name, position, actionPoints);
+        public name: string, 
+        public posi: Position, 
+        public actionPoints: number = 2
+    ) {
+        this.id = idCounter++;
     }
 }
