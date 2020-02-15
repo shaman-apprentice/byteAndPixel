@@ -19,8 +19,8 @@ export class MonsterView {
 
     update(monster: Monster) {
         if (monster === this.data) return;
-        let texure = PIXI.Texture.from("Assets/Images/Monster/" + monster.name + ".png")
-        this.sprite.texture = texure;
+        let texture = PIXI.Texture.from("Assets/Images/Monster/" + monster.name + ".png")
+        this.sprite.texture = texture;
 
         let x = monster.position.x;
         let y = monster.position.y;
