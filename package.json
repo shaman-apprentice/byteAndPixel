@@ -14,7 +14,8 @@
   "author": "byteandpixel",
   "homepage": "https://github.com/zwarn/byteAndPixel#readme",
   "dependencies": {
-    "pixi.js": "^5.2.1"
+    "pixi.js": "^5.2.1",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "ts-loader": "^6.2.1",
