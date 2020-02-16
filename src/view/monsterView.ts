@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 import { store } from '../store/store'
-import { toDisplayCoords } from '../model/map'
 import { Monster } from '../model/monster';
 
 export class MonsterView {
@@ -21,7 +20,7 @@ export class MonsterView {
     private getSprite(monsterData: Monster) {
         const sprite = PIXI.Sprite.from("Assets/Images/Monster/" + monsterData.name + ".png");
         sprite.anchor.set(0.5, 0.5);
-        const dc = toDisplayCoords(monsterData.position);
+        const dc = monsterData.position.toDisplayCoords();
         sprite.position.set(dc.x, dc.y);
         return sprite;
     }
@@ -30,7 +29,7 @@ export class MonsterView {
         const monsterDict = store.getState().monsters;
         Object.entries(monsterDict).forEach(([monsterId, monster]) => {
             const sprite = this.monsters[monsterId];
-            const dc = toDisplayCoords(monster.position);
+            const dc = monster.position.toDisplayCoords();
             sprite.position.set(dc.x, dc.y);
         });
     }

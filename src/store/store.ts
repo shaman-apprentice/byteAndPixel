@@ -5,6 +5,7 @@
  import { Monster } from '../model/monster';
 
 import { onTileClickReducer } from './reducers/mapReducer';
+import { Position } from '../model/position';
 
 const initialState: GameState = {
   map: createMap(8),
@@ -19,8 +20,8 @@ export const store = createStore(compose(
 ));
 
 function getInitialMonsters() {
-  const appleman = new Monster('appleman', {x: 2, y: 2}, 2);
-  const pixeldeer = new Monster('Pixeldeer', {x: 4, y: 1}, 2);
+  const appleman = new Monster('appleman', new Position(2, 2), 2);
+  const pixeldeer = new Monster('Pixeldeer', new Position(4, 1), 2);
   return {
     [appleman.id]: appleman,
     [pixeldeer.id]: pixeldeer,

@@ -16,7 +16,7 @@ export const createMap =(size: number): Map => {
         for (let y = 0; y < size; y++) {
             row.push({
                 terrainType: randomTerrainType(),
-                position: {x, y},
+                position: new Position(x, y),
             });
         }
         map.push(row)
@@ -39,12 +39,6 @@ export const isAdjacent = (a: Position, b: Position): boolean => {
     const neighbor = neighbors.find(([x, y]) => x === x2 && y === y2);
     return Boolean(neighbor);
 }
-
-const tileSize: number = 64;
-export const toDisplayCoords = (posi: Position): Position => ({
-    x: posi.x * tileSize + posi.y * tileSize / 2, 
-    y: posi.y * tileSize,
-})
 
 const randomTerrainType = (): TerrainType => {
     const terrainTypes = Object.keys(TerrainType);

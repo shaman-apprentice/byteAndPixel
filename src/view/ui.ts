@@ -2,8 +2,6 @@ import * as PIXI from 'pixi.js';
 import { MonsterView } from './monsterView';
 import { MapView } from './mapView';
 
-const tileSize: number = 64;
-
 export class Ui {
     boardContainer: PIXI.Container;
     // guiContainer: PIXI.Container;
