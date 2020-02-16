@@ -10,4 +10,4 @@ document.body.appendChild(app.view);
 const ui = new Ui();
 
 app.stage.addChild(ui.boardContainer);
-// app.stage.addChild(ui.guiContainer);
+app.stage.addChild(ui.statusContainer);

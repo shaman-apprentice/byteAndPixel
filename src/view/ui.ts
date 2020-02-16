@@ -2,14 +2,15 @@ import * as PIXI from 'pixi.js';
 import { MonsterView } from './monsterView';
 import { MapView } from './mapView';
 import { SelectionView } from './selectionView';
+import { SelectedMonsterDetailView } from './selectedMonsterDetailView';
 
 export class Ui {
     boardContainer: PIXI.Container;
-    // guiContainer: PIXI.Container;
+    statusContainer: PIXI.Container;
 
     constructor() {
         this.boardContainer = this.createBoardContainer();
-        // this.guiContainer = new PIXI.Container();
+        this.statusContainer = this.createStatusContainer();
     }
 
     private createBoardContainer() {
@@ -30,5 +31,14 @@ export class Ui {
         boardContainer.addChild(selectionView.sprite);
         
         return boardContainer;
+    }
+
+    private createStatusContainer() {
+        const statusContainer = new PIXI.Container();
+
+        const selectedMonsterDetailView = new SelectedMonsterDetailView();
+        statusContainer.addChild(selectedMonsterDetailView.textBox);
+
+        return statusContainer;
     }
 }
