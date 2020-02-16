@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import { MonsterView } from './monsterView';
 import { MapView } from './mapView';
+import { SelectionView } from './selectionView';
 
 export class Ui {
     boardContainer: PIXI.Container;
@@ -25,6 +26,9 @@ export class Ui {
         Object.values(monsterView.monsters).forEach(monsterSprite =>
             boardContainer.addChild(monsterSprite));
 
+        const selectionView = new SelectionView();
+        boardContainer.addChild(selectionView.sprite);
+        
         return boardContainer;
     }
 }

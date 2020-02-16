@@ -19,6 +19,11 @@ export const store = createStore(compose(
   onTileClickReducer,
 ));
 
+export const getSelectedMonster = (): Monster => {
+  const state = store.getState();
+  return state.monsters[state.selectedMonster];
+}
+
 function getInitialMonsters() {
   const appleman = new Monster('appleman', new Position(2, 2), 2);
   const pixeldeer = new Monster('Pixeldeer', new Position(4, 1), 2);
