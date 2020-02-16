@@ -13,12 +13,12 @@ const initialState: GameState = {
 }
 const initStateReducer = (state = initialState) => state
 
- export const store = createStore(compose(
-   initStateReducer,
-   onTileClickReducer,
- ));
+export const store = createStore(compose(
+  initStateReducer,
+  onTileClickReducer,
+));
 
- function getInitialMonsters() {
+function getInitialMonsters() {
   const appleman = new Monster('appleman', {x: 2, y: 2}, 2);
   const pixeldeer = new Monster('Pixeldeer', {x: 4, y: 1}, 2);
   return {
