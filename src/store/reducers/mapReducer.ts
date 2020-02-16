@@ -7,15 +7,15 @@ export const onTileClickReducer = (state: GameState, action: any) => {
     return state;
 
   for (let [monsterId, monster] of Object.entries(state.monsters)) {
-    if (monster.posi.x === action.posi.x && monster.posi.y === action.posi.y) {
+    if (monster.position.x === action.position.x && monster.position.y === action.position.y) {
       state.selectedMonster = parseInt(monsterId);
       return state;
     }
   }
 
   const selectedMonster = state.monsters[state.selectedMonster];
-  if (isAdjacent(selectedMonster.posi, action.posi)) {
-    selectedMonster.posi = action.posi;
+  if (isAdjacent(selectedMonster.position, action.position)) {
+    selectedMonster.position = action.position;
   }
 
   return state;

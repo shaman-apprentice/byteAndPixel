@@ -21,7 +21,7 @@ export class MonsterView {
     private getSprite(monsterData: Monster) {
         const sprite = PIXI.Sprite.from("Assets/Images/Monster/" + monsterData.name + ".png");
         sprite.anchor.set(0.5, 0.5);
-        const dc = toDisplayCoords(monsterData.posi);
+        const dc = toDisplayCoords(monsterData.position);
         sprite.position.set(dc.x, dc.y);
         return sprite;
     }
@@ -30,7 +30,7 @@ export class MonsterView {
         const monsterDict = store.getState().monsters;
         Object.entries(monsterDict).forEach(([monsterId, monster]) => {
             const sprite = this.monsters[monsterId];
-            const dc = toDisplayCoords(monster.posi);
+            const dc = toDisplayCoords(monster.position);
             sprite.position.set(dc.x, dc.y);
         });
     }

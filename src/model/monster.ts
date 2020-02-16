@@ -7,7 +7,7 @@ export class Monster {
 
     constructor(
         public name: string, 
-        public posi: Position, 
+        public position: Position, 
         public actionPoints: number = 2
     ) {
         this.id = idCounter++;
