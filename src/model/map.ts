@@ -9,7 +9,7 @@ enum TerrainType {
 
 export type Map = Tile[][];
 
-export const createMap =(size: number): Map => {
+export const createMap = (size: number): Map => {
     let map: Map = [];
     for (let x = 0; x < size; x++) {
         const row: Tile[] = [];
@@ -19,7 +19,7 @@ export const createMap =(size: number): Map => {
                 position: new Position(x, y),
             });
         }
-        map.push(row)
+        map.push(row);
     }
     return map;
 }
