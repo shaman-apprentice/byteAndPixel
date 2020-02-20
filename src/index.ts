@@ -1,5 +1,5 @@
 import { Application } from 'pixi.js';
-import { Ui } from './view/ui';
+import { Ui } from './viewModel/ui';
 
 const app = new Application({
   backgroundColor: 0x1099bb

@@ -1,4 +1,4 @@
-import { Position } from "./position";
+import { Position } from "../../viewModel/Position";
 
 enum TerrainType {
     Earth = "Earth",
@@ -9,7 +9,7 @@ enum TerrainType {
 
 export type Map = Tile[][];
 
-export const createMap = (size: number): Map => {
+export const createMapData = (size: number): Map => {
     let map: Map = [];
     for (let x = 0; x < size; x++) {
         const row: Tile[] = [];
@@ -46,7 +46,7 @@ const randomTerrainType = (): TerrainType => {
     return terrainTypes[index] as TerrainType;
 }
 
-interface Tile {
+export interface Tile {
     position: Position;
     terrainType: TerrainType;
 }
