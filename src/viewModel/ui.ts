@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import { SelectedMonsterInfo } from './SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../GameState';
+import { EndTurnButton } from './EndTurnButton';
 
 export class Ui {
     boardContainer: PIXI.Container;
@@ -30,6 +31,7 @@ export class Ui {
         const statusContainer = new PIXI.Container();
 
         statusContainer.addChild(new SelectedMonsterInfo(0).pixiElem);
+        statusContainer.addChild(new EndTurnButton().pixiElem);
 
         return statusContainer;
     }
