@@ -5,6 +5,7 @@ import { IGuiElem } from "./IGuiElem";
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
+    private static displayOffset = -6;
     
     readonly id;
     name: string; 
@@ -23,7 +24,7 @@ export class Monster implements IGuiElem {
     set position(posi: Position) {
         this._position = posi;
         const dc = this.position.toDisplayCoords();
-        this.pixiElem.position.set(dc.x, dc.y);
+        this.pixiElem.position.set(dc.x, dc.y + Monster.displayOffset);
     }
 
     get position() {
