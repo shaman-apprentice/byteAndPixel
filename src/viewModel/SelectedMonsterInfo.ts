@@ -4,6 +4,7 @@ import { GameState } from '../GameState';
 import { SelectedMonsterChangeEvent } from '../controller/SelectedMonsterChangeEvent';
 import { MonsterMoveEvent } from '../controller/MonsterMoveEvent';
 import { IGuiElem } from './IGuiElem';
+import { EndTurnEvent } from '../controller/EndTurnEvent';
 
 export class SelectedMonsterInfo implements IGuiElem {
   pixiElem: PIXI.Text;
@@ -15,6 +16,8 @@ export class SelectedMonsterInfo implements IGuiElem {
       (event: SelectedMonsterChangeEvent) => { this.setInfo(event.detail); });
     GameState.emitter.addEventListener(MonsterMoveEvent.type,
       (event: MonsterMoveEvent) => { this.setInfo(event.detail.id); });
+    GameState.emitter.addEventListener(EndTurnEvent.type,
+      () => { this.setInfo(GameState.selectedMonster) });
   }
 
   private createTextBox() {
