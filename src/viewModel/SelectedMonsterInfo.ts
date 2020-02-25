@@ -1,23 +1,17 @@
 import * as PIXI from 'pixi.js';
 
 import { GameState } from '../GameState';
-import { SelectedMonsterChangeEvent } from '../controller/SelectedMonsterChangeEvent';
-import { MonsterMoveEvent } from '../controller/MonsterMoveEvent';
 import { IGuiElem } from './IGuiElem';
-import { EndTurnEvent } from '../controller/EndTurnEvent';
+import { StateChangeEvent } from '../controller/StateChangeEvent';
 
 export class SelectedMonsterInfo implements IGuiElem {
   pixiElem: PIXI.Text;
 
-  constructor(selectedMonsterId: number) {
+  constructor() {
     this.pixiElem = this.createTextBox();
-    this.setInfo(selectedMonsterId);
-    GameState.emitter.addEventListener(SelectedMonsterChangeEvent.type,
-      (event: SelectedMonsterChangeEvent) => { this.setInfo(event.detail); });
-    GameState.emitter.addEventListener(MonsterMoveEvent.type,
-      (event: MonsterMoveEvent) => { this.setInfo(event.detail.id); });
-    GameState.emitter.addEventListener(EndTurnEvent.type,
-      () => { this.setInfo(GameState.selectedMonster) });
+    this.setInfo();
+    GameState.emitter.addEventListener(StateChangeEvent.type,
+      () => { this.setInfo(); });
   }
 
   private createTextBox() {
@@ -26,7 +20,8 @@ export class SelectedMonsterInfo implements IGuiElem {
     return textBox;
   }
 
-  private setInfo(selectedMonsterId: number) {
+  private setInfo() {
+    const selectedMonsterId = GameState.selectedMonster
     const sm = GameState.monsters[selectedMonsterId]
     this.pixiElem.text = `name: ${sm.name} \naction-points: ${sm.actionPoints}/2`;
   }

@@ -22,7 +22,7 @@ export class Ui {
         Object.values(GameState.monsters)
             .forEach(m => boardContainer.addChild(m.pixiElem));
 
-        boardContainer.addChild(new SelectedMonsterMarking(0).pixiElem);
+        boardContainer.addChild(new SelectedMonsterMarking().pixiElem);
         
         return boardContainer;
     }
@@ -30,7 +30,7 @@ export class Ui {
     private createStatusContainer() {
         const statusContainer = new PIXI.Container();
 
-        statusContainer.addChild(new SelectedMonsterInfo(0).pixiElem);
+        statusContainer.addChild(new SelectedMonsterInfo().pixiElem);
         statusContainer.addChild(new EndTurnButton().pixiElem);
 
         return statusContainer;

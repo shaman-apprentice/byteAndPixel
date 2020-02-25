@@ -1,8 +1,9 @@
 import * as PIXI from 'pixi.js';
 
-import { EndTurnEvent } from '../controller/EndTurnEvent';
+import { EndTurnAction } from '../controller/EndTurnAction';
 import { IGuiElem } from './IGuiElem';
 import { GameState } from '../GameState';
+import { StateChangeEvent } from '../controller/StateChangeEvent';
 
 export class EndTurnButton implements IGuiElem {
   pixiElem: PIXI.Text;
@@ -11,13 +12,14 @@ export class EndTurnButton implements IGuiElem {
     let endTurn = new PIXI.Text("End Turn 1");
     endTurn.interactive = true;
     endTurn.buttonMode = true;
-    endTurn.on("click", () => EndTurnEvent.dispatch())
+    endTurn.on("click", () => new EndTurnAction().doExecute())
     endTurn.position.set(650, 20);
     this.pixiElem = endTurn;
-    GameState.emitter.addEventListener(EndTurnEvent.type, (event: EndTurnEvent) => (this.updateText(event.detail.turn)))
+    GameState.emitter.addEventListener(StateChangeEvent.type, () => (this.updateText()))
   }
 
-  private updateText(turnNumber: number) {
+  private updateText() {
+    let turnNumber = GameState.turn
     this.pixiElem.text = "End Turn " + turnNumber;
   }
 

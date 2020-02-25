@@ -1,20 +1,17 @@
 import * as PIXI from 'pixi.js'
 
 import { GameState } from '../GameState'
-import { SelectedMonsterChangeEvent } from '../controller/SelectedMonsterChangeEvent';
-import { MonsterMoveEvent } from '../controller/MonsterMoveEvent';
 import { IGuiElem } from './IGuiElem';
+import { StateChangeEvent } from '../controller/StateChangeEvent';
 
 export class SelectedMonsterMarking implements IGuiElem {
   pixiElem: PIXI.Sprite;
 
-  constructor(selectedMonsterId: number) {
+  constructor() {
     this.pixiElem = this.createSprite();
-    this.markSelectedMonster(selectedMonsterId);
-    GameState.emitter.addEventListener(SelectedMonsterChangeEvent.type,
-      (event: SelectedMonsterChangeEvent) => { this.markSelectedMonster(event.detail); });
-    GameState.emitter.addEventListener(MonsterMoveEvent.type,
-      (event: MonsterMoveEvent) => { this.markSelectedMonster(event.detail.id); });
+    this.markSelectedMonster();
+    GameState.emitter.addEventListener(StateChangeEvent.type,
+      () => { this.markSelectedMonster(); });
   }
 
   private createSprite() {
@@ -23,7 +20,8 @@ export class SelectedMonsterMarking implements IGuiElem {
     return sprite;
   }
 
-  private markSelectedMonster(selectedMonsterId: number) {
+  private markSelectedMonster() {
+    const selectedMonsterId = GameState.selectedMonster;
     const selectedMonster = GameState.monsters[GameState.selectedMonster];
     const dc = selectedMonster.position.toDisplayCoords();
     this.pixiElem.position.set(dc.x, dc.y);

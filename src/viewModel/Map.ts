@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js'
 
-import { TileClickEvent } from '../controller/TileClickEvent'
 import { Tile, createMapData } from './utils/map'
 import { IGuiElem } from './IGuiElem';
+import { TileClickAction } from '../controller/TileClickEvent';
 
 export class Map implements IGuiElem {
   pixiElem: PIXI.Container;
@@ -26,7 +26,7 @@ export class Map implements IGuiElem {
     sprite.position.set(dc.x, dc.y);
     sprite.interactive = true;
     sprite.on('click', () => {
-      TileClickEvent.dispatch(tileData.position);
+      new TileClickAction(tileData.position).doExecute();
     });
     return sprite;
   }

@@ -1,22 +1,26 @@
 import { GameState } from '../GameState'
 import { Position } from "../viewModel/Position";
 import { MonsterDict } from '../viewModel/utils/Monster';
-import { SelectedMonsterChangeEvent } from './SelectedMonsterChangeEvent';
-import { MonsterMoveEvent } from './MonsterMoveEvent';
+import { SelectedMonsterChangeAction } from './SelectedMonsterChangeAction';
+import { MonsterMoveAction } from './MonsterMoveAction';
+import { Action } from './Action';
 
-export class TileClickEvent {
-  static dispatch(posi: Position) {
-    const clickedMonsterId = TileClickEvent.clickOnMonster(posi, GameState.monsters);
+export class TileClickAction extends Action {
+  position: Position;
+
+  execute() {
+    const clickedMonsterId = this.clickOnMonster(this.position, GameState.monsters);
+    
     if (clickedMonsterId !== -1) {
-      SelectedMonsterChangeEvent.dispatch(clickedMonsterId);
+      new SelectedMonsterChangeAction(clickedMonsterId).doExecute();
       return;
     }
 
     const selectedMonster = GameState.monsters[GameState.selectedMonster];
-    MonsterMoveEvent.dispatch(selectedMonster.id, posi);
+    new MonsterMoveAction(selectedMonster.id, this.position).doExecute();
   }
 
-  private static clickOnMonster(clickPosi: Position, monsters: MonsterDict) {
+  private clickOnMonster(clickPosi: Position, monsters: MonsterDict) {
     for (let [monsterId, monster] of Object.entries(monsters)) {
       if (clickPosi.isEqual(monster.position)) {
         return parseInt(monsterId);
@@ -24,5 +28,10 @@ export class TileClickEvent {
     }
 
     return -1;
+  }
+
+  constructor(position: Position) {
+    super();
+    this.position = position;
   }
 }
