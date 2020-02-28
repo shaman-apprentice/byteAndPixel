@@ -1,22 +1,23 @@
 import { Position } from "../../viewModel/Position";
 
-enum TerrainType {
+export enum TerrainType {
     Earth = "Earth",
     Fire = "Fire",
     Ice = "Ice",
     Nature = "Nature",
 } 
 
-export type Map = Tile[][];
+export type MapData = TileData[][];
 
-export const createMapData = (size: number): Map => {
-    let map: Map = [];
+export const createMapData = (size: number): MapData => {
+    let map: MapData = [];
     for (let x = 0; x < size; x++) {
-        const row: Tile[] = [];
+        const row: TileData[] = [];
         for (let y = 0; y < size; y++) {
             row.push({
                 terrainType: randomTerrainType(),
                 position: new Position(x, y),
+                slimed: x+y >= 7
             });
         }
         map.push(row);
@@ -46,7 +47,8 @@ const randomTerrainType = (): TerrainType => {
     return terrainTypes[index] as TerrainType;
 }
 
-export interface Tile {
+export interface TileData {
     position: Position;
     terrainType: TerrainType;
+    slimed: boolean;
 }

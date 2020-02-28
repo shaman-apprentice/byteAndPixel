@@ -14,4 +14,8 @@ export class Position {
             y: this.y * tileSizeY,
         }
     }
+
+    toString(): String {
+        return this.x.toString() + ":" + this.y.toString();
+    }
 }
