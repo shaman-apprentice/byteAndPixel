@@ -1,4 +1,6 @@
-## How to build:
+[![Build Status](https://travis-ci.org/shaman-apprentice/byteAndPixel.svg?branch=master)](https://travis-ci.org/shaman-apprentice/byteAndPixel)
+
+## How to run locally:
 
 - install [nodejs LTS](https://nodejs.org/en/)
 - run `npm i` in your terminal

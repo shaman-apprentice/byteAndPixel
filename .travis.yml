@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - 12
+script:
+  - npm i
+  - npm run test
+  - npm run build
+deploy:
+  provider: script
+  script: node scripts/deploy.js
+  # without skip_cleanup the files from npm build will already be gone
+  skip_cleanup: true
+  on:
+    branch: master
