@@ -1,4 +1,3 @@
-import { GameState } from "../GameState";
 import { StateChangeEvent } from "./StateChangeEvent";
 
 export class Action {

@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js'
 import { createMapData, TileData, TerrainType } from './utils/map'
 import { IGuiElem } from './IGuiElem';
 import { TileClickAction } from '../controller/TileClickEvent';
+import { Position } from "./Position";
 
 export class Map implements IGuiElem {
   pixiElem: PIXI.Container;
@@ -46,6 +47,10 @@ export class Tile implements IGuiElem {
   }
 
   constructor(tileData: TileData) {
+    this._slimed = tileData.slimed;
+    this.terrainType = tileData.terrainType;
+    this.position = tileData.position;
+
     this.terrain = PIXI.Sprite.from('Assets/Images/Terrain/' + tileData.terrainType.toString() + '.png');
     this.terrain.anchor.set(0.5, 0.5);
     this.slime = PIXI.Sprite.from('Assets/Images/Terrain/Slime.png');
