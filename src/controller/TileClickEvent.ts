@@ -1,6 +1,6 @@
 import { GameState } from '../GameState'
 import { Position } from "../viewModel/Position";
-import { MonsterDict } from '../viewModel/utils/Monster';
+import { MonsterDict } from '../viewModel/utils/monster';
 import { SelectedMonsterChangeAction } from './SelectedMonsterChangeAction';
 import { MonsterMoveAction } from './MonsterMoveAction';
 import { Action } from './Action';
