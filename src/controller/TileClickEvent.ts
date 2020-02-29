@@ -5,36 +5,28 @@ import { SelectedMonsterChangeAction } from './SelectedMonsterChangeAction';
 import { MonsterMoveAction } from './MonsterMoveAction';
 import { Action } from './Action';
 import { ChangeTileSlimeAction as ChangeTileSlimeAction } from './ChangeTileSlimeAction';
+import { isAdjacent } from '../viewModel/utils/map';
+import { monsterAtPosition } from '../viewModel/utils/monster';
 
 export class TileClickAction extends Action {
   position: Position;
 
   execute() {
-    const clickedMonsterId = this.clickOnMonster(this.position, GameState.monsters);
-    
+    const clickedMonsterId = monsterAtPosition(this.position);
+
     if (clickedMonsterId !== -1) {
       new SelectedMonsterChangeAction(clickedMonsterId).doExecute();
       return;
     }
-    
+
+    const selectedMonster = GameState.monsters[GameState.selectedMonster];
     const selectedTile = GameState.map.tiles[this.position.x][this.position.y];
-    if (selectedTile.slimed) {
+    if (isAdjacent(this.position, selectedMonster.position) && selectedTile.slimed) {
       new ChangeTileSlimeAction(GameState.selectedMonster, this.position, false).doExecute();
     } else {
-      const selectedMonster = GameState.monsters[GameState.selectedMonster];
       new MonsterMoveAction(selectedMonster.id, this.position).doExecute();
     }
 
-  }
-
-  private clickOnMonster(clickPosi: Position, monsters: MonsterDict) {
-    for (let [monsterId, monster] of Object.entries(monsters)) {
-      if (clickPosi.isEqual(monster.position)) {
-        return parseInt(monsterId);
-      }
-    }
-
-    return -1;
   }
 
   constructor(position: Position) {
