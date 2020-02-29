@@ -8,7 +8,7 @@ export class MonsterMoveAction extends Action {
   monsterId: number;
   position: Position
 
-  execute() {
+  doAction() {
     const monster = GameState.monsters[this.monsterId];
 
     if (monster.actionPoints <= 0)

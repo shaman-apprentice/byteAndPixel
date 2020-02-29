@@ -11,20 +11,20 @@ import { monsterAtPosition } from '../viewModel/utils/monster';
 export class TileClickAction extends Action {
   position: Position;
 
-  execute() {
+  doAction() {
     const clickedMonsterId = monsterAtPosition(this.position);
 
     if (clickedMonsterId !== -1) {
-      new SelectedMonsterChangeAction(clickedMonsterId).doExecute();
+      new SelectedMonsterChangeAction(clickedMonsterId).execute();
       return;
     }
 
     const selectedMonster = GameState.monsters[GameState.selectedMonster];
     const selectedTile = GameState.map.tiles[this.position.x][this.position.y];
     if (isAdjacent(this.position, selectedMonster.position) && selectedTile.slimed) {
-      new ChangeTileSlimeAction(GameState.selectedMonster, this.position, false).doExecute();
+      new ChangeTileSlimeAction(GameState.selectedMonster, this.position, false).execute();
     } else {
-      new MonsterMoveAction(selectedMonster.id, this.position).doExecute();
+      new MonsterMoveAction(selectedMonster.id, this.position).execute();
     }
 
   }

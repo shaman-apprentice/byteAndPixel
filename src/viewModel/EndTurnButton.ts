@@ -12,7 +12,7 @@ export class EndTurnButton implements IGuiElem {
     let endTurn = new PIXI.Text("End Turn 1");
     endTurn.interactive = true;
     endTurn.buttonMode = true;
-    endTurn.on("click", () => new EndTurnAction().doExecute())
+    endTurn.on("click", () => new EndTurnAction().execute())
     endTurn.position.set(650, 20);
     this.pixiElem = endTurn;
     GameState.emitter.addEventListener(StateChangeEvent.type, () => (this.updateText()))

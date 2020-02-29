@@ -3,13 +3,12 @@ import { Action } from './Action';
 
 export class EndTurnAction extends Action {
 
-  protected execute() {
+  protected doAction() {
     GameState.turn += 1;
 
-    let monsters = GameState.monsters;
-    for (let monster of Object.values(monsters)) {
+    Object.values(GameState.monsters).forEach(monster => {
       monster.actionPoints = 2;
-    }
+    });
   }
 
   constructor() {

@@ -4,7 +4,7 @@ import { Action } from "./Action";
 export class SelectedMonsterChangeAction extends Action {
   newSelectedMonsterId: number;
 
-  execute() {
+  doAction() {
     if (GameState.monsters[this.newSelectedMonsterId].friendly) {
       GameState.selectedMonster = this.newSelectedMonsterId;
     }

@@ -2,12 +2,12 @@ import { StateChangeEvent } from "./StateChangeEvent";
 
 export class Action {
 
-    doExecute() {
-        this.execute();
+    execute() {
+        this.doAction();
         StateChangeEvent.dispatch();
     }
 
-    protected execute () {
+    protected doAction () {
 
     }
 

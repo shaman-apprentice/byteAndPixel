@@ -8,7 +8,7 @@ export class ChangeTileSlimeAction extends Action {
   monsterId: number;
   slime: boolean;
 
-  execute() {
+  doAction() {
     const monster = GameState.monsters[this.monsterId];
 
     if (monster.actionPoints <= 0 || !isAdjacent(monster.position, this.position))

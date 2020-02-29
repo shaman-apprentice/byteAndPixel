@@ -65,7 +65,7 @@ export class Tile implements IGuiElem {
     this.pixiElem.position.set(dc.x, dc.y);
     this.pixiElem.interactive = true;
     this.pixiElem.on('click', () => {
-      new TileClickAction(tileData.position).doExecute();
+      new TileClickAction(tileData.position).execute();
     });
   }
 }
