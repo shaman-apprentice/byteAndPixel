@@ -36,7 +36,7 @@ const toCubeCoords = (pos: Position): [number, number, number] => {
     return [pos.x, -(pos.x + pos.y), pos.y];
 }
 
-const distance = (a: Position, b: Position): number => {
+export const distance = (a: Position, b: Position): number => {
     const [ax, ay, az] = toCubeCoords(a);
     const [bx, by, bz] = toCubeCoords(b);
 

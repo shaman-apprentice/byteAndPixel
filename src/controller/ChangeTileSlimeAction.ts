@@ -11,8 +11,9 @@ export class ChangeTileSlimeAction extends Action {
   doAction() {
     const monster = GameState.monsters[this.monsterId];
 
-    if (monster.actionPoints <= 0 || !isAdjacent(monster.position, this.position))
-        return;
+    if (monster.actionPoints <= 0 || !isAdjacent(monster.position, this.position)) {
+      return;
+    }
 
     GameState.map.tiles[this.position.x][this.position.y].slimed = this.slime;
     monster.actionPoints -= 1;
