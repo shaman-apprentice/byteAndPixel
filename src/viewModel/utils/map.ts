@@ -26,20 +26,20 @@ export const createMapData = (size: number): MapData => {
 }
 
 export const isAdjacent = (a: Position, b: Position): boolean => {
-    const {x: x1, y: y1} = a;
-    const {x: x2, y: y2} = b;
+    const vector = a.difference(b)
+    const base = baseDirections.find(v => vector.isEqual(v));
 
-    const neighbors = [
-        [x1+1, y1],
-        [x1-1, y1],
-        [x1, y1+1],
-        [x1, y1-1],
-        [x1+1, y1-1],
-        [x1-1, y1+1],
-    ];
-    const neighbor = neighbors.find(([x, y]) => x === x2 && y === y2);
-    return Boolean(neighbor);
+    return Boolean(base);
 }
+
+const west: Position = new Position(1,0);
+const east: Position = new Position(-1,0);
+const northWest: Position = new Position(1,-1);
+const northEast: Position = new Position(0,-1);
+const southWest: Position = new Position(0,1);
+const southEast: Position = new Position(-1,-1);
+
+const baseDirections = [west, east, northWest, northEast, southWest, southEast];
 
 const randomTerrainType = (): TerrainType => {
     const terrainTypes = Object.keys(TerrainType);

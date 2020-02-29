@@ -14,4 +14,12 @@ export class Position {
             y: this.y * tileSizeY,
         }
     }
+
+    add(other: Position): Position {
+        return new Position(this.x + other.x, this.y + other.y);
+    }
+
+    difference(other: Position): Position {
+        return new Position(this.x - other.x, this.y - other.y);
+    }
 }
