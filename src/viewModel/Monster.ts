@@ -10,14 +10,16 @@ export class Monster implements IGuiElem {
     readonly id;
     name: string; 
     actionPoints: number;
+    friendly: boolean;
     pixiElem: PIXI.Sprite;
     private _position: Position;
 
-    constructor(name: string, posi: Position) {
+    constructor(name: string, position: Position, friendly: boolean = true) {
         this.id = Monster.idCounter++;
-        this.name = name; 
+        this.name = name;
+        this.friendly = friendly;
         this.pixiElem = this.createSprite();
-        this.position = posi;
+        this.position = position;
         this.actionPoints = 2;
     }
 
