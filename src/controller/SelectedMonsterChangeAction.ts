@@ -5,7 +5,9 @@ export class SelectedMonsterChangeAction extends Action {
   newSelectedMonsterId: number;
 
   execute() {
-    GameState.selectedMonster = this.newSelectedMonsterId;
+    if (GameState.monsters[this.newSelectedMonsterId].friendly) {
+      GameState.selectedMonster = this.newSelectedMonsterId;
+    }
   }
 
   constructor(newSelectedMonsterId: number) {
