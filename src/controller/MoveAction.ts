@@ -1,11 +1,11 @@
 import { GameState } from "../GameState";
 import { Position } from "../viewModel/Position";
-import { isAdjacent, firstStep } from "../viewModel/utils/map";
+import { firstStep } from "../viewModel/utils/map";
 import { Action } from "./Action";
 import { monsterAtPosition } from "../viewModel/utils/monster";
 import { Monster } from "../viewModel/Monster";
 
-export class MonsterMoveAction extends Action {
+export class MoveAction extends Action {
   monsterId: number;
   position: Position
 

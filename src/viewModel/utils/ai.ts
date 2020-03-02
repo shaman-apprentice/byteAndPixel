@@ -2,8 +2,9 @@ import { Monster } from "../Monster";
 import { GameState } from "../../GameState";
 import { Position } from "../Position";
 import { distance, firstStep as stepOnPath } from "./map";
-import { MonsterMoveAction } from "../../controller/MonsterMoveAction";
+import { MoveAction } from "../../controller/MoveAction";
 import { ChangeTileSlimeAction } from "../../controller/ChangeTileSlimeAction";
+import { AttackAction } from "../../controller/AttackAction";
 
 export const enemyAction = (enemy: Monster) => {
     const targetMonster = closestMonster(enemy.position, Object.values(GameState.monsters).filter(monster => monster.friendly));
@@ -17,12 +18,12 @@ export const enemyAction = (enemy: Monster) => {
         const targetPosition = enemy.position.add(direction);
         const targetTile = GameState.map.tiles[targetPosition.x][targetPosition.y];
         if ( targetTile.slimed ) {
-            new MonsterMoveAction(enemy.id, targetPosition).execute();
+            new MoveAction(enemy.id, targetPosition).execute();
         } else {
             new ChangeTileSlimeAction(enemy.id, targetPosition, true).execute();
         }
     } else {
-        enemy.actionPoints = 0;
+        new AttackAction(enemy.id, targetMonster.position).execute();
     }
 }
 
