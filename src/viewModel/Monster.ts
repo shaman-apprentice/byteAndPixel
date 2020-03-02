@@ -10,6 +10,7 @@ export class Monster implements IGuiElem {
     readonly id;
     name: string; 
     actionPoints: number;
+    hitPoints: number;
     friendly: boolean;
     pixiElem: PIXI.Sprite;
     private _position: Position;
@@ -21,6 +22,7 @@ export class Monster implements IGuiElem {
         this.pixiElem = this.createSprite();
         this.position = position;
         this.actionPoints = 2;
+        this.hitPoints = 6;
     }
 
     set position(posi: Position) {

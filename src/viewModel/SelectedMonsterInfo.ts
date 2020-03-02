@@ -23,6 +23,6 @@ export class SelectedMonsterInfo implements IGuiElem {
   private setInfo() {
     const selectedMonsterId = GameState.selectedMonster
     const sm = GameState.monsters[selectedMonsterId]
-    this.pixiElem.text = `name: ${sm.name} \naction-points: ${sm.actionPoints}/2`;
+    this.pixiElem.text = `name: ${sm.name} \naction-points: ${sm.actionPoints}/2 \nhit-points: ${sm.hitPoints}/6`;
   }
 }
