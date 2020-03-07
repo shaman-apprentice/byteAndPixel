@@ -1,31 +1,22 @@
 import { monsterAtPosition } from "../viewModel/utils/monster";
 import { GameState } from "../GameState";
-import { SelectedMonsterChangeAction } from "./SelectedMonsterChangeAction";
-import { AttackAction } from "./AttackAction";
+import { SelectedMonsterChangeAction } from "./actions/SelectedMonsterChangeAction";
+import { AttackAction } from "./actions/AttackAction";
 import { isAdjacent } from "../viewModel/utils/map";
-import { ChangeTileSlimeAction } from "./ChangeTileSlimeAction";
-import { MoveAction } from "./MoveAction";
+import { ChangeTileSlimeAction } from "./actions/ChangeTileSlimeAction";
+import { MoveAction } from "./actions/MoveAction";
 import { Position } from "../viewModel/Position";
+import { Action } from "./actions/Action";
 
 export const tileClicked = (position: Position) => {
-    
-        const clickedMonsterId = monsterAtPosition(position);
-        if (clickedMonsterId !== -1) {
-          const clickedMonster = GameState.monsters[clickedMonsterId];
-          if (clickedMonster.friendly) {
-            new SelectedMonsterChangeAction(clickedMonsterId).execute();
-          } else {
-            new AttackAction(GameState.selectedMonster, position).execute();
-          }
-          return;
-        }
-            
-        const selectedMonster = GameState.monsters[GameState.selectedMonster];
-        const selectedTile = GameState.map.tiles[position.x][position.y];
-        if (isAdjacent(position, selectedMonster.position) && selectedTile.slimed) {
-          new ChangeTileSlimeAction(GameState.selectedMonster, position, false).execute();
-        } else {
-          new MoveAction(selectedMonster.id, position).execute();
-        }
-    
+
+    const clickedMonsterId = monsterAtPosition(position);
+    const selectedMonsterId = GameState.selectedMonster;
+    const actions: Action[] = [new SelectedMonsterChangeAction(clickedMonsterId)
+        , new AttackAction(selectedMonsterId, position)
+        , new ChangeTileSlimeAction(selectedMonsterId, position, false)
+    , new MoveAction(selectedMonsterId, position)];
+
+    //Does the first action possible
+    const result = actions.find(action => action.execute());
 }

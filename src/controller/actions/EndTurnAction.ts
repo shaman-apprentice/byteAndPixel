@@ -1,6 +1,6 @@
-import { GameState } from '../GameState'
+import { GameState } from '../../GameState'
 import { Action } from './Action';
-import { enemyAction } from '../viewModel/utils/ai';
+import { enemyAction } from '../../viewModel/utils/ai';
 
 export class EndTurnAction extends Action {
 
@@ -16,6 +16,10 @@ export class EndTurnAction extends Action {
     Object.values(GameState.monsters).forEach(monster => {
       monster.actionPoints = 2;
     });
+  }
+
+  canExecute() : boolean {
+    return true;
   }
 
   constructor() {

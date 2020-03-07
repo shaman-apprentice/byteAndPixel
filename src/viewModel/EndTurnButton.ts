@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { EndTurnAction } from '../controller/EndTurnAction';
+import { EndTurnAction } from '../controller/actions/EndTurnAction';
 import { IGuiElem } from './IGuiElem';
 import { GameState } from '../GameState';
 import { StateChangeEvent } from '../controller/StateChangeEvent';
