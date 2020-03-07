@@ -2,8 +2,8 @@ import * as PIXI from 'pixi.js'
 
 import { createMapData, TileData, TerrainType } from './utils/map'
 import { IGuiElem } from './IGuiElem';
-import { TileClickAction } from '../controller/TileClickEvent';
 import { Position } from "./Position";
+import { tileClicked } from '../controller/Input';
 
 export class Map implements IGuiElem {
   pixiElem: PIXI.Container;
@@ -65,7 +65,7 @@ export class Tile implements IGuiElem {
     this.pixiElem.position.set(dc.x, dc.y);
     this.pixiElem.interactive = true;
     this.pixiElem.on('click', () => {
-      new TileClickAction(tileData.position).execute();
+      tileClicked(tileData.position);
     });
   }
 }
