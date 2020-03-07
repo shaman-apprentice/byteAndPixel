@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 
 import { createMapData, TileData, TerrainType } from './utils/map'
 import { IGuiElem } from './IGuiElem';
-import { Position } from "./Position";
+import { Position, tileSize } from "./Position";
 import { tileClicked } from '../controller/Input';
 
 export class Map implements IGuiElem {
@@ -61,7 +61,8 @@ export class Tile implements IGuiElem {
     this.pixiElem.addChild(this.slime);
     
     const dc = tileData.position.toDisplayCoords();
-    this.pixiElem.hitArea = new PIXI.Polygon([-32+0, -32+15, -32+0, -32+64, -32+30, -32+79, -32+33, -32+79, -32+63, -32+64, -32+63, -32+15, -32+33, -32+0, -32+30, -32+0]);
+    const ht = tileSize / 2
+    this.pixiElem.hitArea = new PIXI.Polygon([-ht+0, -ht+15, -ht+0, -ht+64, -ht+30, -ht+79, -ht+33, -ht+79, -ht+63, -ht+64, -ht+63, -ht+15, -ht+33, -ht+0, -ht+30, -ht+0]);
     this.pixiElem.position.set(dc.x, dc.y);
     this.pixiElem.interactive = true;
     this.pixiElem.on('click', () => {

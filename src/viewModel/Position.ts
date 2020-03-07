@@ -1,5 +1,6 @@
-const tileSize: number = 64;
-const tileSizeY: number = 64 - 16;
+export const tileSize: number = 64;
+const displayTileSizeX: number = tileSize;
+const displayTileSizeY: number = tileSize * 0.75;
 
 export class Position {
     constructor(public x: number, public y: number) { }
@@ -10,8 +11,8 @@ export class Position {
 
     toDisplayCoords(): { x: number, y: number } {
         return {
-            x: this.x * tileSize + this.y * tileSize / 2,
-            y: this.y * tileSizeY,
+            x: this.x * displayTileSizeX + this.y * displayTileSizeX / 2,
+            y: this.y * displayTileSizeY,
         }
     }
 

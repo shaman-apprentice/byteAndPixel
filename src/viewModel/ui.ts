@@ -4,6 +4,7 @@ import { SelectedMonsterInfo } from './SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../GameState';
 import { EndTurnButton } from './EndTurnButton';
+import { tileSize } from './Position';
 
 export class Ui {
     boardContainer: PIXI.Container;
@@ -24,6 +25,7 @@ export class Ui {
 
         boardContainer.addChild(new SelectedMonsterMarking().pixiElem);
         
+        boardContainer.position.set(tileSize/2, tileSize/2);
         return boardContainer;
     }
 
