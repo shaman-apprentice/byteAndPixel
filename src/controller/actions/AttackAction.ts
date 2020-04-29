@@ -12,6 +12,9 @@ export class AttackAction extends Action {
   doAction() {
     this.targetMonster.hitPoints -= 1;
     this.attackingMonster.actionPoints -= 1;
+    if (this.targetMonster.hitPoints <= 0) {
+      delete GameState.monsters[this.targetMonster.id];
+    }
   }
 
   canExecute() {
