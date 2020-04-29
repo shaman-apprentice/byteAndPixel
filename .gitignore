@@ -3,3 +3,4 @@ dist
 .Idea/
 *.iml
 .vscode
+.history/
