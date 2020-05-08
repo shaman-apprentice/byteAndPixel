@@ -25,7 +25,7 @@ export class ChangeTileSlimeAction extends Action {
 
   constructor(monsterId: number, position: Position, slime: boolean) {
     super();
-    this.monster = GameState.monsters[monsterId];
+    this.monster = GameState.monsters.get(monsterId);
     this.targetTile = GameState.map.tiles[position.x][position.y];
     this.targetState = slime;
   }

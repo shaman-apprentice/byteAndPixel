@@ -1,26 +1,19 @@
 import { Monster } from "../Monster";
 import { Position } from "../Position";
 import { GameState } from "../../GameState";
+import { PMap } from "@shaman-apprentice/pack-mule";
 
-export const getInitialMonsters = (): MonsterDict => {
+export const getInitialMonsters = (): PMap<number, Monster> => {
   const appleman = new Monster('appleman', new Position(2, 2));
-  const pixeldeer = new Monster('flammie', new Position(4, 1));
+  const flammie = new Monster('flammie', new Position(4, 1));
   const enemy = new Monster('Dummymon', new Position(6, 6), false);
-  return {
-    [appleman.id]: appleman,
-    [pixeldeer.id]: pixeldeer,
-    [enemy.id]: enemy,
-  };
+  const monsters = [appleman, flammie, enemy];
+  const map = new PMap<number, Monster>();
+  monsters.forEach(monster => map.set(monster.id, monster));
+  return map;
 }
 
-export type MonsterDict = { [key: number]: Monster };
-
 export const monsterAtPosition = (position: Position): number => {
-  for (let [monsterId, monster] of Object.entries(GameState.monsters)) {
-    if (position.isEqual(monster.position)) {
-      return parseInt(monsterId);
-    }
-  }
-
-  return -1;
+  const monsterAtPosition = GameState.monsters.toList().find(entry => position.isEqual(entry.value.position));
+  return monsterAtPosition?.key ?? -1;
 }

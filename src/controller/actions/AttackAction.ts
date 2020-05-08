@@ -13,7 +13,7 @@ export class AttackAction extends Action {
     this.targetMonster.hitPoints -= 1;
     this.attackingMonster.actionPoints -= 1;
     if (this.targetMonster.hitPoints <= 0) {
-      delete GameState.monsters[this.targetMonster.id];
+      GameState.monsters.remove(this.targetMonster.id);
     }
   }
 
@@ -28,7 +28,7 @@ export class AttackAction extends Action {
 
   constructor(attackerId: number, target: Position) {
     super();
-    this.attackingMonster = GameState.monsters[attackerId];
-    this.targetMonster = GameState.monsters[monsterAtPosition(target)];
+    this.attackingMonster = GameState.monsters.get(attackerId);
+    this.targetMonster = GameState.monsters.get(monsterAtPosition(target));
   }
 }

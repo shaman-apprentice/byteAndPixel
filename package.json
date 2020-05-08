@@ -16,7 +16,7 @@
   "author": "byteandpixel",
   "homepage": "https://github.com/shaman-apprentice/byteAndPixel#readme",
   "dependencies": {
-    "@shaman-apprentice/pack-mule": "0.0.1",
+    "@shaman-apprentice/pack-mule": "0.2.0",
     "pixi.js": "^5.2.1"
   },
   "devDependencies": {

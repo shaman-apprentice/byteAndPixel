@@ -15,6 +15,6 @@ export class SelectedMonsterChangeAction extends Action {
 
   constructor(newSelectedMonsterId: number) {
     super();
-    this.monster = GameState.monsters[newSelectedMonsterId];
+    this.monster = GameState.monsters.get(newSelectedMonsterId);
   }
 }

@@ -30,7 +30,7 @@ export class MoveAction extends Action {
 
   constructor(monsterId: number, position: Position) {
     super();
-    this.monster = GameState.monsters[monsterId];
+    this.monster = GameState.monsters.get(monsterId);
     this.targetPosition = this.monster.position.add(firstStep(this.monster.position, position));
   }
 }

@@ -6,12 +6,13 @@ import { GameState } from '../GameState';
 import { EndTurnButton } from './EndTurnButton';
 import { tileSize } from './Position';
 import { StateChangeEvent } from '../controller/StateChangeEvent';
+import { PMap } from '@shaman-apprentice/pack-mule';
 
 export class Ui {
     boardContainer: PIXI.Container;
     statusContainer: PIXI.Container;
 
-    monsterView: { [key: number]: PIXI.Container } = {};
+    monsterView: PMap<number, PIXI.Container> = new PMap();
 
     constructor() {
         this.boardContainer = this.createBoardContainer();
@@ -43,16 +44,14 @@ export class Ui {
     }
 
     private updateMonsterView() {
-        const monsters = GameState.monsters;
-
-        Object.entries(monsters).filter(([id, monster]) => !this.monsterView.hasOwnProperty(id)).forEach(([id, monster]) => {
+        GameState.monsters.values().filter((monster) => !this.monsterView.has(monster.id)).forEach((monster) => {
             this.boardContainer.addChild(monster.pixiElem);
-            this.monsterView[id] = monster.pixiElem;
+            this.monsterView.set(monster.id, monster.pixiElem);
         });
 
-        Object.entries(this.monsterView).filter(([id, monsterView]) => !monsters.hasOwnProperty(id)).forEach(([id, monsterView]) => {
-            this.boardContainer.removeChild(monsterView);
-            delete this.monsterView[id];
+        this.monsterView.toList().filter((entry) => !GameState.monsters.has(entry.key)).forEach((entry) => {
+            this.boardContainer.removeChild(entry.value);
+            this.monsterView.remove(entry.key);
         });
     }
 }

@@ -21,8 +21,7 @@ export class SelectedMonsterMarking implements IGuiElem {
   }
 
   private markSelectedMonster() {
-    const selectedMonsterId = GameState.selectedMonster;
-    const selectedMonster = GameState.monsters[GameState.selectedMonster];
+    const selectedMonster = GameState.monsters.get(GameState.selectedMonster);
     const dc = selectedMonster.position.toDisplayCoords();
     this.pixiElem.position.set(dc.x, dc.y);
   }
