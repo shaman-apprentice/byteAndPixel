@@ -13,7 +13,7 @@ export class AttackAction extends Action {
     this.targetMonster.hitPoints -= 1;
     this.attackingMonster.actionPoints -= 1;
     if (this.targetMonster.hitPoints <= 0) {
-      GameState.monsters.remove(this.targetMonster.id);
+      GameState.monsters.delete(this.targetMonster.id);
     }
   }
 

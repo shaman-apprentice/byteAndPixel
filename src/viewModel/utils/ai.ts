@@ -9,7 +9,7 @@ import { Action } from "../../controller/actions/Action";
 
 export const enemyAction = (enemy: Monster) => {
     
-    const targetMonster = closestMonster(enemy.position, GameState.monsters.values().filter(monster => monster.friendly));
+    const targetMonster = closestMonster(enemy.position, GameState.monsters.getValues().filter(monster => monster.friendly));
     if (!targetMonster) {
         enemy.actionPoints = 0;
         return;
