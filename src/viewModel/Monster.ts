@@ -2,6 +2,8 @@ import * as PIXI from 'pixi.js';
 
 import { Position } from "./Position";
 import { IGuiElem } from "./IGuiElem";
+import { MonsterRemoveEvent } from '../controller/MonsterRemoveEvent';
+import { GameState } from '../GameState';
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
@@ -39,5 +41,13 @@ export class Monster implements IGuiElem {
         const sprite = PIXI.Sprite.from("Assets/Images/Monster/" + this.name + ".png");
         sprite.anchor.set(0.5, 0.5);
         return sprite;
+    }
+
+    die() {
+        MonsterRemoveEvent.dispatch(this);
+        if (GameState.selectedMonster == this.id) {
+            GameState.selectedMonster = GameState.monsters.getValues().find(monster => monster.friendly && monster.id != this.id).id
+        }
+        GameState.monsters.delete(this.id);
     }
 }
