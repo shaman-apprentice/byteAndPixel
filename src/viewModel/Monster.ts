@@ -10,12 +10,13 @@ export class Monster implements IGuiElem {
     private static idCounter = 0;
     private static displayOffset = -6;
     
+    pixiElem: PIXI.Sprite;
     readonly id;
     name: string; 
     actionPoints: ValueWithMax;
     hitPoints: ValueWithMax;
     friendly: boolean;
-    pixiElem: PIXI.Sprite;
+    lastFight: number = 0;
     private _position: Position;
 
     constructor(name: string, position: Position, friendly: boolean = true) {
