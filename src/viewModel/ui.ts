@@ -5,8 +5,8 @@ import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../GameState';
 import { EndTurnButton } from './EndTurnButton';
 import { tileSize } from './Position';
-import { MonsterAddEvent } from '../controller/MonsterAddEvent';
-import { MonsterRemoveEvent } from '../controller/MonsterRemoveEvent';
+import { MonsterAddEvent } from '../controller/events/MonsterAddEvent';
+import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { Monster } from './Monster';
 
 export class Ui {

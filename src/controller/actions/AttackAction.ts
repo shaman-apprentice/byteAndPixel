@@ -4,7 +4,6 @@ import { isAdjacent } from "../../viewModel/utils/map";
 import { Action } from "./Action";
 import { monsterAtPosition } from "../../viewModel/utils/monster";
 import { Monster } from "../../viewModel/Monster";
-import { MonsterRemoveEvent } from "../MonsterRemoveEvent";
 
 export class AttackAction extends Action {
   attackingMonster: Monster;

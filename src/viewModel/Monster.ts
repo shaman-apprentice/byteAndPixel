@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import { Position } from "./Position";
 import { IGuiElem } from "./IGuiElem";
-import { MonsterRemoveEvent } from '../controller/MonsterRemoveEvent';
+import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { GameState } from '../GameState';
 
 export class Monster implements IGuiElem {

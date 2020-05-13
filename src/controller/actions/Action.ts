@@ -1,4 +1,4 @@
-import { StateChangeEvent } from "../StateChangeEvent";
+import { StateChangeEvent } from "../events/StateChangeEvent";
 
 export class Action {
 

@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js'
 
 import { GameState } from '../GameState'
 import { IGuiElem } from './IGuiElem';
-import { StateChangeEvent } from '../controller/StateChangeEvent';
+import { StateChangeEvent } from '../controller/events/StateChangeEvent';
 
 export class SelectedMonsterMarking implements IGuiElem {
   pixiElem: PIXI.Sprite;
