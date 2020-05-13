@@ -23,7 +23,8 @@ export class MoveAction extends Action {
   }
 
   canEnter(position: Position, monster: Monster): boolean {
-    const correctSlimeState = GameState.map.tiles[position.x][position.y].slimed == !monster.friendly;
+    debugger;
+    const correctSlimeState = GameState.map.tiles.get(position).slimed == !monster.friendly;
     const containsMonster = monsterAtPosition(position) != -1;
     return correctSlimeState && !containsMonster;
   }

@@ -4,25 +4,22 @@ import { createMapData, TileData, TerrainType } from './utils/map'
 import { IGuiElem } from './IGuiElem';
 import { Position, tileSize } from "./Position";
 import { tileClicked } from '../controller/Input';
+import { HashMap } from 'utils/HashMap';
 
 export class Map implements IGuiElem {
   pixiElem: PIXI.Container;
-  tiles: Tile[][];
+  tiles: HashMap<Position, Tile>;
 
   constructor(size: number) {
     const mapData = createMapData(size);
     this.pixiElem = new PIXI.Container();
 
-    this.tiles = [];
-    for (let rowData of mapData) {
-      const row: Tile[] = [];
-      for (let tileData of rowData) {
-        const tile: Tile = new Tile(tileData);
-        row.push(tile);
-        this.pixiElem.addChild(tile.pixiElem);
-      }
-      this.tiles.push(row);
-    }
+    this.tiles = new HashMap(Position.toString);
+    mapData.getValues().forEach(tileData => {
+      const tile: Tile = new Tile(tileData);
+      this.tiles.set(tile.position, tile)
+      this.pixiElem.addChild(tile.pixiElem);
+    });
   }
 }
 

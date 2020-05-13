@@ -1,4 +1,5 @@
 import { Position } from "../../viewModel/Position";
+import { HashMap } from "utils/HashMap";
 
 export enum TerrainType {
     Earth = "Earth",
@@ -7,20 +8,13 @@ export enum TerrainType {
     Nature = "Nature",
 }
 
-export type MapData = TileData[][];
-
-export const createMapData = (size: number): MapData => {
-    let map: MapData = [];
+export const createMapData = (size: number): HashMap<Position, TileData> => {
+    let map: HashMap<Position, TileData> = new HashMap(Position.toString);
     for (let x = 0; x < size; x++) {
-        const row: TileData[] = [];
         for (let y = 0; y < size; y++) {
-            row.push({
-                terrainType: randomTerrainType(),
-                position: new Position(x, y),
-                slimed: x + y >= 7
-            });
+            const position = new Position(x,y);
+            map.set(position, {terrainType: randomTerrainType(), position: position, slimed: x + y >= 7})
         }
-        map.push(row);
     }
     return map;
 }

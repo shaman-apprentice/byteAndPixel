@@ -5,6 +5,10 @@ const displayTileSizeY: number = tileSize * 0.75;
 export class Position {
     constructor(public x: number, public y: number) { }
 
+    static toString(p: Position) {
+        return `${p.x}-${p.y}`;
+    }
+
     isEqual(other: Position) {
         return this.x === other.x && this.y === other.y;
     }
