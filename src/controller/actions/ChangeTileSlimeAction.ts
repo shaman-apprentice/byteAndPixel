@@ -3,7 +3,7 @@ import { Action } from "./Action";
 import { Position } from "../../viewModel/Position";
 import { isAdjacent } from "../../viewModel/utils/map";
 import { Monster } from "../../viewModel/Monster";
-import { Tile } from "../../viewModel/Map";
+import { Tile } from "../../viewModel/TileMap";
 
 export class ChangeTileSlimeAction extends Action {
   monster: Monster;

@@ -6,7 +6,7 @@ import { Position, tileSize } from "./Position";
 import { tileClicked } from '../controller/Input';
 import { HashMap } from 'utils/HashMap';
 
-export class Map implements IGuiElem {
+export class TileMap implements IGuiElem {
   pixiElem: PIXI.Container;
   tiles: HashMap<Position, Tile>;
 

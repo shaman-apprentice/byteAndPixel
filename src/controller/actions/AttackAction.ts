@@ -4,6 +4,7 @@ import { isAdjacent } from "../../viewModel/utils/map";
 import { Action } from "./Action";
 import { monsterAtPosition } from "../../viewModel/utils/monster";
 import { Monster } from "../../viewModel/Monster";
+import { MonsterRemoveEvent } from "../MonsterRemoveEvent";
 
 export class AttackAction extends Action {
   attackingMonster: Monster;
@@ -13,6 +14,7 @@ export class AttackAction extends Action {
     this.targetMonster.hitPoints -= 1;
     this.attackingMonster.actionPoints -= 1;
     if (this.targetMonster.hitPoints <= 0) {
+      MonsterRemoveEvent.dispatch(this.targetMonster);
       GameState.monsters.delete(this.targetMonster.id);
     }
   }

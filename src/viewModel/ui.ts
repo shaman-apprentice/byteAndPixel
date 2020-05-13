@@ -5,22 +5,24 @@ import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../GameState';
 import { EndTurnButton } from './EndTurnButton';
 import { tileSize } from './Position';
-import { StateChangeEvent } from '../controller/StateChangeEvent';
-import { HashMap } from 'utils/HashMap';
+import { MonsterAddEvent } from '../controller/MonsterAddEvent';
+import { MonsterRemoveEvent } from '../controller/MonsterRemoveEvent';
+import { Monster } from './Monster';
 
 export class Ui {
     boardContainer: PIXI.Container;
     statusContainer: PIXI.Container;
 
-    monsterView: HashMap<number, PIXI.Container> = new HashMap(k => String(k));
-
     constructor() {
         this.boardContainer = this.createBoardContainer();
         this.statusContainer = this.createStatusContainer();
 
-        this.updateMonsterView();
-        GameState.emitter.addEventListener(StateChangeEvent.type,
-          () => { this.updateMonsterView(); });
+        GameState.monsters.forEach(monster => this.addMonster(monster))
+
+        GameState.emitter.addEventListener(MonsterAddEvent.type,
+          (event: CustomEvent) => { this.addMonster(event.detail); });
+        GameState.emitter.addEventListener(MonsterRemoveEvent.type,
+          (event: CustomEvent) => { this.removeMonster(event.detail); });
     }
 
     private createBoardContainer() {
@@ -43,15 +45,11 @@ export class Ui {
         return statusContainer;
     }
 
-    private updateMonsterView() {
-        GameState.monsters.getValues().filter((monster) => !this.monsterView.has(monster.id)).forEach((monster) => {
-            this.boardContainer.addChild(monster.pixiElem);
-            this.monsterView.set(monster.id, monster.pixiElem);
-        });
+    private addMonster(monster: Monster) {
+        this.boardContainer.addChild(monster.pixiElem);
+    }
 
-        this.monsterView.getEntries().filter((entry) => !GameState.monsters.has(entry.key)).forEach((entry) => {
-            this.boardContainer.removeChild(entry.value);
-            this.monsterView.delete(entry.key);
-        });
+    private removeMonster(monster: Monster) {
+        this.boardContainer.removeChild(monster.pixiElem);
     }
 }
