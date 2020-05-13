@@ -11,11 +11,11 @@ export const enemyAction = (enemy: Monster) => {
     
     const targetMonster = closestMonster(enemy.position, GameState.monsters.getValues().filter(monster => monster.friendly));
     if (!targetMonster) {
-        enemy.actionPoints = 0;
+        enemy.actionPoints.current = 0;
         return;
     }
 
-    while(enemy.actionPoints >= 1) {
+    while(enemy.actionPoints.current >= 1) {
         singleEnemyAction(enemy, targetMonster);
     }
 }
@@ -29,7 +29,7 @@ const singleEnemyAction = (enemy: Monster, targetMonster) => {
     //Does the first action possible
     const result = actions.find(action => action.execute());
     if (!result) {
-        enemy.actionPoints = 0;
+        enemy.actionPoints.current = 0;
     }
 }
 

@@ -4,6 +4,7 @@ import { Position } from "./Position";
 import { IGuiElem } from "./IGuiElem";
 import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { GameState } from '../GameState';
+import { ValueWithMax } from './utils/ValueWithMax';
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
@@ -11,8 +12,8 @@ export class Monster implements IGuiElem {
     
     readonly id;
     name: string; 
-    actionPoints: number;
-    hitPoints: number;
+    actionPoints: ValueWithMax;
+    hitPoints: ValueWithMax;
     friendly: boolean;
     pixiElem: PIXI.Sprite;
     private _position: Position;
@@ -23,8 +24,8 @@ export class Monster implements IGuiElem {
         this.friendly = friendly;
         this.pixiElem = this.createSprite();
         this.position = position;
-        this.actionPoints = 2;
-        this.hitPoints = 6;
+        this.actionPoints = new ValueWithMax(2);
+        this.hitPoints = new ValueWithMax(8);
     }
 
     set position(posi: Position) {

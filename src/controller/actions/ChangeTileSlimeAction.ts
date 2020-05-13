@@ -11,14 +11,14 @@ export class ChangeTileSlimeAction extends Action {
   targetState: boolean;
 
   doAction() {
-    this.monster.actionPoints -= 1;
+    this.monster.actionPoints.sub(1);
     this.targetTile.slimed = this.targetState;
   }
 
   canExecute() {
     return this.monster
       && this.targetTile
-      && this.monster.actionPoints >= 1
+      && this.monster.actionPoints.current >= 1
       && isAdjacent(this.monster.position, this.targetTile.position)
       && this.targetTile.slimed != this.targetState
   }

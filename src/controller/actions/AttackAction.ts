@@ -10,9 +10,9 @@ export class AttackAction extends Action {
   targetMonster: Monster;
 
   doAction() {
-    this.targetMonster.hitPoints -= 1;
-    this.attackingMonster.actionPoints -= 1;
-    if (this.targetMonster.hitPoints <= 0) {
+    this.targetMonster.hitPoints.sub(1);
+    this.attackingMonster.actionPoints.sub(1);
+    if (this.targetMonster.hitPoints.current <= 0) {
       this.targetMonster.die();
     }
   }
@@ -20,7 +20,7 @@ export class AttackAction extends Action {
   canExecute() {
     return this.attackingMonster
       && this.targetMonster
-      && this.attackingMonster.actionPoints >= 1
+      && this.attackingMonster.actionPoints.current >= 1
       && isAdjacent(this.attackingMonster.position, this.targetMonster.position)
       && this.attackingMonster.friendly != this.targetMonster.friendly;
   }

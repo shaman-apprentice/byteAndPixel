@@ -1,3 +1,5 @@
+import * as PIXI from 'pixi.js'
+
 import { TerrainType, TileData } from "./utils/map";
 import { IGuiElem } from "./IGuiElem";
 import { tileSize, Position } from "./Position";

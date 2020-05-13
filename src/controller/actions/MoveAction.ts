@@ -11,14 +11,14 @@ export class MoveAction extends Action {
   targetPosition: Position;
 
   doAction() {
-    this.monster.actionPoints -= 1;
+    this.monster.actionPoints.sub(1);
     this.monster.position = this.targetPosition;
   }
 
   canExecute(): boolean {
     return this.monster
       && isAdjacent(this.monster.position, this.targetPosition)
-      && this.monster.actionPoints >= 1
+      && this.monster.actionPoints.current >= 1
       && this.canEnter(this.targetPosition, this.monster)
   }
 

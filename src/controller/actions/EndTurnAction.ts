@@ -8,13 +8,13 @@ export class EndTurnAction extends Action {
     GameState.turn += 1;
     
     GameState.monsters.getValues().filter(monster => !monster.friendly).forEach(enemy => {
-      while(enemy.actionPoints > 0) {
+      while(enemy.actionPoints.current > 0) {
         enemyAction(enemy);
       }
     })
 
     GameState.monsters.getValues().forEach(monster => {
-      monster.actionPoints = 2;
+      monster.actionPoints.setToMax();
     });
   }
 
