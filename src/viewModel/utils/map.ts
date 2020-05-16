@@ -1,19 +1,27 @@
 import { Position } from "../../viewModel/Position";
 import { HashMap } from "utils/HashMap";
+import { ElementSignature, Element } from "./Element";
 
-export enum TerrainType {
-    Earth = "Earth",
-    Fire = "Fire",
-    Ice = "Ice",
-    Nature = "Nature",
+class TerrainType {
+    elements: ElementSignature;
+    name: string;
 }
+
+const terrains = [
+    {name: 'earth', elements: new ElementSignature(1,0,0,0,0)},
+    {name: 'fire', elements: new ElementSignature(0,1,0,0,0)},
+    {name: 'ice', elements: new ElementSignature(0,0,1,0,0)},
+    {name: 'nature', elements: new ElementSignature(0,0,0,1,0)},
+    {name: 'metal', elements: new ElementSignature(0,0,0,0,1)},
+]
 
 export const createMapData = (size: number): HashMap<Position, TileData> => {
     let map: HashMap<Position, TileData> = new HashMap(Position.toString);
     for (let x = 0; x < size; x++) {
         for (let y = 0; y < size; y++) {
             const position = new Position(x,y);
-            map.set(position, {terrainType: randomTerrainType(), position: position, slimed: x + y >= 7})
+            const terrainType = randomTerrainType();
+            map.set(position, {elements: terrainType.elements, name: terrainType.name, position: position, slimed: x + y >= 7})
         }
     }
     return map;
@@ -64,13 +72,13 @@ const southEast: Position = new Position(0, 1);
 const baseDirections = [west, east, northWest, northEast, southWest, southEast];
 
 const randomTerrainType = (): TerrainType => {
-    const terrainTypes = Object.keys(TerrainType);
-    const index = Math.floor(Math.random() * terrainTypes.length);
-    return terrainTypes[index] as TerrainType;
+    const index = Math.floor(Math.random() * 4);
+    return terrains[index];
 }
 
 export interface TileData {
+    name: string;
+    elements: ElementSignature;
     position: Position;
-    terrainType: TerrainType;
     slimed: boolean;
 }

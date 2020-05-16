@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js'
 
-import { TerrainType, TileData } from "./utils/map";
+import { TileData } from "./utils/map";
 import { IGuiElem } from "./IGuiElem";
 import { tileSize, Position } from "./Position";
 import { tileClicked } from "controller/Input";
+import { ElementSignature } from './utils/Element';
 
 export class Tile implements IGuiElem {
     pixiElem: PIXI.Container;
@@ -12,7 +13,7 @@ export class Tile implements IGuiElem {
   
     private _slimed: boolean;
     position: Position;
-    terrainType: TerrainType;
+    elementSignature: ElementSignature;
   
     set slimed(slimed: boolean) {
       this._slimed = slimed;
@@ -25,10 +26,10 @@ export class Tile implements IGuiElem {
   
     constructor(tileData: TileData) {
       this._slimed = tileData.slimed;
-      this.terrainType = tileData.terrainType;
       this.position = tileData.position;
+      this.elementSignature = tileData.elements;
   
-      this.terrain = PIXI.Sprite.from('Assets/Images/Terrain/' + tileData.terrainType.toString() + '.png');
+      this.terrain = PIXI.Sprite.from('Assets/Images/Terrain/' + tileData.name + '.png');
       this.terrain.anchor.set(0.5, 0.5);
       this.slime = PIXI.Sprite.from('Assets/Images/Terrain/Slime.png');
       this.slime.anchor.set(0.5, 0.5);
