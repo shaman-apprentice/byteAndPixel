@@ -1,13 +1,13 @@
 import { Position } from "../../viewModel/Position";
 import { HashMap } from "utils/HashMap";
-import { ElementSignature, Element } from "./Element";
+import { ElementSignature } from "./Element";
 
 class TerrainType {
     elements: ElementSignature;
     name: string;
 }
 
-const terrains = [
+const terrainTypes = [
     {name: 'earth', elements: new ElementSignature(1,0,0,0,0)},
     {name: 'fire', elements: new ElementSignature(0,1,0,0,0)},
     {name: 'ice', elements: new ElementSignature(0,0,1,0,0)},
@@ -32,6 +32,10 @@ export const isAdjacent = (a: Position, b: Position): boolean => {
     const base = baseDirections.find(v => vector.isEqual(v));
 
     return Boolean(base);
+}
+
+export const neighbors = (a: Position): Position[] => {
+    return baseDirections.map(delta => a.add(delta));
 }
 
 const toCubeCoords = (pos: Position): [number, number, number] => {
@@ -73,7 +77,7 @@ const baseDirections = [west, east, northWest, northEast, southWest, southEast];
 
 const randomTerrainType = (): TerrainType => {
     const index = Math.floor(Math.random() * 4);
-    return terrains[index];
+    return terrainTypes[index];
 }
 
 export interface TileData {

@@ -16,13 +16,13 @@ export class SelectedMonsterInfo implements IGuiElem {
 
   private createTextBox() {
     const textBox = new PIXI.Text('');
-    textBox.position.set(20, 500);
+    textBox.position.set(20, 450);
     return textBox;
   }
 
   private setInfo() {
     const selectedMonsterId = GameState.selectedMonster;
     const sm = GameState.monsters.get(selectedMonsterId);
-    this.pixiElem.text = `name: ${sm.name} \naction-points: ${sm.actionPoints.current}/${sm.actionPoints.max} \nhit-points: ${sm.hitPoints.current}/${sm.hitPoints.max}`;
+    this.pixiElem.text = `name: ${sm.name} \naction-points: ${sm.actionPoints.current}/${sm.actionPoints.max} \nhit-points: ${sm.hitPoints.current}/${sm.hitPoints.max} \nhappyness: ${sm.happyness.current}/${sm.happyness.max}`;
   }
 }

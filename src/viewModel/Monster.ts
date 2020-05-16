@@ -5,6 +5,7 @@ import { IGuiElem } from "./IGuiElem";
 import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { GameState } from '../GameState';
 import { ValueWithRange } from './utils/ValueWithRange';
+import { ElementSignature } from './utils/Element';
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
@@ -12,21 +13,25 @@ export class Monster implements IGuiElem {
     
     pixiElem: PIXI.Sprite;
     readonly id;
-    name: string; 
+    name: string;
+    elements: ElementSignature;
     actionPoints: ValueWithRange;
     hitPoints: ValueWithRange;
+    happyness: ValueWithRange;
     friendly: boolean;
     lastFight: number = 0;
     private _position: Position;
 
-    constructor(name: string, position: Position, friendly: boolean = true) {
+    constructor(name: string, position: Position, elements: ElementSignature = new ElementSignature(0,0,0,0,0), friendly: boolean = true) {
         this.id = Monster.idCounter++;
         this.name = name;
+        this.elements = elements;
         this.friendly = friendly;
         this.pixiElem = this.createSprite();
         this.position = position;
         this.actionPoints = new ValueWithRange(2);
         this.hitPoints = new ValueWithRange(8);
+        this.happyness = new ValueWithRange(100, 50);
     }
 
     set position(posi: Position) {
