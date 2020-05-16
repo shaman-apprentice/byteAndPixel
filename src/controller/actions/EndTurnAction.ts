@@ -1,7 +1,6 @@
 import { GameState } from '../../GameState'
 import { Action } from './Action';
 import { enemyAction } from '../../viewModel/utils/ai';
-import { monsterAtPosition } from 'viewModel/utils/monster';
 
 export class EndTurnAction extends Action {
 

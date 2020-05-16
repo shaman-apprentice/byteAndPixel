@@ -1,11 +1,13 @@
-export class ValueWithMax {
+export class ValueWithRange {
 
     private _current: number;
+    private _min: number;
     private _max: number;
 
-    constructor(max: number, current: number = max) {
+    constructor(max: number, current: number = max, min: number = 0) {
         this._current = current;
         this._max = max;
+        this._min = min;
     }
 
     get current() {
@@ -17,16 +19,25 @@ export class ValueWithMax {
     }
 
     set current(current: number) {
-        this._current = Math.min(current, this._max);
+        this._current = this.clamp(current);
     }
 
     set max(max: number) {
         this._max = max;
-        this._current = Math.min(this._current, this._max);
+        this._current = this.clamp(this._current);
+    }
+
+    set min(min: number) {
+        this._min = min;
+        this._current = this.clamp(this._current);
     }
 
     changeCurrent(fn: (current: number) => number) {
-        this._current = Math.min(fn(this._current), this._max)
+        this._current = this.clamp(this._current);
+    }
+
+    private clamp(value: number) {
+        return Math.max(this._min, Math.min(value, this._max));
     }
 
     add(value: number) {
@@ -39,5 +50,9 @@ export class ValueWithMax {
 
     setToMax() {
         this._current = this._max;
+    }
+
+    setToMin() {
+        this._current = this._min;
     }
 }

@@ -2,7 +2,6 @@ import { monsterAtPosition } from "../viewModel/utils/monster";
 import { GameState } from "../GameState";
 import { SelectedMonsterChangeAction } from "./actions/SelectedMonsterChangeAction";
 import { AttackAction } from "./actions/AttackAction";
-import { isAdjacent } from "../viewModel/utils/map";
 import { ChangeTileSlimeAction } from "./actions/ChangeTileSlimeAction";
 import { MoveAction } from "./actions/MoveAction";
 import { Position } from "../viewModel/Position";
