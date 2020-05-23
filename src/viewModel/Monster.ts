@@ -22,15 +22,15 @@ export class Monster implements IGuiElem {
     lastFight: number = 0;
     private _position: Position;
 
-    constructor(name: string, position: Position, elements: ElementSignature = new ElementSignature(0,0,0,0,0), friendly: boolean = true) {
+    constructor(name: string, position: Position, baseStats: MonsterStats, friendly: boolean = true) {
         this.id = Monster.idCounter++;
         this.name = name;
-        this.elements = elements;
         this.friendly = friendly;
         this.pixiElem = this.createSprite();
         this.position = position;
-        this.actionPoints = new ValueWithRange(2);
-        this.hitPoints = new ValueWithRange(8);
+        this.elements = baseStats.elements;
+        this.actionPoints = new ValueWithRange(baseStats.energy);
+        this.hitPoints = new ValueWithRange(baseStats.hp);
         this.happiness = new ValueWithRange(100, 50);
     }
 
@@ -56,5 +56,17 @@ export class Monster implements IGuiElem {
             GameState.selectedMonster = GameState.monsters.getValues().find(monster => monster.friendly && monster.id != this.id).id
         }
         GameState.monsters.delete(this.id);
+    }
+}
+
+export class MonsterStats {
+    elements: ElementSignature;
+    hp: number;
+    energy: number;
+    
+    constructor(elements: ElementSignature, hp: number, enegry: number) {
+        this.elements = elements;
+        this.hp = hp;
+        this.energy = enegry;
     }
 }
