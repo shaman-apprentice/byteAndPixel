@@ -17,7 +17,7 @@ export class Monster implements IGuiElem {
     elements: ElementSignature;
     actionPoints: ValueWithRange;
     hitPoints: ValueWithRange;
-    happyness: ValueWithRange;
+    happiness: ValueWithRange;
     friendly: boolean;
     lastFight: number = 0;
     private _position: Position;
@@ -31,7 +31,7 @@ export class Monster implements IGuiElem {
         this.position = position;
         this.actionPoints = new ValueWithRange(2);
         this.hitPoints = new ValueWithRange(8);
-        this.happyness = new ValueWithRange(100, 50);
+        this.happiness = new ValueWithRange(100, 50);
     }
 
     set position(posi: Position) {

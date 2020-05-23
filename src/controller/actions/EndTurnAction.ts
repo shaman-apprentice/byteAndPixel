@@ -18,18 +18,18 @@ export class EndTurnAction extends Action {
       if (GameState.turn - monster.lastFight > 2) {
         monster.hitPoints.add(1);
       }
-      this.handleHappyness(monster);
+      this.handlehappiness(monster);
       monster.actionPoints.setToMax();
     });
   }
 
-  private handleHappyness(monster: Monster) {
+  private handlehappiness(monster: Monster) {
     const elementalNeighborhood = GameState.map.getElementsInNeighborhod(monster.position);
     const unsatisfied = monster.elements.sub(elementalNeighborhood).magnitude()
     if (unsatisfied > 0) {
-      monster.happyness.current -= unsatisfied;
+      monster.happiness.current -= unsatisfied;
     } else {
-      monster.happyness.current += 2;
+      monster.happiness.current += 2;
     }
   }
 
