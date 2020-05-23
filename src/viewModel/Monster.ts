@@ -6,6 +6,9 @@ import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { GameState } from '../GameState';
 import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
+import { basicAction, spawnAction } from './utils/ai';
+import { spiderStats } from './utils/monster';
+import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
@@ -64,9 +67,40 @@ export class MonsterStats {
     hp: number;
     energy: number;
     
-    constructor(elements: ElementSignature, hp: number, enegry: number) {
+    constructor(elements: ElementSignature, hp: number, energy: number) {
         this.elements = elements;
         this.hp = hp;
-        this.energy = enegry;
+        this.energy = energy;
+    }
+}
+
+export class BasicEnemy extends Monster {
+    static spawn(position: Position) {
+        const monster = new BasicEnemy("spider", position, spiderStats)
+        GameState.monsters.set(monster.id, monster);
+        MonsterAddEvent.dispatch(monster);
+    }
+
+    aiAction = () => basicAction(this);
+
+    constructor(name: string, position: Position, baseStats: MonsterStats) {
+        super(name, position, baseStats, false);
+    }
+}
+
+export class Cave extends BasicEnemy {
+
+    // TODO: refactor this so we don't splatter the logic in to many places
+    cooldown = 0;
+    aiAction = () => {
+        this.cooldown = ((this.cooldown + 1) % 3)
+        if (this.cooldown == 0) {
+            spawnAction(this);
+        }
+        this.actionPoints.current -= 1;
+    }
+
+    constructor(name: string, position: Position, baseStats: MonsterStats) {
+        super(name, position, baseStats);
     }
 }

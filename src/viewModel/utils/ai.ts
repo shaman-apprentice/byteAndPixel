@@ -1,13 +1,13 @@
-import { Monster } from "../Monster";
+import { Monster, BasicEnemy } from "../Monster";
 import { GameState } from "../../GameState";
 import { Position } from "../Position";
-import { distance, firstStep } from "./map";
+import { distance, firstStep, neighbors } from "./map";
 import { MoveAction } from "../../controller/actions/MoveAction";
 import { ChangeTileSlimeAction } from "../../controller/actions/ChangeTileSlimeAction";
 import { AttackAction } from "../../controller/actions/AttackAction";
 import { Action } from "../../controller/actions/Action";
 
-export const enemyAction = (enemy: Monster) => {
+export const basicAction = (enemy: Monster) => {
     
     const targetMonster = closestMonster(enemy.position, GameState.monsters.getValues().filter(monster => monster.friendly));
     if (!targetMonster) {
@@ -46,4 +46,12 @@ const closestMonster = (position: Position, monsters: Monster[]): Monster => {
     })
 
     return closest;
+}
+
+export const spawnAction = (monster: Monster) => {
+    const tiles = GameState.map.tiles;
+    const monsters = GameState.monsters;
+    const takenPositions = monsters.getValues().map(monster => monster.position)
+    const spawnPosition = neighbors(monster.position).filter(position => tiles.has(position)).find(position => !takenPositions.find(pos => position.isEqual(pos)));
+    BasicEnemy.spawn(spawnPosition);
 }

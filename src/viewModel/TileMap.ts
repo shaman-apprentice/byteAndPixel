@@ -23,7 +23,7 @@ export class TileMap implements IGuiElem {
     });
   }
 
-  getElementsInNeighborhod(position: Position): ElementSignature {
+  getElementsInNeighborhood(position: Position): ElementSignature {
     const positions = getNeighbors(position).concat(position);
     return positions.filter(position => this.tiles.has(position)).map(position => this.tiles.get(position).elementSignature).reduce((acc, value) => acc.add(value), new ElementSignature(0,0,0,0,0))
   }
