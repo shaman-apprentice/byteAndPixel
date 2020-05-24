@@ -15,7 +15,7 @@ export class AttackAction extends Action {
     this.targetMonster.lastFight = GameState.turn;
     this.targetMonster.lastFight = GameState.turn;
     if (this.targetMonster.hitPoints.current <= 0) {
-      this.targetMonster.die();
+      GameState.removeMonster(this.targetMonster);
     }
   }
 

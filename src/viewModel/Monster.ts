@@ -2,13 +2,8 @@ import * as PIXI from 'pixi.js';
 
 import { Position } from "./Position";
 import { IGuiElem } from "./IGuiElem";
-import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
-import { GameState } from '../GameState';
 import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
-import { basicAction, spawnAction } from './utils/ai';
-import { spiderStats } from './utils/monster';
-import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
@@ -52,14 +47,6 @@ export class Monster implements IGuiElem {
         sprite.anchor.set(0.5, 0.5);
         return sprite;
     }
-
-    die() {
-        MonsterRemoveEvent.dispatch(this);
-        if (GameState.selectedMonster == this.id) {
-            GameState.selectedMonster = GameState.monsters.getValues().find(monster => monster.friendly && monster.id != this.id).id
-        }
-        GameState.monsters.delete(this.id);
-    }
 }
 
 export class MonsterStats {
@@ -71,36 +58,5 @@ export class MonsterStats {
         this.elements = elements;
         this.hp = hp;
         this.energy = energy;
-    }
-}
-
-export class BasicEnemy extends Monster {
-    static spawn(position: Position) {
-        const monster = new BasicEnemy("spider", position, spiderStats)
-        GameState.monsters.set(monster.id, monster);
-        MonsterAddEvent.dispatch(monster);
-    }
-
-    aiAction = () => basicAction(this);
-
-    constructor(name: string, position: Position, baseStats: MonsterStats) {
-        super(name, position, baseStats, false);
-    }
-}
-
-export class Cave extends BasicEnemy {
-
-    // TODO: refactor this so we don't splatter the logic in to many places
-    cooldown = 0;
-    aiAction = () => {
-        this.cooldown = ((this.cooldown + 1) % 3)
-        if (this.cooldown == 0) {
-            spawnAction(this);
-        }
-        this.actionPoints.current -= 1;
-    }
-
-    constructor(name: string, position: Position, baseStats: MonsterStats) {
-        super(name, position, baseStats);
     }
 }

@@ -1,13 +1,14 @@
 import { GameState } from '../../GameState'
 import { Action } from './Action';
-import { Monster, BasicEnemy } from 'viewModel/Monster';
+import { Monster } from 'viewModel/Monster';
+import { Enemy } from 'viewModel/enemy/enemy';
 
 export class EndTurnAction extends Action {
 
   protected doAction() {
     GameState.turn += 1;
 
-    GameState.monsters.getValues().filter(monster => monster instanceof BasicEnemy).map(monster => monster as BasicEnemy).forEach(enemy => {
+    GameState.monsters.getValues().filter(monster => monster instanceof Enemy).map(monster => monster as Enemy).forEach(enemy => {
       while (enemy.actionPoints.current > 0) {
         enemy.aiAction();
       }

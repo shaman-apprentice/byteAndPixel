@@ -1,13 +1,20 @@
-import { Monster, MonsterStats, BasicEnemy, Cave } from "../Monster";
+import { Monster, MonsterStats } from "../Monster";
 import { Position } from "../Position";
 import { GameState } from "../../GameState";
 import { HashMap } from "utils/HashMap";
 import { ElementSignature } from "./Element";
+import { Spider } from "viewModel/enemy/spider";
+import { Cave } from "viewModel/enemy/cave";
+
+export const monsterMap = (): HashMap<number, Monster> => {
+  const map = new HashMap<number, Monster>(k => String(k));
+  return map;
+}
 
 export const getInitialMonsters = (): HashMap<number, Monster> => {
   const appleman = new Monster('appleman', new Position(2, 2), applemanStats);
   const flammie = new Monster('flammie', new Position(4, 1), flammieStats);
-  const spider = new BasicEnemy('spider', new Position(6, 5), spiderStats);
+  const spider = new Spider('spider', new Position(6, 5), spiderStats);
   const cave = new Cave('cave', new Position(6, 6), caveStats);
   const monsters = [appleman, flammie, spider, cave];
   const map = new HashMap<number, Monster>(k => String(k));
