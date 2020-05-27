@@ -7,18 +7,25 @@ import { MoveAction } from "./actions/MoveAction";
 import { Position } from "../viewModel/Position";
 import { Action } from "./actions/Action";
 
-export const tileClicked = (position: Position) => {
-
+export const tileSelected = (position: Position) => {
     const clickedMonsterId = monsterAtPosition(position);
+    const action = new SelectedMonsterChangeAction(clickedMonsterId);
+    if (action.canExecute()) {
+        action.execute();
+    }
+}
+
+export const tileClicked = (position: Position) => {
     const selectedMonsterId = GameState.selectedMonster;
     const selectedMonster = GameState.monsters.get(selectedMonsterId);
-    const actions: Action[] = [new SelectedMonsterChangeAction(clickedMonsterId)];
-    if (selectedMonster && selectedMonster.friendly) {
-        actions.push(new SelectedMonsterChangeAction(clickedMonsterId)
-            , new AttackAction(selectedMonsterId, position)
-            , new ChangeTileSlimeAction(selectedMonsterId, position, false)
-            , new MoveAction(selectedMonsterId, position))
+
+    if (!selectedMonster || !selectedMonster.friendly) {
+        return;
     }
+
+    const actions: Action[] = [new AttackAction(selectedMonsterId, position)
+        , new ChangeTileSlimeAction(selectedMonsterId, position, false)
+        , new MoveAction(selectedMonsterId, position)];
 
     //Does the first action possible
     const result = actions.find(action => action.execute());
