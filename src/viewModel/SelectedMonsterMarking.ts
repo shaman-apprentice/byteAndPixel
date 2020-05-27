@@ -21,6 +21,12 @@ export class SelectedMonsterMarking implements IGuiElem {
   }
 
   private markSelectedMonster() {
+    if (GameState.selectedMonster == -1) {
+      this.pixiElem.visible = false;
+      return;
+    } else {
+      this.pixiElem.visible = true;
+    }
     const selectedMonster = GameState.monsters.get(GameState.selectedMonster);
     const dc = selectedMonster.position.toDisplayCoords();
     this.pixiElem.position.set(dc.x, dc.y);

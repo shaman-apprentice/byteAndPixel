@@ -10,7 +10,7 @@ export class SelectedMonsterChangeAction extends Action {
   }
 
   canExecute(): boolean {
-    return this.monster && this.monster.friendly
+    return this.monster ? true : false;
   }
 
   constructor(newSelectedMonsterId: number) {

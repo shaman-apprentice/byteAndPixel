@@ -23,7 +23,7 @@ export class GameState {
     MonsterRemoveEvent.dispatch(monster);
     if (GameState.selectedMonster == monster.id) {
       //TODO: handle no valid selection target
-      GameState.selectedMonster = GameState.monsters.getValues().find(candiate => candiate.friendly && candiate.id != monster.id).id
+      GameState.selectedMonster = GameState.monsters.getValues().find(candiate => candiate.friendly && candiate.id != monster.id)?.id ?? -1
     }
   }
 

@@ -11,10 +11,14 @@ export const tileClicked = (position: Position) => {
 
     const clickedMonsterId = monsterAtPosition(position);
     const selectedMonsterId = GameState.selectedMonster;
-    const actions: Action[] = [new SelectedMonsterChangeAction(clickedMonsterId)
-        , new AttackAction(selectedMonsterId, position)
-        , new ChangeTileSlimeAction(selectedMonsterId, position, false)
-    , new MoveAction(selectedMonsterId, position)];
+    const selectedMonster = GameState.monsters.get(selectedMonsterId);
+    const actions: Action[] = [new SelectedMonsterChangeAction(clickedMonsterId)];
+    if (selectedMonster && selectedMonster.friendly) {
+        actions.push(new SelectedMonsterChangeAction(clickedMonsterId)
+            , new AttackAction(selectedMonsterId, position)
+            , new ChangeTileSlimeAction(selectedMonsterId, position, false)
+            , new MoveAction(selectedMonsterId, position))
+    }
 
     //Does the first action possible
     const result = actions.find(action => action.execute());
