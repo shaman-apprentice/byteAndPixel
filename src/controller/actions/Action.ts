@@ -1,6 +1,7 @@
 import { StateChangeEvent } from "../events/StateChangeEvent";
+import { Position } from "../../viewModel/Position";
 
-export class Action {
+export abstract class Action {
 
     execute(): boolean {
         if (!this.canExecute()) {
@@ -15,8 +16,12 @@ export class Action {
 
     }
 
-    protected canExecute(): boolean {
+    canExecute(): boolean {
         return true;
     }
+
+    abstract target(): Position;
+
+    abstract type(): String;
 
 }

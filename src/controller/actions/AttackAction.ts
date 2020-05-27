@@ -6,6 +6,7 @@ import { monsterAtPosition } from "../../viewModel/utils/monster";
 import { Monster } from "../../viewModel/Monster";
 
 export class AttackAction extends Action {
+
   attackingMonster: Monster;
   targetMonster: Monster;
 
@@ -27,10 +28,16 @@ export class AttackAction extends Action {
       && this.attackingMonster.friendly != this.targetMonster.friendly;
   }
 
-
   constructor(attackerId: number, target: Position) {
     super();
     this.attackingMonster = GameState.monsters.get(attackerId);
     this.targetMonster = GameState.monsters.get(monsterAtPosition(target));
+  }
+
+  target(): Position {
+    return this.targetMonster.position;
+  }
+  type(): String {
+    return "attack";
   }
 }

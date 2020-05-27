@@ -1,6 +1,7 @@
 import { GameState } from "../../GameState"
 import { Action } from "./Action";
 import { Monster } from "../../viewModel/Monster";
+import { Position } from "../../viewModel/Position";
 
 export class SelectedMonsterChangeAction extends Action {
   monster: Monster;
@@ -16,5 +17,12 @@ export class SelectedMonsterChangeAction extends Action {
   constructor(newSelectedMonsterId: number) {
     super();
     this.monster = GameState.monsters.get(newSelectedMonsterId);
+  }
+
+  target(): Position {
+    return this.monster.position;
+  }
+  type(): String {
+    return "activate";
   }
 }

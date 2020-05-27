@@ -6,6 +6,7 @@ import { ChangeTileSlimeAction } from "./actions/ChangeTileSlimeAction";
 import { MoveAction } from "./actions/MoveAction";
 import { Position } from "../viewModel/Position";
 import { Action } from "./actions/Action";
+import { ActionPreviewEvent } from "./events/ActionPreviewEvent";
 
 export const tileSelected = (position: Position) => {
     const clickedMonsterId = monsterAtPosition(position);
@@ -15,7 +16,7 @@ export const tileSelected = (position: Position) => {
     }
 }
 
-export const tileClicked = (position: Position) => {
+const decideAction = (position: Position) => {
     const selectedMonsterId = GameState.selectedMonster;
     const selectedMonster = GameState.monsters.get(selectedMonsterId);
 
@@ -28,5 +29,17 @@ export const tileClicked = (position: Position) => {
         , new MoveAction(selectedMonsterId, position)];
 
     //Does the first action possible
-    const result = actions.find(action => action.execute());
+    const result = actions.find(action => action.canExecute());
+    return result;
+}
+
+export const tileClicked = (position: Position) => {
+    decideAction(position)?.execute();
+}
+
+export const tileHover = (position: Position) => {
+    const action = decideAction(position);
+    if (action) {
+        ActionPreviewEvent.dispatch(action);
+    }
 }

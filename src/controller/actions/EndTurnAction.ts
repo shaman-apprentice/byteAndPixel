@@ -2,6 +2,7 @@ import { GameState } from '../../GameState'
 import { Action } from './Action';
 import { Monster } from 'viewModel/Monster';
 import { Enemy } from 'viewModel/enemy/enemy';
+import { Position } from "../../viewModel/Position";
 
 export class EndTurnAction extends Action {
 
@@ -39,6 +40,13 @@ export class EndTurnAction extends Action {
 
   constructor() {
     super();
+  }
+
+  target(): Position {
+    return new Position(0,0);
+  }
+  type(): String {
+    return "endTurn"
   }
 
 }

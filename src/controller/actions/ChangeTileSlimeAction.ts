@@ -29,4 +29,11 @@ export class ChangeTileSlimeAction extends Action {
     this.targetTile = GameState.map.tiles.get(position);
     this.targetState = slime;
   }
+
+  target(): Position {
+    return this.targetTile.position;
+  }
+  type(): String {
+    return "clean";
+  }
 }

@@ -10,6 +10,7 @@ app.view.addEventListener('contextmenu', event => {
   event.preventDefault();
 }, false);
 
+app.renderer.plugins.interaction.autoPreventDefault = true;
 const ui = new Ui();
 
 app.stage.addChild(ui.boardContainer);

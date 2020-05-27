@@ -33,4 +33,11 @@ export class MoveAction extends Action {
     this.monster = GameState.monsters.get(monsterId);
     this.targetPosition = this.monster.position.add(firstStep(this.monster.position, position));
   }
+
+  target(): Position {
+    return this.targetPosition;
+  }
+  type(): String {
+    return "walk";
+  }
 }
