@@ -27,6 +27,11 @@ export class ActionPreviewMarking implements IGuiElem {
 
   onActionPreview(action: Action) {
     //TODO: maybe accept empty action for blank
+    if (!action) {
+      this.onClean();
+      return;
+    }
+
     const dc = action.target().toDisplayCoords();
     this.pixiElem.position.set(dc.x, dc.y);
     this.pixiElem.texture = PIXI.Texture.from(`Assets/Images/Actions/${action.type()}.png`);

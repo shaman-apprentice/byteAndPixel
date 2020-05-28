@@ -39,7 +39,5 @@ export const tileClicked = (position: Position) => {
 
 export const tileHover = (position: Position) => {
     const action = decideAction(position);
-    if (action) {
-        ActionPreviewEvent.dispatch(action);
-    }
+    ActionPreviewEvent.dispatch(action);
 }
