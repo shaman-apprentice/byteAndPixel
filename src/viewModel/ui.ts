@@ -8,12 +8,15 @@ import { tileSize } from './Position';
 import { MonsterAddEvent } from '../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { Monster } from './Monster';
+import { ActionPreviewMarking } from './ActionPreviewMarking';
 
 export class Ui {
     boardContainer: PIXI.Container;
     statusContainer: PIXI.Container;
+    monsterContainer: PIXI.Container;
 
     constructor() {
+        this.monsterContainer = new PIXI.Container();
         this.boardContainer = this.createBoardContainer();
         this.statusContainer = this.createStatusContainer();
 
@@ -29,8 +32,9 @@ export class Ui {
         const boardContainer = new PIXI.Container();
 
         boardContainer.addChild(GameState.map.pixiElem);
-
         boardContainer.addChild(new SelectedMonsterMarking().pixiElem);
+        boardContainer.addChild(this.monsterContainer);
+        boardContainer.addChild(new ActionPreviewMarking().pixiElem);
         
         boardContainer.position.set(tileSize/2, tileSize/2);
         return boardContainer;
@@ -46,10 +50,10 @@ export class Ui {
     }
 
     private addMonster(monster: Monster) {
-        this.boardContainer.addChild(monster.pixiElem);
+        this.monsterContainer.addChild(monster.pixiElem);
     }
 
     private removeMonster(monster: Monster) {
-        this.boardContainer.removeChild(monster.pixiElem);
+        this.monsterContainer.removeChild(monster.pixiElem);
     }
 }
