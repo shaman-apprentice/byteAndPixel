@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js'
 import { TileData } from "./utils/map";
 import { IGuiElem } from "./IGuiElem";
 import { tileSize, Position } from "./Position";
-import { tileSelected, tileClicked, tileHover } from "controller/Input";
+import { tileClicked } from "controller/Input";
 import { ElementSignature } from './utils/Element';
 
 export class Tile implements IGuiElem {
@@ -44,14 +44,7 @@ export class Tile implements IGuiElem {
       this.pixiElem.position.set(dc.x, dc.y);
       this.pixiElem.interactive = true;
       this.pixiElem.on('click', () => {
-        tileSelected(tileData.position);
-      });
-      this.pixiElem.on('rightclick', () => {
         tileClicked(tileData.position);
       });
-      this.pixiElem.on('mouseover', () => {
-        tileHover(tileData.position);
-      })
     }
-
   }
