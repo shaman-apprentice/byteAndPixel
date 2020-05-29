@@ -4,8 +4,6 @@ import { Position } from "./Position";
 import { IGuiElem } from "./IGuiElem";
 import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
-import * as filters from "pixi-filters";
-console.log(filters);
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
