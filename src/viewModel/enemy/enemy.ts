@@ -8,5 +8,4 @@ export abstract class Enemy extends Monster {
         super(name, position, baseStats, false);
     }
 
-
 }

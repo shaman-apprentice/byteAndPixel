@@ -7,6 +7,7 @@ import { MoveAction } from "./actions/MoveAction";
 import { Position } from "../viewModel/Position";
 import { Action } from "./actions/Action";
 import { ActionPreviewEvent } from "./events/ActionPreviewEvent";
+import { MonsterHoverEvent } from "./events/MonsterHoverEvent";
 
 export const tileSelected = (position: Position) => {
     const clickedMonsterId = monsterAtPosition(position);
@@ -40,4 +41,6 @@ export const tileClicked = (position: Position) => {
 export const tileHover = (position: Position) => {
     const action = decideAction(position);
     ActionPreviewEvent.dispatch(action);
+    const monsterId = monsterAtPosition(position);
+    MonsterHoverEvent.dispatch(monsterId as Number);
 }

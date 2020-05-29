@@ -4,6 +4,9 @@ import { Position } from "./Position";
 import { IGuiElem } from "./IGuiElem";
 import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
+import { GameState } from 'GameState';
+import { MonsterHoverEvent } from 'controller/events/MonsterHoverEvent';
+import { addFilter, removeFilter } from './utils/glowfilter'
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
@@ -30,6 +33,14 @@ export class Monster implements IGuiElem {
         this.actionPoints = new ValueWithRange(baseStats.energy);
         this.hitPoints = new ValueWithRange(baseStats.hp);
         this.happiness = new ValueWithRange(100, 50);
+
+        GameState.emitter.addEventListener(MonsterHoverEvent.type, (event : CustomEvent) => {
+            if (event.detail == this.id) {
+                this.onHover();
+            } else {
+                this.onHoverEnd();
+            }
+        })
     }
 
     set position(posi: Position) {
@@ -45,7 +56,16 @@ export class Monster implements IGuiElem {
     private createSprite() {
         const sprite = PIXI.Sprite.from("Assets/Images/Monster/" + this.name + ".png");
         sprite.anchor.set(0.5, 0.5);
+        sprite.filters = [];
         return sprite;
+    }
+
+    private onHover() {
+        addFilter(this.pixiElem.filters, this.friendly, false);
+    }
+
+    private onHoverEnd() {
+        this.pixiElem.filters = removeFilter(this.pixiElem.filters, this.friendly, false);
     }
 }
 

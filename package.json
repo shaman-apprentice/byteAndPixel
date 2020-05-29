@@ -16,6 +16,7 @@
   "author": "byteandpixel",
   "homepage": "https://github.com/shaman-apprentice/byteAndPixel#readme",
   "dependencies": {
+    "@pixi/filter-glow": "^3.1.1",
     "@shaman-apprentice/pack-mule": "0.4.0",
     "pixi.js": "^5.2.1"
   },

@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js'
 import { GameState } from '../GameState'
 import { IGuiElem } from './IGuiElem';
 import { StateChangeEvent } from '../controller/events/StateChangeEvent';
+import { addFilter } from './utils/glowfilter';
 
 export class SelectedMonsterMarking implements IGuiElem {
   pixiElem: PIXI.Sprite;
@@ -28,6 +29,7 @@ export class SelectedMonsterMarking implements IGuiElem {
       this.pixiElem.visible = true;
     }
     const selectedMonster = GameState.monsters.get(GameState.selectedMonster);
+    addFilter(selectedMonster.pixiElem.filters, selectedMonster.friendly, true);
     const dc = selectedMonster.position.toDisplayCoords();
     this.pixiElem.position.set(dc.x, dc.y);
   }
