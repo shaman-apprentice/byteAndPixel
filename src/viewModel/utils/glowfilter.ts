@@ -11,7 +11,10 @@ const redSelected = new GlowFilter({ distance: 10, outerStrength: 3, innerStreng
 const redHover = new GlowFilter({ distance: 10, outerStrength: 1, innerStrength: 1, color: 0xff0000, quality: 0.2 });
 
 export const addFilter = (filters: Array<PIXI.Filter>, friendly: boolean, selected: boolean) => {
-    filters.push(glowFilter(friendly, selected));
+    const filter = glowFilter(friendly, selected)
+    if (!filters.includes(filter)) {
+        filters.push(filter);
+    }
 }
 
 export const removeFilter = (filters: Array<PIXI.Filter>, friendly: boolean, selected: boolean) => {
