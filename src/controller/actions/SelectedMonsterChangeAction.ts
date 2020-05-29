@@ -7,6 +7,8 @@ export class SelectedMonsterChangeAction extends Action {
   monster: Monster;
 
   doAction() {
+    const unselected = GameState.monsters.get(GameState.selectedMonster);
+    unselected.pixiElem.filters = null;
     GameState.selectedMonster = this.monster.id;
   }
 
