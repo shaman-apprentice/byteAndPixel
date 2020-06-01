@@ -6,7 +6,7 @@ import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
 import { GameState } from 'GameState';
 import { MonsterHoverEvent } from 'controller/events/MonsterHoverEvent';
-import { addFilter, removeFilter } from './utils/glowfilter'
+import { hoverGlow } from './utils/filters';
 
 export class Monster implements IGuiElem {
     private static idCounter = 0;
@@ -61,11 +61,21 @@ export class Monster implements IGuiElem {
     }
 
     private onHover() {
-        addFilter(this.pixiElem.filters, this.friendly, false);
+        this.addFilter(hoverGlow(this.friendly));
     }
 
     private onHoverEnd() {
-        this.pixiElem.filters = removeFilter(this.pixiElem.filters, this.friendly, false);
+        this.removeFilter(hoverGlow(this.friendly));
+    }
+
+    addFilter(filter: PIXI.Filter) {
+        if (!this.pixiElem.filters?.includes(filter)) {
+            this.pixiElem.filters.push(filter);
+        }
+    }
+    
+    removeFilter(filter: PIXI.Filter) {
+        this.pixiElem.filters = this.pixiElem.filters?.filter((a) => a !== filter);
     }
 }
 

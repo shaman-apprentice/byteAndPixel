@@ -3,10 +3,12 @@ import * as PIXI from 'pixi.js'
 import { GameState } from '../GameState'
 import { IGuiElem } from './IGuiElem';
 import { StateChangeEvent } from '../controller/events/StateChangeEvent';
-import { addFilter } from './utils/glowfilter';
+import { selectionGlow } from './utils/filters';
+import { Monster } from './Monster';
 
 export class SelectedMonsterMarking implements IGuiElem {
   pixiElem: PIXI.Sprite;
+  currentMonster: Monster;
 
   constructor() {
     this.pixiElem = this.createSprite();
@@ -22,15 +24,22 @@ export class SelectedMonsterMarking implements IGuiElem {
   }
 
   private markSelectedMonster() {
-    if (GameState.selectedMonster == -1) {
-      this.pixiElem.visible = false;
-      return;
+    this.unmark(this.currentMonster)
+    this.currentMonster = GameState.monsters.get(GameState.selectedMonster);
+    if (this.currentMonster) {
+      this.mark(this.currentMonster);
+      const dc = this.currentMonster.position.toDisplayCoords();
+      this.pixiElem.position.set(dc.x, dc.y);
     } else {
-      this.pixiElem.visible = true;
+      this.pixiElem.visible = false;
     }
-    const selectedMonster = GameState.monsters.get(GameState.selectedMonster);
-    addFilter(selectedMonster.pixiElem.filters, selectedMonster.friendly, true);
-    const dc = selectedMonster.position.toDisplayCoords();
-    this.pixiElem.position.set(dc.x, dc.y);
+  }
+
+  private mark(monster: Monster) {
+    monster?.addFilter(selectionGlow(monster.friendly));
+  }
+
+  private unmark(monster: Monster) {
+    monster?.removeFilter(selectionGlow(monster.friendly));
   }
 }
