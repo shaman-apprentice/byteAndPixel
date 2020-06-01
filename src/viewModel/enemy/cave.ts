@@ -20,6 +20,9 @@ export class Cave extends Enemy {
         const monsters = GameState.monsters;
         const takenPositions = monsters.getValues().map(monster => monster.position)
         const spawnPosition = neighbors(this.position).filter(position => tiles.has(position)).find(position => !takenPositions.find(pos => position.isEqual(pos)));
-        Spider.spawn(spawnPosition);
+        if (spawnPosition) {
+            Spider.spawn(spawnPosition);
+            GameState.map.tiles.get(spawnPosition).slimed = true;
+        }
     }
 }
