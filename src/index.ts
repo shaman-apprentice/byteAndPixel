@@ -1,5 +1,6 @@
 import { Application } from 'pixi.js';
 import { Ui } from './viewModel/ui';
+import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 
 const app = new Application({
   backgroundColor: 0x1099bb,
@@ -9,6 +10,15 @@ document.body.appendChild(app.view);
 app.view.addEventListener('contextmenu', event => { 
   event.preventDefault();
 }, false);
+
+document.addEventListener('keydown', (event) => {
+  switch (event.key) {
+    case "ArrowLeft": MapMoveEvent.dispatch({x:40,y:0}); break;
+    case "ArrowRight": MapMoveEvent.dispatch({x:-40,y:0}); break;
+    case "ArrowUp": MapMoveEvent.dispatch({x:0,y:40}); break;
+    case "ArrowDown": MapMoveEvent.dispatch({x:0,y:-40}); break;
+  }});
+  
 
 app.renderer.plugins.interaction.autoPreventDefault = true;
 const ui = new Ui();

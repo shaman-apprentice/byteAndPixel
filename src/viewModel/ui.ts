@@ -9,6 +9,7 @@ import { MonsterAddEvent } from '../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { Monster } from './Monster';
 import { ActionPreviewMarking } from './ActionPreviewMarking';
+import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 
 export class Ui {
     boardContainer: PIXI.Container;
@@ -23,9 +24,11 @@ export class Ui {
         GameState.monsters.forEach(monster => this.addMonster(monster))
 
         GameState.emitter.addEventListener(MonsterAddEvent.type,
-          (event: CustomEvent) => { this.addMonster(event.detail); });
+            (event: CustomEvent) => { this.addMonster(event.detail); });
         GameState.emitter.addEventListener(MonsterRemoveEvent.type,
-          (event: CustomEvent) => { this.removeMonster(event.detail); });
+            (event: CustomEvent) => { this.removeMonster(event.detail); });
+        GameState.emitter.addEventListener(MapMoveEvent.type, 
+            (event: CustomEvent) => { this.mapMoved(event.detail) })
     }
 
     private createBoardContainer() {
@@ -35,8 +38,8 @@ export class Ui {
         boardContainer.addChild(new SelectedMonsterMarking().pixiElem);
         boardContainer.addChild(this.monsterContainer);
         boardContainer.addChild(new ActionPreviewMarking().pixiElem);
-        
-        boardContainer.position.set(tileSize/2, tileSize/2);
+
+        boardContainer.position.set(tileSize / 2, tileSize / 2);
         return boardContainer;
     }
 
@@ -55,5 +58,10 @@ export class Ui {
 
     private removeMonster(monster: Monster) {
         this.monsterContainer.removeChild(monster.pixiElem);
+    }
+
+    private mapMoved(delta: {x:number, y:number}) {
+        this.boardContainer.position.x += delta.x;
+        this.boardContainer.position.y += delta.y;
     }
 }
