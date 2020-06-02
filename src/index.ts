@@ -2,8 +2,13 @@ import { Application } from 'pixi.js';
 import { Ui } from './viewModel/ui';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 
+export const width = 800;
+export const height = 600;
+
 const app = new Application({
   backgroundColor: 0x1099bb,
+  width: width,
+  height: height
 });
 
 document.body.appendChild(app.view);
@@ -24,4 +29,6 @@ app.renderer.plugins.interaction.autoPreventDefault = true;
 const ui = new Ui();
 
 app.stage.addChild(ui.boardContainer);
+app.stage.addChild(ui.middleGroundContainer);
 app.stage.addChild(ui.statusContainer);
+

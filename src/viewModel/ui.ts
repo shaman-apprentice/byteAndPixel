@@ -4,22 +4,25 @@ import { SelectedMonsterInfo } from './SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../GameState';
 import { EndTurnButton } from './EndTurnButton';
-import { tileSize } from './Position';
+import { tileSize, Position } from './Position';
 import { MonsterAddEvent } from '../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
 import { Monster } from './Monster';
 import { ActionPreviewMarking } from './ActionPreviewMarking';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
+import { Design } from './Design';
 
 export class Ui {
     boardContainer: PIXI.Container;
     statusContainer: PIXI.Container;
     monsterContainer: PIXI.Container;
+    middleGroundContainer: PIXI.Container;
 
     constructor() {
         this.monsterContainer = new PIXI.Container();
         this.boardContainer = this.createBoardContainer();
         this.statusContainer = this.createStatusContainer();
+        this.middleGroundContainer = this.createMiddleGroundContainer();
 
         GameState.monsters.forEach(monster => this.addMonster(monster))
 
@@ -50,6 +53,14 @@ export class Ui {
         statusContainer.addChild(new EndTurnButton().pixiElem);
 
         return statusContainer;
+    }
+
+    private createMiddleGroundContainer(){
+        const middleGroundContainer = new PIXI.Container();
+
+        middleGroundContainer.addChild(new Design("test", "Assets/Images/Ranke.png").pixiElem);
+
+        return middleGroundContainer;
     }
 
     private addMonster(monster: Monster) {
