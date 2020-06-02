@@ -61,11 +61,11 @@ export class Monster implements IGuiElem {
     }
 
     private onHover() {
-        this.addFilter(hoverGlow(this.friendly));
+        this.addFilter(hoverGlow(this.friendly, this.actionPoints.current));
     }
 
     private onHoverEnd() {
-        this.removeFilter(hoverGlow(this.friendly));
+        this.removeFilter(hoverGlow(this.friendly, this.actionPoints.current));
     }
 
     addFilter(filter: PIXI.Filter) {
