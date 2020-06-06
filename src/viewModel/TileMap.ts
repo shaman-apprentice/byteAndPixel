@@ -1,13 +1,13 @@
 import * as PIXI from 'pixi.js'
 
 import { createMapData, neighbors as getNeighbors } from './utils/map'
-import { IGuiElem } from './IGuiElem';
+import { GuiElem } from './ui/GuiElem';
 import { Position } from "./Position";
 import { HashMap } from 'utils/HashMap';
 import { Tile } from './Tile';
 import { ElementSignature } from './utils/Element';
 
-export class TileMap implements IGuiElem {
+export class TileMap implements GuiElem {
   pixiElem: PIXI.Container;
   tiles: HashMap<Position, Tile>;
 

@@ -2,12 +2,12 @@ import * as PIXI from 'pixi.js';
 
 import { SelectedMonsterInfo } from './SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
-import { GameState } from '../GameState';
+import { GameState } from '../../GameState';
 import { EndTurnButton } from './EndTurnButton';
-import { tileSize, Position } from './Position';
-import { MonsterAddEvent } from '../controller/events/MonsterAddEvent';
-import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
-import { Monster } from './Monster';
+import { tileSize, Position } from '../Position';
+import { MonsterAddEvent } from '../../controller/events/MonsterAddEvent';
+import { MonsterRemoveEvent } from '../../controller/events/MonsterRemoveEvent';
+import { Monster } from '../Monster';
 import { ActionPreviewMarking } from './ActionPreviewMarking';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 import { Design } from './Design';

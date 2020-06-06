@@ -1,12 +1,12 @@
 import * as PIXI from 'pixi.js'
 
-import { GameState } from '../GameState'
-import { IGuiElem } from './IGuiElem';
-import { StateChangeEvent } from '../controller/events/StateChangeEvent';
+import { GameState } from '../../GameState'
+import { GuiElem } from './GuiElem';
+import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
 import { ActionPreviewEvent } from 'controller/events/ActionPreviewEvent';
 import { Action } from 'controller/actions/Action';
 
-export class ActionPreviewMarking implements IGuiElem {
+export class ActionPreviewMarking implements GuiElem {
   pixiElem: PIXI.Sprite;
 
   constructor() {

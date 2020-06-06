@@ -1,15 +1,15 @@
 import * as PIXI from 'pixi.js';
 
-import { Position } from "./Position";
-import { IGuiElem } from "./IGuiElem";
-import { width } from '../index';
+import { GuiElem } from "./GuiElem";
+import { width } from '../../index';
 
-export class Design implements IGuiElem{
+export class Design extends GuiElem{
     name:string;
     pixiElem: PIXI.Sprite;
     
 
     constructor (name: string, baseDesign: string){
+        super();
         this.name = name;
         this.pixiElem = PIXI.Sprite.from(baseDesign);
         

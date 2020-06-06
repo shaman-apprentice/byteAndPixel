@@ -1,18 +1,17 @@
 import * as PIXI from 'pixi.js';
 
-import { GameState } from '../GameState';
-import { IGuiElem } from './IGuiElem';
-import { StateChangeEvent } from '../controller/events/StateChangeEvent';
+import { GameState } from '../../GameState';
+import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
+import { UiElementWithBackground } from './UiElementWithBackground';
 
-export class SelectedMonsterInfo implements IGuiElem {
+export class SelectedMonsterInfo extends UiElementWithBackground {
   pixiElem: PIXI.Container;
   textBox: PIXI.Text;
 
   constructor() {
-    this.pixiElem = new PIXI.Container();
+    super("Assets/Images/parchment.png", 270, 200);
     this.pixiElem.position.set(135,505)
     this.textBox = this.createTextBox();
-    this.pixiElem.addChild(this.createBackground());
     this.pixiElem.addChild(this.textBox);
     this.setInfo();
     GameState.emitter.addEventListener(StateChangeEvent.type,
@@ -23,13 +22,6 @@ export class SelectedMonsterInfo implements IGuiElem {
     const textBox = new PIXI.Text('');
     textBox.anchor.set(0.5,0.5);
     return textBox;
-  }
-
-  private createBackground() {
-    const sprite = PIXI.Sprite.from("Assets/Images/parchment.png")
-    sprite.anchor.set(0.5,0.5);
-    sprite.scale.set(0.7,0.5);
-    return sprite;
   }
 
   private setInfo() {

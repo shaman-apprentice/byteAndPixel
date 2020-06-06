@@ -1,5 +1,5 @@
 import { Application } from 'pixi.js';
-import { Ui } from './viewModel/ui';
+import { Ui } from './viewModel/ui/ui';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 
 export const width = 800;
