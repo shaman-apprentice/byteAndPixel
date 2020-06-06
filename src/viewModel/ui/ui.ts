@@ -11,6 +11,7 @@ import { Monster } from '../Monster';
 import { ActionPreviewMarking } from './ActionPreviewMarking';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 import { Design } from './Design';
+import { HoverMonsterInfo } from "./HoverMonsterInfo";
 
 export class Ui {
     boardContainer: PIXI.Container;
@@ -50,6 +51,7 @@ export class Ui {
         const statusContainer = new PIXI.Container();
 
         statusContainer.addChild(new SelectedMonsterInfo().pixiElem);
+        statusContainer.addChild(new HoverMonsterInfo().pixiElem);
         statusContainer.addChild(new EndTurnButton().pixiElem);
 
         return statusContainer;
