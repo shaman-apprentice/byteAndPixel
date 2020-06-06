@@ -10,7 +10,7 @@ export class EndTurnButton extends UiElementWithBackground {
   button: PIXI.Text;
 
   constructor() {
-    super("Assets/Images/brownButton.png", 200, 50);
+    super("brownButton", 200, 50);
     this.button = this.createButton();
     this.pixiElem.addChild(this.button);
     this.pixiElem.position.set(680, 40);

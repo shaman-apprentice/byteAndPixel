@@ -15,14 +15,13 @@ export class UiElementWithBackground extends GuiElem {
     private createBackground(path: string, width: number, height: number) {
         const sprite = PIXI.Sprite.from(path);
         sprite.anchor.set(0.5,0.5);
-        sprite.texture.addListener("update", () => this.scale(sprite, width, height));
+        this.scale(sprite, width, height)
         return sprite;
     }
 
     private scale(sprite: PIXI.Sprite, width: number, height: number) {
         sprite.scale.x = width / sprite.width;
         sprite.scale.y = height / sprite.height;
-        sprite.texture.removeListener("update");
     }
 
 }
