@@ -8,14 +8,15 @@ export abstract class MonsterInfoBox extends UiElementWithBackground {
   textBox: PIXI.Text;
 
   constructor() {
-    super("parchment", 270, 200);
+    super("StatusBackground", 450, 400);
     this.textBox = this.createTextBox();
     this.pixiElem.addChild(this.textBox);
   }
 
   private createTextBox() {
     const textBox = new PIXI.Text('');
-    textBox.anchor.set(0.5,0.5);
+    textBox.scale.set(0.75, 0.75);
+    textBox.anchor.set(0.35,0.5);
     return textBox;
   }
 
