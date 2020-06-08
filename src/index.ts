@@ -9,7 +9,7 @@ export const height = 600;
 
 const loader = PIXI.Loader.shared;
 
-loader.add("brownButton", "Assets/Images/brownButton.png").add("parchment", "Assets/Images/parchment.png");
+loader.add("brownButton", "Assets/Images/brownButton.png").add("StatusBackground", "Assets/Images/StatusBackground.png");
 
 const app = new Application({
   backgroundColor: 0x1099bb,
