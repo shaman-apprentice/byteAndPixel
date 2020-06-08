@@ -7,13 +7,10 @@ import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 export const width = 800;
 export const height = 600;
 
-<<<<<<< HEAD
-=======
 const loader = PIXI.Loader.shared;
 
 loader.add("brownButton", "Assets/Images/brownButton.png").add("parchment", "Assets/Images/parchment.png");
 
->>>>>>> 5bbe0c47bf57c72d9cb631ec0718a3e38e39754b
 const app = new Application({
   backgroundColor: 0x1099bb,
   width: width,
@@ -37,11 +34,6 @@ document.addEventListener('keydown', (event) => {
 
 app.renderer.plugins.interaction.autoPreventDefault = true;
 
-<<<<<<< HEAD
-app.stage.addChild(ui.boardContainer);
-app.stage.addChild(ui.middleGroundContainer);
-app.stage.addChild(ui.statusContainer);
-=======
 loader.load();
 loader.onComplete.add(() => {
   const ui = new Ui();
@@ -50,5 +42,4 @@ loader.onComplete.add(() => {
   app.stage.addChild(ui.statusContainer);
 })
 
->>>>>>> 5bbe0c47bf57c72d9cb631ec0718a3e38e39754b
 

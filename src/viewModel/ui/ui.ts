@@ -4,15 +4,6 @@ import { SelectedMonsterInfo } from './SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../../GameState';
 import { EndTurnButton } from './EndTurnButton';
-<<<<<<< HEAD:src/viewModel/ui.ts
-import { tileSize, Position } from './Position';
-import { MonsterAddEvent } from '../controller/events/MonsterAddEvent';
-import { MonsterRemoveEvent } from '../controller/events/MonsterRemoveEvent';
-import { Monster } from './Monster';
-import { ActionPreviewMarking } from './ActionPreviewMarking';
-import { MapMoveEvent } from 'controller/events/MapMoveEvent';
-import { Design } from './Design';
-=======
 import { tileSize, Position } from '../Position';
 import { MonsterAddEvent } from '../../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../../controller/events/MonsterRemoveEvent';
@@ -21,7 +12,6 @@ import { ActionPreviewMarking } from './ActionPreviewMarking';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 import { Design } from './Design';
 import { HoverMonsterInfo } from "./HoverMonsterInfo";
->>>>>>> 5bbe0c47bf57c72d9cb631ec0718a3e38e39754b:src/viewModel/ui/ui.ts
 
 export class Ui {
     boardContainer: PIXI.Container;
