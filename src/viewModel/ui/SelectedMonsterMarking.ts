@@ -1,16 +1,17 @@
 import * as PIXI from 'pixi.js'
 
-import { GameState } from '../GameState'
-import { IGuiElem } from './IGuiElem';
-import { StateChangeEvent } from '../controller/events/StateChangeEvent';
-import { selectionGlow } from './utils/filters';
-import { Monster } from './Monster';
+import { GameState } from '../../GameState'
+import { GuiElem } from './GuiElem';
+import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
+import { selectionGlow } from '../utils/filters';
+import { Monster } from '../Monster';
 
-export class SelectedMonsterMarking implements IGuiElem {
+export class SelectedMonsterMarking extends GuiElem {
   pixiElem: PIXI.Sprite;
   currentMonster: Monster;
 
   constructor() {
+    super();
     this.pixiElem = this.createSprite();
     this.markSelectedMonster();
     GameState.emitter.addEventListener(StateChangeEvent.type,

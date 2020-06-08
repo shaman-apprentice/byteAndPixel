@@ -1,14 +1,14 @@
 import * as PIXI from 'pixi.js';
 
 import { Position } from "./Position";
-import { IGuiElem } from "./IGuiElem";
+import { GuiElem } from "./ui/GuiElem";
 import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
 import { GameState } from 'GameState';
 import { MonsterHoverEvent } from 'controller/events/MonsterHoverEvent';
 import { hoverGlow } from './utils/filters';
 
-export class Monster implements IGuiElem {
+export class Monster implements GuiElem {
     private static idCounter = 0;
     private static displayOffset = -6;
     

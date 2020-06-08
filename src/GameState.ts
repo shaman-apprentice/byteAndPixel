@@ -7,7 +7,7 @@ import { MonsterRemoveEvent } from 'controller/events/MonsterRemoveEvent';
 export class GameState {
   public static emitter = new EventTarget();
 
-  public static map = new TileMap(8);
+  public static map = new TileMap(16);
   public static monsters = getInitialMonsters();
   public static selectedMonster = 0;
   public static turn = 1;

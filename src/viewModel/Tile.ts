@@ -1,12 +1,12 @@
 import * as PIXI from 'pixi.js'
 
 import { TileData } from "./utils/map";
-import { IGuiElem } from "./IGuiElem";
+import { GuiElem } from "./ui/GuiElem";
 import { tileSize, Position } from "./Position";
 import { tileSelected, tileClicked, tileHover } from "controller/Input";
 import { ElementSignature } from './utils/Element';
 
-export class Tile implements IGuiElem {
+export class Tile implements GuiElem {
     pixiElem: PIXI.Container;
     private terrain: PIXI.Sprite;
     private slime: PIXI.Sprite;
