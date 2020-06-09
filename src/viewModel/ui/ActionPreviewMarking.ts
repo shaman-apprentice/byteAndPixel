@@ -3,16 +3,16 @@ import * as PIXI from 'pixi.js'
 import { GameState } from '../../GameState'
 import { GuiElem } from './GuiElem';
 import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
-import { ActionPreviewEvent } from 'controller/events/ActionPreviewEvent';
-import { Action } from 'controller/actions/Action';
+import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
+import { decideAction } from 'controller/Input';
 
 export class ActionPreviewMarking implements GuiElem {
   pixiElem: PIXI.Sprite;
 
   constructor() {
     this.pixiElem = this.createSprite();
-    GameState.emitter.addEventListener(ActionPreviewEvent.type, (event: CustomEvent) => this.onActionPreview(event.detail));
-    GameState.emitter.addEventListener(StateChangeEvent.type, () => this.onClean());
+    GameState.emitter.addEventListener(MouseHoverEvent.type, () => this.actionPreview());
+    GameState.emitter.addEventListener(StateChangeEvent.type, () => this.actionPreview());
   }
 
   private createSprite() {
@@ -24,9 +24,13 @@ export class ActionPreviewMarking implements GuiElem {
   }
 
 
-
-  onActionPreview(action: Action) {
-    //TODO: maybe accept empty action for blank
+  actionPreview() {
+    const position = GameState.mousePosition;
+    if (!position) {
+      this.onClean();
+      return;
+    }
+    const action = decideAction(position);
     if (!action) {
       this.onClean();
       return;

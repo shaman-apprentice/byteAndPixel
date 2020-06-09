@@ -26,9 +26,21 @@ export const getInitialMonsters = (): HashMap<number, Monster> => {
   return map;
 }
 
-export const monsterAtPosition = (position: Position): number => {
+export const monsterAtMousePosition = (): Monster => {
+  const position = GameState.mousePosition;
+  if (!position) {
+    return undefined;
+  }
+  return monsterAtPosition(position);
+}
+
+export const monsterAtPosition = (position: Position): Monster => {
   const monsterAtPosition = GameState.monsters.getEntries().find(entry => position.isEqual(entry.value.position));
-  return monsterAtPosition?.key ?? -1;
+  return monsterAtPosition?.value;
+}
+
+export const monsterIdAtPosition = (position: Position): number => {
+  return monsterAtPosition(position)?.id ?? -1;
 }
 
 const applemanStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,1,0), 8, 2);

@@ -3,6 +3,8 @@ import { getInitialMonsters } from './viewModel/utils/monster';
 import { Monster } from 'viewModel/Monster';
 import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from 'controller/events/MonsterRemoveEvent';
+import { Position } from "/viewModel/Position";
+import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 
 export class GameState {
   public static emitter = new EventTarget();
@@ -11,6 +13,7 @@ export class GameState {
   public static monsters = getInitialMonsters();
   public static selectedMonster = 0;
   public static turn = 1;
+  private static _mousePosition : Position = undefined;
 
 
   static addMonster(monster: Monster) {
@@ -25,6 +28,15 @@ export class GameState {
       //TODO: handle no valid selection target
       GameState.selectedMonster = GameState.monsters.getValues().find(candiate => candiate.friendly && candiate.id != monster.id)?.id ?? -1
     }
+  }
+
+  static get mousePosition() {
+    return this._mousePosition;
+  }
+
+  static set mousePosition(position: Position) {
+    this._mousePosition = position;
+    MouseHoverEvent.dispatch(position);
   }
 
 

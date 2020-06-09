@@ -31,7 +31,7 @@ export class AttackAction extends Action {
   constructor(attackerId: number, target: Position) {
     super();
     this.attackingMonster = GameState.monsters.get(attackerId);
-    this.targetMonster = GameState.monsters.get(monsterAtPosition(target));
+    this.targetMonster = monsterAtPosition(target);
   }
 
   target(): Position {

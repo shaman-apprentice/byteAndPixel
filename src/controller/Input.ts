@@ -1,4 +1,4 @@
-import { monsterAtPosition } from "../viewModel/utils/monster";
+import { monsterIdAtPosition } from "../viewModel/utils/monster";
 import { GameState } from "../GameState";
 import { SelectedMonsterChangeAction } from "./actions/SelectedMonsterChangeAction";
 import { AttackAction } from "./actions/AttackAction";
@@ -6,18 +6,16 @@ import { ChangeTileSlimeAction } from "./actions/ChangeTileSlimeAction";
 import { MoveAction } from "./actions/MoveAction";
 import { Position } from "../viewModel/Position";
 import { Action } from "./actions/Action";
-import { ActionPreviewEvent } from "./events/ActionPreviewEvent";
-import { MonsterHoverEvent } from "./events/MonsterHoverEvent";
 
 export const tileSelected = (position: Position) => {
-    const clickedMonsterId = monsterAtPosition(position);
+    const clickedMonsterId = monsterIdAtPosition(position);
     const action = new SelectedMonsterChangeAction(clickedMonsterId);
     if (action.canExecute()) {
         action.execute();
     }
 }
 
-const decideAction = (position: Position) => {
+export const decideAction = (position: Position) => {
     const selectedMonsterId = GameState.selectedMonster;
     const selectedMonster = GameState.monsters.get(selectedMonsterId);
 
@@ -39,8 +37,5 @@ export const tileClicked = (position: Position) => {
 }
 
 export const tileHover = (position: Position) => {
-    const action = decideAction(position);
-    ActionPreviewEvent.dispatch(action);
-    const monsterId = monsterAtPosition(position);
-    MonsterHoverEvent.dispatch(monsterId as Number);
+    GameState.mousePosition = position;
 }

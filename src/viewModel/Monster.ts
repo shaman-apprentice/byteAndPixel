@@ -5,9 +5,9 @@ import { GuiElem } from "./ui/GuiElem";
 import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
 import { GameState } from 'GameState';
-import { MonsterHoverEvent } from 'controller/events/MonsterHoverEvent';
 import { hoverGlow, actionGlow } from './utils/filters';
 import { StateChangeEvent } from 'controller/events/StateChangeEvent';
+import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 
 export class Monster implements GuiElem {
     private static idCounter = 0;
@@ -37,15 +37,12 @@ export class Monster implements GuiElem {
 
         this.checkActionPoints();
 
-        GameState.emitter.addEventListener(MonsterHoverEvent.type, (event : CustomEvent) => {
-            if (event.detail == this.id) {
-                this.onHover();
-            } else {
-                this.onHoverEnd();
-            }
+        GameState.emitter.addEventListener(MouseHoverEvent.type, () => {
+            this.checkHover();
         });
         GameState.emitter.addEventListener(StateChangeEvent.type, () => {
             this.checkActionPoints();
+            this.checkHover();
         })
     }
 
@@ -64,6 +61,14 @@ export class Monster implements GuiElem {
         sprite.anchor.set(0.5, 0.5);
         sprite.filters = [];
         return sprite;
+    }
+
+    private checkHover() {
+        if (GameState.mousePosition.isEqual(this.position)) {
+            this.onHover();
+        } else {
+            this.onHoverEnd();
+        }
     }
 
     private onHover() {

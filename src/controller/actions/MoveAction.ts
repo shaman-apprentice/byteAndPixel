@@ -2,7 +2,7 @@ import { GameState } from "../../GameState";
 import { Position } from "../../viewModel/Position";
 import { firstStep } from "../../viewModel/utils/map";
 import { Action } from "./Action";
-import { monsterAtPosition } from "../../viewModel/utils/monster";
+import { monsterIdAtPosition } from "../../viewModel/utils/monster";
 import { Monster } from "../../viewModel/Monster";
 import { isAdjacent } from "../../viewModel/utils/map";
 
@@ -24,7 +24,7 @@ export class MoveAction extends Action {
 
   canEnter(position: Position, monster: Monster): boolean {
     const correctSlimeState = GameState.map.tiles.get(position).slimed == !monster.friendly;
-    const containsMonster = monsterAtPosition(position) != -1;
+    const containsMonster = monsterIdAtPosition(position) != -1;
     return correctSlimeState && !containsMonster;
   }
 
