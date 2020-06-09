@@ -6,7 +6,8 @@ import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
 import { GameState } from 'GameState';
 import { MonsterHoverEvent } from 'controller/events/MonsterHoverEvent';
-import { hoverGlow } from './utils/filters';
+import { hoverGlow, actionGlow } from './utils/filters';
+import { StateChangeEvent } from 'controller/events/StateChangeEvent';
 
 export class Monster implements GuiElem {
     private static idCounter = 0;
@@ -34,12 +35,17 @@ export class Monster implements GuiElem {
         this.hitPoints = new ValueWithRange(baseStats.hp);
         this.happiness = new ValueWithRange(100, 50);
 
+        this.checkActionPoints();
+
         GameState.emitter.addEventListener(MonsterHoverEvent.type, (event : CustomEvent) => {
             if (event.detail == this.id) {
                 this.onHover();
             } else {
                 this.onHoverEnd();
             }
+        });
+        GameState.emitter.addEventListener(StateChangeEvent.type, () => {
+            this.checkActionPoints();
         })
     }
 
@@ -61,11 +67,19 @@ export class Monster implements GuiElem {
     }
 
     private onHover() {
-        this.addFilter(hoverGlow(this.friendly));
+        this.addFilter(hoverGlow());
     }
 
     private onHoverEnd() {
-        this.removeFilter(hoverGlow(this.friendly));
+        this.removeFilter(hoverGlow());
+    }
+
+    private checkActionPoints() {
+        if (this.actionPoints.current > 0) {
+            this.addFilter(actionGlow(this.friendly));
+        } else {
+            this.removeFilter(actionGlow(this.friendly));
+        }
     }
 
     addFilter(filter: PIXI.Filter) {

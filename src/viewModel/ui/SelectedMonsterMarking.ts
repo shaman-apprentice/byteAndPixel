@@ -37,10 +37,10 @@ export class SelectedMonsterMarking extends GuiElem {
   }
 
   private mark(monster: Monster) {
-    monster?.addFilter(selectionGlow(monster.friendly));
+    monster?.addFilter(selectionGlow());
   }
 
   private unmark(monster: Monster) {
-    monster?.removeFilter(selectionGlow(monster.friendly));
+    monster?.removeFilter(selectionGlow());
   }
 }
