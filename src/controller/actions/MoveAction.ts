@@ -5,6 +5,7 @@ import { Action } from "./Action";
 import { monsterIdAtPosition } from "../../viewModel/utils/monster";
 import { Monster } from "../../viewModel/Monster";
 import { isAdjacent } from "../../viewModel/utils/map";
+import {baseSkill} from "../../viewModel/utils/skills";
 
 export class MoveAction extends Action {
   monster: Monster;
@@ -13,6 +14,11 @@ export class MoveAction extends Action {
   doAction() {
     this.monster.actionPoints.sub(1);
     this.monster.position = this.targetPosition;
+    //learn basic skill depending on tile
+    const tileEle = GameState.map.tiles.get(this.targetPosition).elementSignature;
+    if(tileEle == this.monster.elements){
+        this.monster.learnSkill(baseSkill(tileEle));
+    }
   }
 
   canExecute(): boolean {
@@ -41,3 +47,4 @@ export class MoveAction extends Action {
     return "walk";
   }
 }
+
