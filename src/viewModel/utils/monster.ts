@@ -23,7 +23,7 @@ export const getInitialMonsters = (): HashMap<number, Monster> => {
   const cave = new Cave('cave', new Position(6, 6), caveStats);
   const cave2 = new Cave('cave', new Position(11, 6), caveStats);
   const cave3 = new Cave('cave', new Position(6, 11), caveStats);
-  const monsters = [appleman, flammie, penguin, watchhog, danjii, leefa, coffy, spider, cave, cave2, cave3];
+  const monsters = [appleman, flammie, penguin, watchhog, spider, cave, cave2, cave3];
   const map = new HashMap<number, Monster>(k => String(k));
   monsters.forEach(monster => map.set(monster.id, monster));
   return map;
