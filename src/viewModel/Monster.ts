@@ -23,7 +23,7 @@ export class Monster implements GuiElem {
     happiness: ValueWithRange;
     friendly: boolean;
     lastFight: number = 0;
-    skillList: Skill[];
+    skillList: Skill[] =[];
     private _position: Position;
 
     constructor(name: string, position: Position, baseStats: MonsterStats, friendly: boolean = true) {
@@ -36,7 +36,7 @@ export class Monster implements GuiElem {
         this.actionPoints = new ValueWithRange(baseStats.energy);
         this.hitPoints = new ValueWithRange(baseStats.hp);
         this.happiness = new ValueWithRange(100, 50);
-
+        
         this.checkActionPoints();
 
         GameState.emitter.addEventListener(MouseHoverEvent.type, () => {
@@ -100,12 +100,9 @@ export class Monster implements GuiElem {
     }
     
     learnSkill(skill: Skill){
-        for(let i = 0; i<this.skillList.length; i++){
-            if(skill.name == this.skillList[i].name){
-                break;
-            }
+        if(!(this.skillList.map((s) => s.name).includes(skill.name))){
+          this.skillList.push(skill);
         }
-        this.skillList.push(skill);
     }
 }
 

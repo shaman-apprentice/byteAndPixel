@@ -16,7 +16,7 @@ export class MoveAction extends Action {
     this.monster.position = this.targetPosition;
     //learn basic skill depending on tile
     const tileEle = GameState.map.tiles.get(this.targetPosition).elementSignature;
-    if(tileEle == this.monster.elements){
+    if(tileEle.equals(this.monster.elements)){
         this.monster.learnSkill(baseSkill(tileEle));
     }
   }
