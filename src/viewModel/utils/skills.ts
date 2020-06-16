@@ -15,23 +15,18 @@ export const initiateSkills = (): HashMap<number, Skill> =>{
 }
 
 export const baseSkill=(element: ElementSignature)=>{
-    switch(element){
-        case  earth:
-            return throwStone;
-            
-        case fire:
-            return smallFlame;
-            
-        case ice:
-            return snowflake;
-            
-        case nature:
-            return breeze;
-        
-        case metal:
-            return flyingScrew;
-    }
+    if(element.earth > 0)
+        return throwStone;
+    else if (element.fire > 0)       
+        return smallFlame;       
+    else if (element.ice > 0) 
+        return snowflake;
+    else if (element.nature > 0)     
+        return breeze;
+    else if (element.metal > 0)     
+        return flyingScrew;
 }
+
 
 const earth: ElementSignature = new ElementSignature(1, 0, 0, 0, 0);
 const fire: ElementSignature = new ElementSignature(0, 1, 0, 0, 0);

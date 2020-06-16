@@ -47,13 +47,14 @@ export const monsterIdAtPosition = (position: Position): number => {
   return monsterAtPosition(position)?.id ?? -1;
 }
 
-const applemanStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,1,0), 8, 2);
-const flammieStats: MonsterStats = new MonsterStats(new ElementSignature(0,1,0,0,0), 6, 2);
-const penguinStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,1,0,0), 7, 2);
-const watchhogStats: MonsterStats = new MonsterStats(new ElementSignature(1,0,0,0,0), 10, 1);
+
 const danjiiStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,2,0), 8, 2);
 const leefaStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,3,0),1,3);
 const coffyStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,0,1), 8,2);
 const kyromonStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,2,0,0), 3, 3);
+const applemanStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,1,0), 8, 6);
+const flammieStats: MonsterStats = new MonsterStats(new ElementSignature(0,1,0,0,0), 6, 5);
+const penguinStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,1,0,0), 7, 4);
+const watchhogStats: MonsterStats = new MonsterStats(new ElementSignature(1,0,0,0,0), 10, 2);
 export const spiderStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,0,0), 3, 1);
 const caveStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,0,0), 10, 1);

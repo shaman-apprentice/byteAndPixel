@@ -29,4 +29,8 @@ export class ElementSignature {
         return Math.max(this.earth, 0) + Math.max(this.fire, 0) + Math.max(this.ice, 0) + Math.max(this.nature, 0) + Math.max(this.metal, 0)
     }
 
+    equals(other : ElementSignature) : boolean {
+        return this.earth == other.earth && this.fire == other.fire && this.ice == other.ice && this.nature == other.nature && this.metal == other.metal;
+    }
+
 }
