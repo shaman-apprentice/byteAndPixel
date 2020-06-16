@@ -18,11 +18,12 @@ export const getInitialMonsters = (): HashMap<number, Monster> => {
   const watchhog = new Monster('watchhog', new Position(1, 4), watchhogStats);
   const danjii = new Monster('danjii', new Position(2,3), danjiiStats);
   const leefa = new Monster('leefa', new Position(0,0),leefaStats);
+  const coffy = new Monster('coffy',new Position(0,3),coffyStats);
   const spider = new Spider('spider', new Position(6, 5), spiderStats);
   const cave = new Cave('cave', new Position(6, 6), caveStats);
   const cave2 = new Cave('cave', new Position(11, 6), caveStats);
   const cave3 = new Cave('cave', new Position(6, 11), caveStats);
-  const monsters = [appleman, flammie, penguin, watchhog, danjii, spider, cave, cave2, cave3];
+  const monsters = [appleman, flammie, penguin, watchhog, danjii, leefa, coffy, spider, cave, cave2, cave3];
   const map = new HashMap<number, Monster>(k => String(k));
   monsters.forEach(monster => map.set(monster.id, monster));
   return map;
@@ -49,7 +50,8 @@ const applemanStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,
 const flammieStats: MonsterStats = new MonsterStats(new ElementSignature(0,1,0,0,0), 6, 2);
 const penguinStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,1,0,0), 7, 2);
 const watchhogStats: MonsterStats = new MonsterStats(new ElementSignature(1,0,0,0,0), 10, 1);
-const danjiiStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,2,0), 12, 1);
-const leefaStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,3,0),1,5);
+const danjiiStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,2,0), 8, 2);
+const leefaStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,3,0),1,3);
+const coffyStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,0,1), 8,2);
 export const spiderStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,0,0), 3, 1);
 const caveStats: MonsterStats = new MonsterStats(new ElementSignature(0,0,0,0,0), 10, 1);
