@@ -1,46 +1,38 @@
 import { HashMap } from "utils/HashMap";
-import {Skill} from "../Skill"
-import { ElementSignature } from "./Element";
+import { Skill } from "../Skill"
+import { Element, ElementSignature } from "./Element";
 
-export const skillMap = () : HashMap<number, Skill> => {
-    const map = new HashMap<number, Skill>(k=>String(k));
-    return map;
+export class Skills {
+
+    static skills: HashMap<string, Skill> = Skills.initSkills();
+    static baseSkills: HashMap<Element, Skill> = Skills.initBaseSkills();
+
+    private static initSkills() {
+        const map = new HashMap<string, Skill>(k => k)
+        const skills = [
+        new Skill("Throw Stone", ElementSignature.build(Element.Earth), 2, 1),
+        new Skill("Stonefist", ElementSignature.build(Element.Earth), 6, 2),
+        new Skill("Small Flame", ElementSignature.build(Element.Fire), 2, 1),
+        new Skill("Fireball", ElementSignature.build(Element.Fire), 7, 3),
+        new Skill("Snowflake", ElementSignature.build(Element.Ice), 1, 1),
+        new Skill("Frost", ElementSignature.build(Element.Ice), 4, 2),
+        new Skill("Breeze", ElementSignature.build(Element.Nature), 1, 1),
+        new Skill("Vines", ElementSignature.build(Element.Nature), 3, 2),
+        new Skill("Flying Screw", ElementSignature.build(Element.Metal), 3, 1),
+        new Skill("Iron Fist", ElementSignature.build(Element.Metal), 7, 2),
+        ]
+        skills.forEach(skill => map.set(skill.name, skill))
+        return map;
+    }
+
+    private static initBaseSkills() {
+        const map = new HashMap<Element, Skill>(k => k.toString());
+        map.set(Element.Earth, this.skills.get("Throw Stone"));
+        map.set(Element.Fire, this.skills.get("Small Flame"));
+        map.set(Element.Ice, this.skills.get("Snowflake"));
+        map.set(Element.Nature, this.skills.get("Breeze"));
+        map.set(Element.Metal, this.skills.get("Flying Screw"));
+        return map;
+    }
+
 }
-
-export const initiateSkills = (): HashMap<number, Skill> =>{
-    const skills = [throwStone, stonefist, smallFlame, fireball, snowflake, frost, breeze, vines, flyingScrew, ironfist];
-    const map = new HashMap<number, Skill>(k => String(k));
-    skills.forEach(skill => map.set(skill.id, skill));
-    return map;
-}
-
-export const baseSkill=(element: ElementSignature)=>{
-    if(element.earth > 0)
-        return throwStone;
-    else if (element.fire > 0)       
-        return smallFlame;       
-    else if (element.ice > 0) 
-        return snowflake;
-    else if (element.nature > 0)     
-        return breeze;
-    else if (element.metal > 0)     
-        return flyingScrew;
-}
-
-
-const earth: ElementSignature = new ElementSignature(1, 0, 0, 0, 0);
-const fire: ElementSignature = new ElementSignature(0, 1, 0, 0, 0);
-const ice: ElementSignature = new ElementSignature(0, 0, 1, 0, 0);
-const nature: ElementSignature = new ElementSignature(0, 0, 0, 1, 0);
-const metal: ElementSignature = new ElementSignature(0, 0, 0, 0, 1);
-
-const throwStone = new Skill("Throw Stone", new ElementSignature(1,0,0,0,0), 2, 1);
-const stonefist = new Skill("Stonefist", new ElementSignature(1,0,0,0,0), 6, 2)
-const smallFlame = new Skill("Small Flame", new ElementSignature(0,1,0,0,0), 2, 1);
-const fireball = new Skill("Fireball", new ElementSignature(0,1,0,0,0), 7, 3);
-const snowflake = new Skill("Snowflake", new ElementSignature(0,0,1,0,0), 1, 1);
-const frost = new Skill("Frost", new ElementSignature(0,0,1,0,0), 4, 2); //maybe develop into an AOE and highten the cost
-const breeze = new Skill("Breeze", new ElementSignature(0,0,0,1,0), 1, 1);
-const vines = new Skill("Vines", new ElementSignature(0,0,0,1,0), 3, 2); //maybe add a debuff to slow/poison/etc. the enemy
-const flyingScrew = new Skill("Flying Screw", new ElementSignature(0,0,0,0,1), 3, 1);
-const ironfist = new Skill("Iron Fist", new ElementSignature(0,0,0,0,1), 7, 2);

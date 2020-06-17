@@ -5,14 +5,12 @@ import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from 'controller/events/MonsterRemoveEvent';
 import { Position } from "/viewModel/Position";
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
-import {initiateSkills} from './viewModel/utils/skills';
 
 export class GameState {
   public static emitter = new EventTarget();
 
   public static map = new TileMap(16);
   public static monsters = getInitialMonsters();
-  public static skills = initiateSkills();
   public static selectedMonster = 0;
   public static turn = 1;
   private static _mousePosition : Position = undefined;

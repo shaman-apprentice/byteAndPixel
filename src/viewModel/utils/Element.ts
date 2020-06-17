@@ -33,6 +33,16 @@ export class ElementSignature {
         return this.earth == other.earth && this.fire == other.fire && this.ice == other.ice && this.nature == other.nature && this.metal == other.metal;
     }
 
+    getElement() : Element {
+        //TODO: this will not work very well once we have multi-element monsters and tiles
+        if (this.earth > 0) return Element.Earth;
+        if (this.fire > 0) return Element.Fire;
+        if (this.ice > 0) return Element.Ice;
+        if (this.nature > 0) return Element.Nature;
+        if (this.metal > 0) return Element.Metal;
+        return undefined;
+    }
+
     static build(element: Element, value: number = 1) {
         switch(element) {
             case Element.Earth: return new ElementSignature(value,0,0,0,0);
