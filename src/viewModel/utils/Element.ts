@@ -53,4 +53,8 @@ export class ElementSignature {
         }
     }
 
+    static buildNeutral() : ElementSignature {
+        return new ElementSignature(0,0,0,0,0);
+    }
+
 }

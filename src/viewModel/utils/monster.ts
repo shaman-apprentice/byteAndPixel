@@ -56,5 +56,5 @@ const flammieStats: MonsterStats = new MonsterStats(ElementSignature.build(Eleme
 const penguinStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice), 7, 4);
 const watchhogStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Earth), 10, 2);
 
-export const spiderStats: MonsterStats = new MonsterStats(new ElementSignature(0, 0, 0, 0, 0), 3, 1);
-const caveStats: MonsterStats = new MonsterStats(new ElementSignature(0, 0, 0, 0, 0), 10, 1);
+export const spiderStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 3, 1);
+const caveStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 10, 1);

@@ -8,7 +8,8 @@ import { GameState } from 'GameState';
 import { hoverGlow, actionGlow } from './utils/filters';
 import { StateChangeEvent } from 'controller/events/StateChangeEvent';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
-import { Skill } from './Skill';
+import { Skill } from '../controller/skills/Skill';
+import { Skills } from './utils/skills';
 
 export class Monster implements GuiElem {
     private static idCounter = 0;
@@ -23,7 +24,7 @@ export class Monster implements GuiElem {
     happiness: ValueWithRange;
     friendly: boolean;
     lastFight: number = 0;
-    skillList: Skill[] =[];
+    skillList: Skill[] = [Skills.defaultAttack()];
     private _position: Position;
 
     constructor(name: string, position: Position, baseStats: MonsterStats, friendly: boolean = true) {

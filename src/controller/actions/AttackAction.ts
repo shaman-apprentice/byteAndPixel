@@ -4,7 +4,6 @@ import { isAdjacent } from "../../viewModel/utils/map";
 import { Action } from "./Action";
 import { monsterAtPosition } from "../../viewModel/utils/monster";
 import { Monster } from "../../viewModel/Monster";
-import {Skill} from "../../viewModel/Skill";
 
 export class AttackAction extends Action {
 
@@ -12,22 +11,12 @@ export class AttackAction extends Action {
   targetMonster: Monster;
 
   doAction() {
-    const l = this.attackingMonster.skillList.length;
-    if(l != 0){
-      const skill = this.attackingMonster.skillList[l-1];
-      this.targetMonster.hitPoints.sub(skill.damage);
-      this.attackingMonster.actionPoints.sub(skill.cost);
-      this.targetMonster.lastFight = GameState.turn;
-      this.targetMonster.lastFight = GameState.turn;
-      
-    }
-    else{
-      this.targetMonster.hitPoints.sub(1);
-      this.attackingMonster.actionPoints.sub(1);
-      this.targetMonster.lastFight = GameState.turn;
-      this.targetMonster.lastFight = GameState.turn;
-    }
-    
+    const skill = this.attackingMonster.skillList[this.attackingMonster.skillList.length - 1];
+    this.targetMonster.hitPoints.sub(skill.damage);
+    this.attackingMonster.actionPoints.sub(skill.cost);
+    this.targetMonster.lastFight = GameState.turn;
+    this.targetMonster.lastFight = GameState.turn;
+
     if (this.targetMonster.hitPoints.current <= 0) {
       GameState.removeMonster(this.targetMonster);
     }
