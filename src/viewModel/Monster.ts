@@ -14,12 +14,13 @@ import { Skills } from './utils/skills';
 export class Monster implements GuiElem {
     private static idCounter = 0;
     private static displayOffset = -6;
-    
+
     pixiElem: PIXI.Sprite;
     readonly id;
     name: string;
     elements: ElementSignature;
     actionPoints: ValueWithRange;
+    energy: ValueWithRange;
     hitPoints: ValueWithRange;
     happiness: ValueWithRange;
     friendly: boolean;
@@ -34,10 +35,11 @@ export class Monster implements GuiElem {
         this.pixiElem = this.createSprite();
         this.position = position;
         this.elements = baseStats.elements;
-        this.actionPoints = new ValueWithRange(baseStats.energy);
+        this.actionPoints = new ValueWithRange(baseStats.actionPoints);
+        this.energy = new ValueWithRange(baseStats.energy)
         this.hitPoints = new ValueWithRange(baseStats.hp);
         this.happiness = new ValueWithRange(100, 50);
-        
+
         this.checkActionPoints();
 
         GameState.emitter.addEventListener(MouseHoverEvent.type, () => {
@@ -95,14 +97,14 @@ export class Monster implements GuiElem {
             this.pixiElem.filters.push(filter);
         }
     }
-    
+
     removeFilter(filter: PIXI.Filter) {
         this.pixiElem.filters = this.pixiElem.filters?.filter((a) => a !== filter);
     }
-    
-    learnSkill(skill: Skill){
-        if(!(this.skillList.map((s) => s.name).includes(skill.name))){
-          this.skillList.push(skill);
+
+    learnSkill(skill: Skill) {
+        if (!(this.skillList.map((s) => s.name).includes(skill.name))) {
+            this.skillList.push(skill);
         }
     }
 }
@@ -111,10 +113,12 @@ export class MonsterStats {
     elements: ElementSignature;
     hp: number;
     energy: number;
-    
-    constructor(elements: ElementSignature, hp: number, energy: number) {
+    actionPoints: number;
+
+    constructor(elements: ElementSignature, hp: number, energy: number, actionPoints: number) {
         this.elements = elements;
         this.hp = hp;
         this.energy = energy;
+        this.actionPoints = actionPoints;
     }
 }

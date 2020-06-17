@@ -16,7 +16,7 @@ export abstract class MonsterInfoBox extends UiElementWithBackground {
   private createTextBox() {
     const textBox = new PIXI.Text('');
     textBox.scale.set(0.75, 0.75);
-    textBox.anchor.set(0.35,0.5);
+    textBox.anchor.set(0.35,0.65);
     return textBox;
   }
 
@@ -27,6 +27,6 @@ export abstract class MonsterInfoBox extends UiElementWithBackground {
     } else {
       this.pixiElem.visible = true;
     }
-    this.textBox.text = `name: ${monster.name} \naction-points: ${monster.actionPoints.current}/${monster.actionPoints.max} \nhit-points: ${monster.hitPoints.current}/${monster.hitPoints.max} \nhappiness: ${monster.happiness.current}/${monster.happiness.max}`;
+    this.textBox.text = `name: ${monster.name} \naction-points: ${monster.actionPoints.current}/${monster.actionPoints.max} \nenergy: ${monster.energy.current}/${monster.hitPoints.max} \nhit-points: ${monster.hitPoints.current}/${monster.hitPoints.max} \nhappiness: ${monster.happiness.current}/${monster.happiness.max}`;
   }
 }
