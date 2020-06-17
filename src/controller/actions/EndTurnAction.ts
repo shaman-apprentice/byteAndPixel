@@ -21,6 +21,7 @@ export class EndTurnAction extends Action {
       }
       this.handlehappiness(monster);
       monster.actionPoints.setToMax();
+      monster.energy.current += 2;
     });
   }
 
