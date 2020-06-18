@@ -1,15 +1,14 @@
 import { Monster } from "viewModel/Monster";
 
-export abstract class Cost {
-    abstract canPay(monster: Monster) : boolean;
-    abstract pay(monster: Monster)
+export interface Cost {
+    canPay(monster: Monster) : boolean;
+    pay(monster: Monster)
 }
 
-export class CombinedCost extends Cost {
+export class CombinedCost implements Cost {
     private subCosts: Cost[];
 
     constructor(subCosts: Cost[]) {
-        super();
         this.subCosts = subCosts;
     }
 
@@ -22,11 +21,10 @@ export class CombinedCost extends Cost {
     }
 }
 
-export class EnergyCost extends Cost {
+export class EnergyCost implements Cost {
     energyCost: number;
 
     constructor(cost: number) {
-        super();
         this.energyCost = cost;
     }
 
@@ -39,11 +37,10 @@ export class EnergyCost extends Cost {
     }
 }
 
-export class ActionCost extends Cost {
+export class ActionCost implements Cost {
     actionCost: number;
 
     constructor(cost: number) {
-        super();
         this.actionCost = cost;
     }
 
