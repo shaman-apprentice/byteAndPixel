@@ -21,6 +21,7 @@ export const getInitialMonsters = (): HashMap<number, Monster> => {
   const snorx = new Monster('snorx', new Position(5, 2), snorxStats);
   const leefa = new Monster('leefa', new Position(0, 0), leefaStats);
   const coffy = new Monster('coffy', new Position(0, 3), coffyStats);
+  const federmaus = new Monster('federmaus',new Position(1,0),federmausStats);
   const spider = new Spider('spider', new Position(6, 5), spiderStats);
   const kyromon = new Monster('kyromon', new Position(0, 1), kyromonStats);
   const cave = new Cave('cave', new Position(6, 6), caveStats);
@@ -59,6 +60,7 @@ const applemanStats: MonsterStats = new MonsterStats(ElementSignature.build(Elem
 const flammieStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Fire), 6, 55, 2);
 const penguinStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice), 7, 60, 2);
 const watchhogStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Earth), 10, 120, 1);
+const federmausStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature),6,50,2);
 
 export const spiderStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 3, 100, 1);
 const caveStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 10, 100, 1);
