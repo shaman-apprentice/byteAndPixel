@@ -27,6 +27,6 @@ export abstract class MonsterInfoBox extends UiElementWithBackground {
     } else {
       this.pixiElem.visible = true;
     }
-    this.textBox.text = `name: ${monster.name} \naction-points: ${monster.actionPoints.current}/${monster.actionPoints.max} \nenergy: ${monster.energy.current}/${monster.energy.max} \nhit-points: ${monster.hitPoints.current}/${monster.hitPoints.max} \nhappiness: ${monster.happiness.current}/${monster.happiness.max}`;
+    this.textBox.text = `name: ${monster.name} \naction-points: ${monster.actionPoints.current}/${monster.actionPoints.max} \nenergy: ${monster.energy.current}/${monster.energy.max} \nhit-points: ${monster.hitPoints.current}/${monster.hitPoints.max} \nhappiness: ${monster.happiness.current}/${monster.happiness.max} \nxp: ${monster.experiencePoints.current}/${monster.experiencePoints.max}`;
   }
 }

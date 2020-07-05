@@ -3,6 +3,7 @@ import { Action } from './Action';
 import { Monster } from 'viewModel/Monster';
 import { Enemy } from 'viewModel/enemy/enemy';
 import { Position } from "../../viewModel/Position";
+import { Skills } from 'viewModel/utils/skills';
 
 export class EndTurnAction extends Action {
 
@@ -22,7 +23,19 @@ export class EndTurnAction extends Action {
       this.handlehappiness(monster);
       monster.actionPoints.setToMax();
       monster.energy.current += 2;
+
+      this.handleexperiencePoints(monster);
     });
+  }
+
+  private handleexperiencePoints(monster: Monster) {
+    if (monster.experiencePoints.current == monster.experiencePoints.max) {
+      monster.experiencePoints.current = 0;
+      monster.learnSkill(Skills.baseSkills.get(monster.elements.getElement()));
+
+    } else {
+      monster.experiencePoints.current += 1;
+    }
   }
 
   private handlehappiness(monster: Monster) {
@@ -44,7 +57,7 @@ export class EndTurnAction extends Action {
   }
 
   target(): Position {
-    return new Position(0,0);
+    return new Position(0, 0);
   }
   type(): String {
     return "endTurn"
