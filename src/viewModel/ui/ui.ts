@@ -8,7 +8,6 @@ import { tileSize} from '../Position';
 import { MonsterAddEvent } from '../../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../../controller/events/MonsterRemoveEvent';
 import { Monster } from '../Monster';
-import { ActionPreviewMarking } from './ActionPreviewMarking';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 import { Design } from './Design';
 import { HoverMonsterInfo } from "./HoverMonsterInfo";
@@ -41,7 +40,6 @@ export class Ui {
         boardContainer.addChild(GameState.map.pixiElem);
         boardContainer.addChild(new SelectedMonsterMarking().pixiElem);
         boardContainer.addChild(this.monsterContainer);
-        boardContainer.addChild(new ActionPreviewMarking().pixiElem);
 
         boardContainer.position.set(tileSize / 2, tileSize / 2);
         return boardContainer;

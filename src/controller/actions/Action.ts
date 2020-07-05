@@ -1,5 +1,4 @@
 import { StateChangeEvent } from "../events/StateChangeEvent";
-import { Position } from "../../viewModel/Position";
 
 export abstract class Action {
 
@@ -19,9 +18,5 @@ export abstract class Action {
     canExecute(): boolean {
         return true;
     }
-
-    abstract target(): Position;
-
-    abstract type(): String;
 
 }

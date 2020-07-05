@@ -6,9 +6,8 @@ import { closestMonster } from "../utils/ai";
 import { Monster } from "viewModel/Monster";
 import { firstStep } from "viewModel/utils/map";
 import { Action } from "controller/actions/Action";
-import { AttackAction } from "controller/actions/AttackAction";
-import { ChangeTileSlimeAction } from "controller/actions/ChangeTileSlimeAction";
-import { MoveAction } from "controller/actions/MoveAction";
+import { SkillAction } from "controller/actions/SkillAction";
+import { Skill } from "controller/skills/Skill";
 
 export class Spider extends Enemy {
     aiAction: () => void = () => {
@@ -26,9 +25,9 @@ export class Spider extends Enemy {
 
     singleAction(targetMonster: Monster) {
         const stepPosition = this.position.add(firstStep(this.position, targetMonster.position))
-        const actions: Action[] = [new AttackAction(this.id, stepPosition)
-            , new ChangeTileSlimeAction(this.id, stepPosition, true)
-        , new MoveAction(this.id, stepPosition)];
+        const actions: Action[] = [new SkillAction(this.id, stepPosition, this.skillList[0])
+            , new SkillAction(this.id, stepPosition, Skill.slime())
+        , new SkillAction(this.id, stepPosition, Skill.walk())];
     
         //Does the first action possible
         const result = actions.find(action => action.execute());

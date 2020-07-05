@@ -1,11 +1,10 @@
 import { monsterIdAtPosition } from "../viewModel/utils/monster";
 import { GameState } from "../GameState";
 import { SelectedMonsterChangeAction } from "./actions/SelectedMonsterChangeAction";
-import { AttackAction } from "./actions/AttackAction";
-import { ChangeTileSlimeAction } from "./actions/ChangeTileSlimeAction";
-import { MoveAction } from "./actions/MoveAction";
 import { Position } from "../viewModel/Position";
 import { Action } from "./actions/Action";
+import { Skill } from "./skills/Skill";
+import { SkillAction } from "./actions/SkillAction";
 
 export const tileSelected = (position: Position) => {
     const clickedMonsterId = monsterIdAtPosition(position);
@@ -23,9 +22,9 @@ export const decideAction = (position: Position) => {
         return;
     }
 
-    const actions: Action[] = [new AttackAction(selectedMonsterId, position)
-        , new ChangeTileSlimeAction(selectedMonsterId, position, false)
-        , new MoveAction(selectedMonsterId, position)];
+    const actions: Action[] = [new SkillAction(selectedMonsterId, position, selectedMonster.skillList[selectedMonster.skillList.length-1])
+        , new SkillAction(selectedMonsterId, position, Skill.cleanse())
+        , new SkillAction(selectedMonsterId, position, Skill.walk())];
 
     //Does the first action possible
     const result = actions.find(action => action.canExecute());

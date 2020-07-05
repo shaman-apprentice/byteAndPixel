@@ -5,6 +5,7 @@ import { HashMap } from "utils/HashMap";
 import { Element, ElementSignature } from "./Element";
 import { Spider } from "viewModel/enemy/spider";
 import { Cave } from "viewModel/enemy/cave";
+import { Tile } from "viewModel/Tile";
 
 export const monsterMap = (): HashMap<number, Monster> => {
   const map = new HashMap<number, Monster>(k => String(k));
@@ -43,6 +44,10 @@ export const monsterAtMousePosition = (): Monster => {
 export const monsterAtPosition = (position: Position): Monster => {
   const monsterAtPosition = GameState.monsters.getEntries().find(entry => position.isEqual(entry.value.position));
   return monsterAtPosition?.value;
+}
+
+export const tileAtPosition = (position: Position): Tile => {
+  return GameState.map.tiles.get(position);
 }
 
 export const monsterIdAtPosition = (position: Position): number => {
