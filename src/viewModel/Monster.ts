@@ -25,6 +25,7 @@ export class Monster implements GuiElem {
     happiness: ValueWithRange;
     friendly: boolean;
     lastFight: number = 0;
+    experiencePoints: ValueWithRange;
     skillList: Skill[] = [Skills.defaultAttack()];
     private _position: Position;
 
@@ -38,6 +39,7 @@ export class Monster implements GuiElem {
         this.actionPoints = new ValueWithRange(baseStats.actionPoints);
         this.energy = new ValueWithRange(baseStats.energy)
         this.hitPoints = new ValueWithRange(baseStats.hp);
+        this.experiencePoints = new ValueWithRange(5,0);
         this.happiness = new ValueWithRange(100, 50);
 
         this.checkActionPoints();
@@ -114,6 +116,7 @@ export class MonsterStats {
     hp: number;
     energy: number;
     actionPoints: number;
+    xp: number;
 
     constructor(elements: ElementSignature, hp: number, energy: number, actionPoints: number) {
         this.elements = elements;
