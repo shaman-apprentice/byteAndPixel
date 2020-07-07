@@ -16,14 +16,17 @@ export class ActionUI{
     }
 
     private showActions(){
+        
         this.currentMonster = GameState.monsters.get(GameState.selectedMonster);
         if(this.currentMonster){
-            this.currentMonster.skillList.forEach(element => {
-                const action: ActionUiElement = new ActionUiElement("Assets/Images/actions/attack.png" , element.name);
+            const size = this.currentMonster.skillList.length;
+            for(let i = 0; i < size; i++){
+                const action: ActionUiElement = new ActionUiElement("Assets/Images/actions/attack.png" , this.currentMonster.skillList[i].name);
+                action.pixiElem.position.set(this.circle.position.x + 50* Math.cos(i*2*Math.PI/(size + 1)), this.circle.position.y + 50*Math.sin(i*2*Math.PI/(size + 1))) ;
                 this.circle.addChild(action.pixiElem);
-            });
+            }
             this.container.addChild(this.circle);
-            this.container.position.set(this.currentMonster.position.x, this.currentMonster.position.y);
+            this.container.position.set(this.currentMonster.pixiElem.position.x, this.currentMonster.pixiElem.position.y);
         }
         else {
             this.container.visible = false;
