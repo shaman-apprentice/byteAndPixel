@@ -19,6 +19,7 @@ export class ActionUI{
         
         this.currentMonster = GameState.monsters.get(GameState.selectedMonster);
         if(this.currentMonster){
+            this.circle.removeChildren();
             const size = this.currentMonster.skillList.length;
             for(let i = 0; i < size; i++){
                 const action: ActionUiElement = new ActionUiElement("Assets/Images/actions/attack.png" , this.currentMonster.skillList[i].name);
