@@ -24,7 +24,7 @@ export class ActionUI{
             if(this.currentMonster.friendly){
                 const size = this.currentMonster.skillList.length;
                 for(let i = 0; i < size; i++){
-                    const action: ActionUiElement = new ActionUiElement("Assets/Images/actions/attack.png" , this.currentMonster.skillList[i].name);
+                    const action: ActionUiElement = new ActionUiElement("Assets/Images/Skills/"+this.currentMonster.skillList[i].name+".png" , this.currentMonster.skillList[i].name);
                     action.pixiElem.position.set(this.circle.position.x + 50* Math.cos(i*2*Math.PI/(size + 1)), this.circle.position.y + 50*Math.sin(i*2*Math.PI/(size + 1))) ;
                     this.circle.addChild(action.pixiElem);
                 }
@@ -45,12 +45,14 @@ class ActionUiElement{
     constructor(picture:string, text:string){
         this.pixiElem = new PIXI.Container();
         this.pic = PIXI.Sprite.from(picture);
+        this.pic.scale.set(0.15, 0.125);
         this.button = new PIXI.Text(text);
 
         this.button.interactive = true;
         this.button.buttonMode = true;
+        //this.button.anchor.set(0.5,0.5);
         //this.button.on("click", ()=> new AttackAction().execute());
-        //this.button.anchor.set(0.5, 0.5);
+        //this.button.position.set(this.pic.position.x + 50, this.pic.position.y + 25);
         this.pixiElem.addChild(this.pic);
         this.pixiElem.addChild(this.button);
     }
