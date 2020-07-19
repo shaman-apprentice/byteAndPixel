@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { Position } from "./Position";
-import { GuiElem } from "./ui/GuiElem";
+import { GuiElem } from "./GeneralAbstracts/GuiElem";
 import { ValueWithRange } from './utils/ValueWithRange';
 import { ElementSignature } from './utils/Element';
 import { GameState } from 'GameState';
@@ -11,7 +11,7 @@ import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 import { Skill } from '../controller/skills/Skill';
 import { Skills } from './utils/skills';
 
-export class Monster implements GuiElem {
+export class Monster extends GuiElem {
     private static idCounter = 0;
     private static displayOffset = -6;
 
@@ -30,6 +30,7 @@ export class Monster implements GuiElem {
     private _position: Position;
 
     constructor(name: string, position: Position, baseStats: MonsterStats, friendly: boolean = true) {
+        super();
         this.id = Monster.idCounter++;
         this.name = name;
         this.friendly = friendly;

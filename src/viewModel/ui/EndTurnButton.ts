@@ -3,14 +3,17 @@ import * as PIXI from 'pixi.js';
 import { EndTurnAction } from '../../controller/actions/EndTurnAction';
 import { GameState } from '../../GameState';
 import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
-import { UiElementWithBackground } from './UiElementWithBackground';
+import { GuiElemBg } from '../GeneralAbstracts/GuiElemBg';
 
-export class EndTurnButton extends UiElementWithBackground {
+export class EndTurnButton extends GuiElemBg {
   pixiElem: PIXI.Container;
+  pixiElemBg: PIXI.DisplayObject;
   button: PIXI.Text;
 
   constructor() {
-    super("brownButton", 200, 50);
+    super();
+    this.pixiElem = new PIXI.Container();
+    this.pixiElemBg = this.pixiElem.addChild(this.createBackground({path: "brownButton", width: 200, height: 50}));
     this.button = this.createButton();
     this.pixiElem.addChild(this.button);
     this.pixiElem.position.set(680, 40);

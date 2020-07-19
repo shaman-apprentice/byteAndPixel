@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 
 import { GameState } from '../../GameState'
-import { GuiElem } from './GuiElem';
+import { GuiElem } from '../GeneralAbstracts/GuiElem';
 import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
 import { selectionGlow } from '../utils/filters';
 import { Monster } from '../Monster';

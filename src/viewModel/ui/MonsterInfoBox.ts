@@ -1,14 +1,17 @@
 import * as PIXI from 'pixi.js';
 
-import { UiElementWithBackground } from './UiElementWithBackground';
+import { GuiElemBg } from '../GeneralAbstracts/GuiElemBg';
 import { Monster } from 'viewModel/Monster';
 
-export abstract class MonsterInfoBox extends UiElementWithBackground {
+export abstract class MonsterInfoBox extends GuiElemBg {
   pixiElem: PIXI.Container;
+  pixiElemBg: PIXI.DisplayObject;
   textBox: PIXI.Text;
 
   constructor() {
-    super("StatusBackground", 450, 400);
+    super();
+    this.pixiElem = new PIXI.Container();
+    this.pixiElemBg = this.pixiElem.addChild(this.createBackground({path: "StatusBackground", width: 450, height:400}));
     this.textBox = this.createTextBox();
     this.pixiElem.addChild(this.textBox);
   }
