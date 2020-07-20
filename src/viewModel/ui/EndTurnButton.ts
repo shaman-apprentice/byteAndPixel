@@ -11,9 +11,7 @@ export class EndTurnButton extends GuiElemBg {
   button: PIXI.Text;
 
   constructor() {
-    super();
-    this.pixiElem = new PIXI.Container();
-    this.pixiElemBg = this.pixiElem.addChild(this.createBackground({path: "brownButton", width: 200, height: 50}));
+    super({path: "brownButton", width: 200, height: 50});
     this.button = this.createButton();
     this.pixiElem.addChild(this.button);
     this.pixiElem.position.set(680, 40);

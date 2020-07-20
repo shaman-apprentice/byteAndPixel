@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import { GuiElemBg } from '../GeneralAbstracts/GuiElemBg';
 import { Monster } from 'viewModel/Monster';
+import {width,height} from 'index';
 
 export abstract class MonsterInfoBox extends GuiElemBg {
   pixiElem: PIXI.Container;
@@ -9,9 +10,8 @@ export abstract class MonsterInfoBox extends GuiElemBg {
   textBox: PIXI.Text;
 
   constructor() {
-    super();
-    this.pixiElem = new PIXI.Container();
-    this.pixiElemBg = this.pixiElem.addChild(this.createBackground({path: "StatusBackground", width: 450, height:400}));
+    super({path: "BgBox", width: width, height:height/4});
+    this.pixiElem.position.set(400,525);
     this.textBox = this.createTextBox();
     this.pixiElem.addChild(this.textBox);
   }
