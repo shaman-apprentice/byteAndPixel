@@ -3,31 +3,19 @@ import * as PIXI from 'pixi.js';
 import { EndTurnAction } from '../../controller/actions/EndTurnAction';
 import { GameState } from '../../GameState';
 import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
-import { GuiElemBg } from '../GeneralAbstracts/GuiElemBg';
+import { Button } from '../GeneralAbstracts/Button';
 
-export class EndTurnButton extends GuiElemBg {
+export class EndTurnButton extends Button {
   pixiElem: PIXI.Container;
   pixiElemBg: PIXI.DisplayObject;
   button: PIXI.Text;
 
   constructor() {
-    super({path: "brownButton", width: 200, height: 50});
-    this.button = this.createButton();
-    this.pixiElem.addChild(this.button);
-    this.pixiElem.position.set(680, 40);
-    GameState.emitter.addEventListener(StateChangeEvent.type, () => this.updateText())
+    super({path: "brownButton"});
+    GameState.emitter.addEventListener(StateChangeEvent.type, () => this.update())
   }
 
-  private createButton() {
-    const button = new PIXI.Text("End Turn 1");
-    button.interactive = true;
-    button.buttonMode = true;
-    button.on("click", () => new EndTurnAction().execute())
-    button.anchor.set(0.5,0.5);
-    return button;
-  }
-
-  private updateText() {
+  protected update() {
     this.button.text = "End Turn " + GameState.turn;
   }
 
