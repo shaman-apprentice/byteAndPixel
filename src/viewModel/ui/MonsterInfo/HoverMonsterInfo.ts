@@ -8,7 +8,6 @@ export class HoverMonsterInfo extends MonsterInfoBox {
     textBox: PIXI.Text;
     constructor() {
         super();
-        this.pixiElem.position.set(665, 505);
         this.setInfo(undefined);
         GameState.emitter.addEventListener(MouseHoverEvent.type, () => {
             this.setInfo(monsterAtMousePosition());

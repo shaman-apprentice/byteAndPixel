@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
-import { GameState } from '../../GameState';
-import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
+import { GameState } from '.../../GameState';
+import { StateChangeEvent } from '.../../controller/events/StateChangeEvent';
 import { MonsterInfoBox } from './MonsterInfoBox';
 import { Monster } from 'viewModel/Monster';
 
@@ -11,7 +11,6 @@ export class SelectedMonsterInfo extends MonsterInfoBox {
 
   constructor() {
     super();
-    this.pixiElem.position.set(135,505)
     this.setInfo(this.target());
     GameState.emitter.addEventListener(StateChangeEvent.type,
       () => { this.setInfo(this.target()); });

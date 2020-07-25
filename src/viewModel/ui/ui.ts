@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { SelectedMonsterInfo } from './SelectedMonsterInfo';
+import { SelectedMonsterInfo } from './MonsterInfo/SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../../GameState';
 import { EndTurnButton } from './EndTurnButton';
@@ -10,7 +10,7 @@ import { MonsterRemoveEvent } from '../../controller/events/MonsterRemoveEvent';
 import { Monster } from '../Monster';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 import { Design } from './Design';
-import { HoverMonsterInfo } from "./HoverMonsterInfo";
+import { HoverMonsterInfo } from "./MonsterInfo/HoverMonsterInfo";
 
 export class Ui {
     boardContainer: PIXI.Container;
