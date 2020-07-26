@@ -39,7 +39,7 @@ export class Monster implements GuiElem {
         this.actionPoints = new ValueWithRange(baseStats.actionPoints);
         this.energy = new ValueWithRange(baseStats.energy)
         this.hitPoints = new ValueWithRange(baseStats.hp);
-        this.experiencePoints = new ValueWithRange(5,0);
+        this.experiencePoints = new ValueWithRange(5, 0);
         this.happiness = new ValueWithRange(100, 50);
 
         this.checkActionPoints();

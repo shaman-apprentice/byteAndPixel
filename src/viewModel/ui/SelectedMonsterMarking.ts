@@ -5,6 +5,7 @@ import { GuiElem } from './GuiElem';
 import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
 import { selectionGlow } from '../utils/filters';
 import { Monster } from '../Monster';
+import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 
 export class SelectedMonsterMarking extends GuiElem {
   pixiElem: PIXI.Sprite;
@@ -16,6 +17,8 @@ export class SelectedMonsterMarking extends GuiElem {
     this.markSelectedMonster();
     GameState.emitter.addEventListener(StateChangeEvent.type,
       () => { this.markSelectedMonster(); });
+      GameState.emitter.addEventListener(SelectedMonsterChangedEvent.type,
+      () => { this.markSelectedMonster(); });
   }
 
   private createSprite() {
@@ -26,7 +29,7 @@ export class SelectedMonsterMarking extends GuiElem {
 
   private markSelectedMonster() {
     this.unmark(this.currentMonster)
-    this.currentMonster = GameState.monsters.get(GameState.selectedMonster);
+    this.currentMonster = GameState.selectedMonster;
     if (this.currentMonster) {
       this.mark(this.currentMonster);
       const dc = this.currentMonster.position.toDisplayCoords();
