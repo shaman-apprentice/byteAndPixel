@@ -10,22 +10,24 @@ export abstract class Button extends GuiElemBg {
     pixiElemBg: PIXI.DisplayObject;
     button: PIXI.Text;
 
-    constructor({path} : {path:string}) {
-        super({path: path, width: 200, height: 50});
+    constructor({path,width,height} : {path:string,width:number,height:number},{xpos,ypos} : {xpos:number,ypos:number}) {
+        super({path: path, width: width, height: height});
         this.button = this.createButton();
         this.pixiElem.addChild(this.button);
-        this.pixiElem.position.set(680, 40);
-        GameState.emitter.addEventListener(StateChangeEvent.type, () => this.update())
+        this.pixiElem.position.set(xpos, ypos);
     }
 
     private createButton() {
-        const button = new PIXI.Text("End Turn 1");
+        const button = new PIXI.Text('');
         button.interactive = true;
         button.buttonMode = true;
-        button.on("click", () => new EndTurnAction().execute())
+        button.on("click", () => this.reaction())
         button.anchor.set(0.5,0.5);
         return button;
     }
+
     
-    protected abstract update(): void
+    protected abstract reaction(): void
+
+
 }
