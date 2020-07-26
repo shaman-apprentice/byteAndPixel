@@ -1,9 +1,8 @@
 import { monsterAtPosition } from "../viewModel/utils/monster";
 import { GameState } from "../GameState";
 import { Position } from "../viewModel/Position";
-import { Action } from "./actions/Action";
-import { Skill } from "./skills/Skill";
 import { SkillAction } from "./actions/SkillAction";
+import { SkillType } from "./skills/Skill";
 
 export const tileSelected = (position: Position) => {
     const monsterToBeSelected = monsterAtPosition(position);
@@ -14,18 +13,22 @@ export const tileSelected = (position: Position) => {
 
 export const decideAction = (position: Position) => {
     const selectedMonster = GameState.selectedMonster;
+    var selectedSkill = GameState.selectedAction;
 
     if (!selectedMonster || !selectedMonster.friendly) {
         return;
     }
 
-    const actions: Action[] = [new SkillAction(selectedMonster, position, selectedMonster.skillList[selectedMonster.skillList.length-1])
-        , new SkillAction(selectedMonster, position, Skill.cleanse())
-        , new SkillAction(selectedMonster, position, Skill.walk())];
+    if (!selectedSkill) {
+        selectedSkill = selectedMonster.skillByType(SkillType.MOVE);
+    }
 
-    //Does the first action possible
-    const result = actions.find(action => action.canExecute());
-    return result;
+    const action = new SkillAction(selectedMonster, position, selectedSkill);
+    if (action.canExecute()) {
+        return action;
+    }
+
+    return undefined;
 }
 
 export const tileClicked = (position: Position) => {

@@ -28,7 +28,7 @@ export const handleKeyPress = (key: string) => {
 const selectSkillByTyoe = (skilltype: SkillType, index: number = 0) => {
     const monster = GameState.selectedMonster;
     if (!monster) { return; }
-    const skill =  monster.skillList.filter((skill) => skill.type == skilltype)[index];
+    const skill =  monster.skillByType(skilltype, index);
     if (skill) {
         GameState.selectedAction = skill;
     }

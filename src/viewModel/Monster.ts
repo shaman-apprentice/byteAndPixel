@@ -8,7 +8,7 @@ import { GameState } from 'GameState';
 import { hoverGlow, actionGlow } from './utils/filters';
 import { StateChangeEvent } from 'controller/events/StateChangeEvent';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
-import { Skill } from '../controller/skills/Skill';
+import { Skill, SkillType } from '../controller/skills/Skill';
 import { Skills } from './utils/skills';
 
 export class Monster implements GuiElem {
@@ -108,6 +108,10 @@ export class Monster implements GuiElem {
         if (!(this.skillList.map((s) => s.name).includes(skill.name))) {
             this.skillList.push(skill);
         }
+    }
+
+    skillByType(skilltype: SkillType, index : number = 0) : Skill {
+        return this.skillList.filter((skill) => skill.type == skilltype)[index];
     }
 }
 
