@@ -1,4 +1,3 @@
-import { GameState } from "../../GameState";
 import { Position } from "../../viewModel/Position";
 import { Action } from "./Action";
 import { Monster } from "../../viewModel/Monster";

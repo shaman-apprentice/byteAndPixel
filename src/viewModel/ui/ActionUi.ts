@@ -24,7 +24,7 @@ export class ActionUI extends GuiElem {
 
     showSelectedAction() {
         const selectedAction = GameState.selectedAction;
-        this.pixiElem.text = selectedAction ? "Walk" : selectedAction.name;
+        this.pixiElem.text = selectedAction ? selectedAction.name : "Walk";
     }
 
     

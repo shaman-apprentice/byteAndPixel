@@ -26,7 +26,7 @@ export class Monster implements GuiElem {
     friendly: boolean;
     lastFight: number = 0;
     experiencePoints: ValueWithRange;
-    skillList: Skill[] = [Skills.defaultAttack()];
+    skillList: Skill[] = [Skills.defaultAttack(), Skill.walk(), Skill.cleanse()];
     private _position: Position;
 
     constructor(name: string, position: Position, baseStats: MonsterStats, friendly: boolean = true) {
