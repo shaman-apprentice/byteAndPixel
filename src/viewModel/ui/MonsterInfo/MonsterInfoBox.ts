@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import { GuiElemBg } from 'viewModel/GeneralAbstracts/GuiElemBg';
 import { Monster } from 'viewModel/Monster';
 import {width,height} from 'index';
+import { hideButton } from '../buttons/hideButton';
 
 export class MonsterInfoBox extends GuiElemBg {
   pixiElem: PIXI.Container;
@@ -20,6 +21,7 @@ export class MonsterInfoBox extends GuiElemBg {
     this.bmstextBox = this.createTextBox({xpos:-width/4+20,ypos:0.5});
     this.monsterPic = this.createSprite();
     this.pixiElem.addChild(this.textBox, this.nameBox, this.bmstextBox, this.monsterPic);
+    this.pixiElem.addChild(new hideButton({otherContainer: this.pixiElem}).pixiElem);
   }
 
   private createTextBox({xpos, ypos}:{xpos:number, ypos:number}) {

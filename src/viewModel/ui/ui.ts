@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import { SelectedMonsterInfo } from './MonsterInfo/SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../../GameState';
-import { EndTurnButton } from './EndTurnButton';
+import { EndTurnButton } from './buttons/EndTurnButton';
 import { tileSize} from '../Position';
 import { MonsterAddEvent } from '../../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../../controller/events/MonsterRemoveEvent';
