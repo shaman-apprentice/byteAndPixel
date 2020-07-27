@@ -2,13 +2,21 @@ import { Position } from "../../viewModel/Position";
 import { Monster } from "viewModel/Monster";
 import { monsterAtPosition, tileAtPosition } from "viewModel/utils/monster";
 import { distance } from "viewModel/utils/map";
+import { GameState } from "GameState";
 
 export interface Target {
     validTarget(subject: Monster, position: Position): boolean;
 }
 
 export class CombinedTarget implements Target {
-    targets: Target[] = [];
+
+    onMap: Target = {
+        validTarget: (subject: Monster, position: Position): boolean => {
+            return GameState.map.tiles.get(position) != undefined;
+        }
+    }
+
+    targets: Target[] = [this.onMap];
     validTarget(subject: Monster, position: Position): boolean {
         return this.targets.every(target => target.validTarget(subject, position));
     }
@@ -51,5 +59,7 @@ export class CombinedTarget implements Target {
             }
         })
     }
+
+
 
 }
