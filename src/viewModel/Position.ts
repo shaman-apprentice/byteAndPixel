@@ -27,4 +27,14 @@ export class Position {
     difference(other: Position): Position {
         return new Position(this.x - other.x, this.y - other.y);
     }
+
+    public static STAY: Position = new Position(0, 0);
+    public static WEST: Position = new Position(-1, 0);
+    public static EAST: Position = new Position(1, 0);
+    public static NORTH_WEST: Position = new Position(0, -1);
+    public static NORTH_EAST: Position = new Position(1, -1);
+    public static SOUTH_WEST: Position = new Position(-1, 1);
+    public static SOUTH_EAST: Position = new Position(0, 1);
+
+    public static BASE_DIRECTIONS = [Position.WEST, Position.EAST, Position.NORTH_WEST, Position.NORTH_EAST, Position.SOUTH_WEST, Position.SOUTH_EAST];
 }
