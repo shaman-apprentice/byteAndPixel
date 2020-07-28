@@ -50,10 +50,6 @@ export const tileAtPosition = (position: Position): Tile => {
   return GameState.map.tiles.get(position);
 }
 
-export const monsterIdAtPosition = (position: Position): number => {
-  return monsterAtPosition(position)?.id ?? -1;
-}
-
 const danjiiStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 8, 85, 2);
 const blorbStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 10, 65, 2);
 const snorxStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice, 2), 6, 55, 2);

@@ -7,18 +7,22 @@ import { Monster } from 'viewModel/Monster';
 import { tileAtPosition, monsterAtPosition } from 'viewModel/utils/monster';
 import { GameState } from 'GameState';
 
+export enum SkillType {
+    MOVE, CLEANSE, ATTACK
+}
+
 export class Skill {
     name: string;
-    tags: string[];
+    type: SkillType;
     elements: ElementSignature;
     target: Target;
     cost: Cost;
     effect: Effect;
     icon: string;
 
-    constructor(name: string, tags: string[], element: ElementSignature, target: Target, cost: Cost, effect: Effect, icon: string) {
+    constructor(name: string, type: SkillType, element: ElementSignature, target: Target, cost: Cost, effect: Effect, icon: string) {
         this.name = name;
-        this.tags = tags;
+        this.type = type;
         this.elements = element;
         this.cost = cost;
         this.effect = effect;
@@ -35,7 +39,7 @@ export class Skill {
             }
         }
 
-        return new Skill("walk", [], ElementSignature.buildNeutral(), target, cost, effect, "walk");
+        return new Skill("walk", SkillType.MOVE, ElementSignature.buildNeutral(), target, cost, effect, "walk");
     }
 
     //TODO: change range to 0
@@ -48,7 +52,7 @@ export class Skill {
             }
         }
 
-        return new Skill("cleanse", [], ElementSignature.buildNeutral(), target, cost, effect, "cleanse");
+        return new Skill("cleanse", SkillType.CLEANSE, ElementSignature.buildNeutral(), target, cost, effect, "cleanse");
     }
 
     //TODO: change range to 0
@@ -61,7 +65,7 @@ export class Skill {
             }
         }
 
-        return new Skill("slime", [], ElementSignature.buildNeutral(), target, cost, effect, "slime");
+        return new Skill("slime", undefined, ElementSignature.buildNeutral(), target, cost, effect, "slime");
     }
 
     static attackAction(name: string, element: ElementSignature, damage: number, range: number, actionCost: number, energyCost): Skill {
@@ -81,7 +85,7 @@ export class Skill {
             }
         }
 
-        return new Skill(name, [], element, target, cost, effect, name);
+        return new Skill(name,SkillType.ATTACK, element, target, cost, effect, name);
     }
 
 }

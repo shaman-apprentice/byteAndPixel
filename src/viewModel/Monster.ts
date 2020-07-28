@@ -8,7 +8,7 @@ import { GameState } from 'GameState';
 import { hoverGlow, actionGlow } from './utils/filters';
 import { StateChangeEvent } from 'controller/events/StateChangeEvent';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
-import { Skill } from '../controller/skills/Skill';
+import { Skill, SkillType } from '../controller/skills/Skill';
 import { Skills } from './utils/skills';
 
 export class Monster extends GuiElem {
@@ -26,7 +26,7 @@ export class Monster extends GuiElem {
     friendly: boolean;
     lastFight: number = 0;
     experiencePoints: ValueWithRange;
-    skillList: Skill[] = [Skills.defaultAttack()];
+    skillList: Skill[] = [Skills.defaultAttack(), Skill.walk(), Skill.cleanse()];
     private _position: Position;
 
     constructor(name: string, position: Position, baseStats: MonsterStats, friendly: boolean = true) {
@@ -40,7 +40,7 @@ export class Monster extends GuiElem {
         this.actionPoints = new ValueWithRange(baseStats.actionPoints);
         this.energy = new ValueWithRange(baseStats.energy)
         this.hitPoints = new ValueWithRange(baseStats.hp);
-        this.experiencePoints = new ValueWithRange(5,0);
+        this.experiencePoints = new ValueWithRange(5, 0);
         this.happiness = new ValueWithRange(100, 50);
 
         this.checkActionPoints();
@@ -109,6 +109,10 @@ export class Monster extends GuiElem {
         if (!(this.skillList.map((s) => s.name).includes(skill.name))) {
             this.skillList.push(skill);
         }
+    }
+
+    skillByType(skilltype: SkillType, index : number = 0) : Skill {
+        return this.skillList.filter((skill) => skill.type == skilltype)[index];
     }
 }
 

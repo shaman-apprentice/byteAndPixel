@@ -1,4 +1,3 @@
-import { GameState } from "../../GameState";
 import { Position } from "../../viewModel/Position";
 import { Action } from "./Action";
 import { Monster } from "../../viewModel/Monster";
@@ -21,9 +20,9 @@ export class SkillAction extends Action {
     && this.skill.cost.canPay(this.attackingMonster);
   }
 
-  constructor(attackerId: number, target: Position, skill: Skill) {
+  constructor(attackingMonster: Monster, target: Position, skill: Skill) {
     super();
-    this.attackingMonster = GameState.monsters.get(attackerId);
+    this.attackingMonster = attackingMonster;
     this.target = target;
     this.skill = skill;
   }

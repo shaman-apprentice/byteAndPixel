@@ -25,9 +25,9 @@ export class Spider extends Enemy {
 
     singleAction(targetMonster: Monster) {
         const stepPosition = this.position.add(firstStep(this.position, targetMonster.position))
-        const actions: Action[] = [new SkillAction(this.id, stepPosition, this.skillList[0])
-            , new SkillAction(this.id, stepPosition, Skill.slime())
-        , new SkillAction(this.id, stepPosition, Skill.walk())];
+        const actions: Action[] = [new SkillAction(this, stepPosition, this.skillList[0])
+            , new SkillAction(this, stepPosition, Skill.slime())
+        , new SkillAction(this, stepPosition, Skill.walk())];
     
         //Does the first action possible
         const result = actions.find(action => action.execute());
