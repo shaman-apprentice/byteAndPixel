@@ -1,21 +1,19 @@
 import * as PIXI from 'pixi.js';
 
 import { Button } from '../../GeneralAbstracts/Button';
-import {width,height} from 'index';
+import {width} from 'index';
+import { InfoHideEvent } from 'controller/events/InfoHideEvent';
 
 export class hideButton extends Button {
-    pixiElem: PIXI.Container;
-    pixiElemBg: PIXI.DisplayObject;
-    button: PIXI.Text;
-    hiddenContainer: PIXI.Container;
   
-    constructor({otherContainer} : {otherContainer : PIXI.Container}) {
-      super({path: "hideButton", width: 25, height: 150},{xpos:width/2-25/2, ypos:0});
-      this.hiddenContainer = otherContainer;
+    constructor() {
+      super({path: "hideButton", width: 25, height: 150},{xpos:width-25/2, ypos:525});
+      this.pixiElemBg.angle = 180;
     }
   
     protected reaction(){
-      this.hiddenContainer.visible = false;
+      InfoHideEvent.dispatch();
+      this.pixiElemBg.angle += 180;
     }
 
   }

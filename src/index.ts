@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js'
 import { Application } from 'pixi.js';
 import { Ui } from './viewModel/ui/ui';
 import { handleKeyPress } from 'viewModel/utils/HotKeyManager';
+import { GameState } from 'GameState';
 
 export const width = 800;
 export const height = 600;
@@ -33,6 +34,8 @@ loader.onComplete.add(() => {
   app.stage.addChild(ui.boardContainer);
   app.stage.addChild(ui.middleGroundContainer);
   app.stage.addChild(ui.statusContainer);
+
+  GameState.selectedMonster = GameState.monsters.getValues()[0];
 })
 
 

@@ -6,8 +6,7 @@ import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
 import { GuiElemBg } from '../GeneralAbstracts/GuiElemBg';
 
 export abstract class Button extends GuiElemBg {
-    pixiElem: PIXI.Container;
-    pixiElemBg: PIXI.DisplayObject;
+
     button: PIXI.Text;
 
     constructor({path,width,height} : {path:string,width:number,height:number},{xpos,ypos} : {xpos:number,ypos:number}) {
