@@ -26,7 +26,7 @@ export class Monster implements GuiElem {
     friendly: boolean;
     lastFight: number = 0;
     experiencePoints: ValueWithRange;
-    skillList: Skill[] = [Skills.defaultAttack(), Skill.walk(), Skill.cleanse()];
+    skillList: Skill[];
     private _position: Position;
 
     constructor(name: string, position: Position, baseStats: MonsterStats, friendly: boolean = true) {
@@ -41,6 +41,7 @@ export class Monster implements GuiElem {
         this.hitPoints = new ValueWithRange(baseStats.hp);
         this.experiencePoints = new ValueWithRange(5, 0);
         this.happiness = new ValueWithRange(100, 50);
+        this.skillList = this.getBaseSkills();
 
         this.checkActionPoints();
 
@@ -92,6 +93,10 @@ export class Monster implements GuiElem {
         } else {
             this.removeFilter(actionGlow(this.friendly));
         }
+    }
+
+    private getBaseSkills() {
+        return [Skills.defaultAttack(), Skill.walk(), Skill.cleanse(), Skill.rest()];
     }
 
     addFilter(filter: PIXI.Filter) {

@@ -4,6 +4,8 @@ import { Monster } from 'viewModel/Monster';
 import { Enemy } from 'viewModel/enemy/enemy';
 import { Position } from "../../viewModel/Position";
 import { Skills } from 'viewModel/utils/skills';
+import { SkillAction } from './SkillAction';
+import { SkillType } from 'controller/skills/Skill';
 
 export class EndTurnAction extends Action {
 
@@ -17,6 +19,9 @@ export class EndTurnAction extends Action {
     })
 
     GameState.monsters.getValues().forEach(monster => {
+      //use up remaining action points for rest action
+      new SkillAction(monster, monster.position, monster.skillByType(SkillType.REST)).execute()
+      
       if (GameState.turn - monster.lastFight > 2) {
         monster.hitPoints.add(1);
       }

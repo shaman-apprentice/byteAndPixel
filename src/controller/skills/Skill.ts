@@ -1,5 +1,5 @@
 import { ElementSignature } from '../../viewModel/utils/Element';
-import { Cost, CombinedCost } from 'controller/actions/Cost';
+import { Cost, CombinedCost, EnergyCost } from 'controller/actions/Cost';
 import { Effect } from 'controller/actions/Effect';
 import { Target, CombinedTarget } from 'controller/actions/Target';
 import { Position } from "../../viewModel/Position";
@@ -8,7 +8,7 @@ import { tileAtPosition, monsterAtPosition } from 'viewModel/utils/monster';
 import { GameState } from 'GameState';
 
 export enum SkillType {
-    MOVE, CLEANSE, ATTACK
+    MOVE, CLEANSE, ATTACK, REST
 }
 
 export class Skill {
@@ -66,6 +66,20 @@ export class Skill {
         }
 
         return new Skill("slime", undefined, ElementSignature.buildNeutral(), target, cost, effect, "slime");
+    }
+
+    static rest(): Skill {
+        const target: Target = new CombinedTarget().self();
+        const cost = EnergyCost.all();
+        const effect = {
+            applyEffect: (subject: Monster, target: Position) => {
+                const scale = subject.actionPoints.current;
+                subject.energy.add(scale * 5);
+                subject.actionPoints.setToMin();
+            }
+        }
+
+        return new Skill("rest", SkillType.REST, ElementSignature.buildNeutral(), target, cost, effect, "rest");
     }
 
     static attackAction(name: string, element: ElementSignature, damage: number, range: number, actionCost: number, energyCost): Skill {

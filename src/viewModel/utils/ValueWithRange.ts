@@ -32,7 +32,7 @@ export class ValueWithRange {
         this._current = this.clamp(this._current);
     }
 
-    changeCurrent(fn: (current: number) => number) {
+    private changeCurrent(fn: (current: number) => number) {
         this._current = this.clamp(fn(this._current));
     }
 

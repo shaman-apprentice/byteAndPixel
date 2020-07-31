@@ -9,7 +9,6 @@ export interface Target {
 }
 
 export class CombinedTarget implements Target {
-
     onMap: Target = {
         validTarget: (subject: Monster, position: Position): boolean => {
             return GameState.map.tiles.get(position) != undefined;
@@ -56,6 +55,14 @@ export class CombinedTarget implements Target {
         return this.add({
             validTarget: (subject: Monster, position: Position): boolean => {
                 return tileAtPosition(position).slimed == slimed;
+            }
+        })
+    }
+
+    self(): Target {
+        return this.add({
+            validTarget: (subject: Monster, position: Position): boolean => {
+                return subject.position.isEqual(position);
             }
         })
     }

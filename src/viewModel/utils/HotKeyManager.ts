@@ -14,6 +14,7 @@ export const handleKeyPress = (key: string) => {
         // select action
         case "m": selectSkillByTyoe(SkillType.MOVE); break;
         case "t": selectSkillByTyoe(SkillType.CLEANSE); break;
+        case "r": selectSkillByTyoe(SkillType.REST); break;
         case "1": selectSkillByTyoe(SkillType.ATTACK, 0); break;
         case "2": selectSkillByTyoe(SkillType.ATTACK, 1); break;
         case "3": selectSkillByTyoe(SkillType.ATTACK, 2); break;
@@ -31,6 +32,7 @@ export const handleKeyPress = (key: string) => {
         case "d": moveInDirection(Position.EAST); break;
         case "y": moveInDirection(Position.SOUTH_WEST); break;
         case "x": moveInDirection(Position.SOUTH_EAST); break;
+        case " ": rest(); break;
     }
 }
 
@@ -49,6 +51,16 @@ const moveInDirection = (delta: Position) => {
     const skill = monster.skillByType(SkillType.MOVE);
     if (skill) {
         const action = new SkillAction(monster, monster.position.add(delta), skill);
+        action.execute();
+    }
+}
+
+const rest = () => {
+    const monster = GameState.selectedMonster;
+    if (!monster) { return; }
+    const skill = monster.skillByType(SkillType.REST);
+    if (skill) {
+        const action = new SkillAction(monster, monster.position, skill);
         action.execute();
     }
 }

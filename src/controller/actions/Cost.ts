@@ -36,6 +36,18 @@ export class CombinedCost implements Cost {
 }
 
 export class EnergyCost implements Cost {
+    
+    static all() {
+        return {
+            canPay(monster: Monster): boolean {
+                return monster.actionPoints.current > 0;
+            },
+            pay(monster: Monster) {
+                // must be payed in the effect to know how many energy was spent
+            }
+        }
+    }
+
     energyCost: number;
 
     constructor(cost: number) {
