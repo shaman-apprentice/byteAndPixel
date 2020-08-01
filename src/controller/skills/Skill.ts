@@ -6,6 +6,7 @@ import { Position } from "../../viewModel/Position";
 import { Monster } from 'viewModel/Monster';
 import { tileAtPosition, monsterAtPosition } from 'viewModel/utils/monster';
 import { GameState } from 'GameState';
+import { SkillAnimation, MoveAnimation } from 'controller/actions/Animation';
 
 export enum SkillType {
     MOVE, CLEANSE, ATTACK, REST
@@ -18,15 +19,17 @@ export class Skill {
     target: Target;
     cost: Cost;
     effect: Effect;
+    animation: SkillAnimation;
     icon: string;
 
-    constructor(name: string, type: SkillType, element: ElementSignature, target: Target, cost: Cost, effect: Effect, icon: string) {
+    constructor(name: string, type: SkillType, element: ElementSignature, target: Target, cost: Cost, effect: Effect, animation: SkillAnimation, icon: string) {
         this.name = name;
         this.type = type;
         this.elements = element;
         this.cost = cost;
         this.effect = effect;
         this.target = target;
+        this.animation = animation;
         this.icon = icon;
     }
 
@@ -38,8 +41,9 @@ export class Skill {
                 subject.position = target;
             }
         }
+        const animation = new MoveAnimation();
 
-        return new Skill("walk", SkillType.MOVE, ElementSignature.buildNeutral(), target, cost, effect, "walk");
+        return new Skill("walk", SkillType.MOVE, ElementSignature.buildNeutral(), target, cost, effect, animation, "walk");
     }
 
     //TODO: change range to 0
@@ -52,7 +56,7 @@ export class Skill {
             }
         }
 
-        return new Skill("cleanse", SkillType.CLEANSE, ElementSignature.buildNeutral(), target, cost, effect, "cleanse");
+        return new Skill("cleanse", SkillType.CLEANSE, ElementSignature.buildNeutral(), target, cost, effect, undefined, "cleanse");
     }
 
     //TODO: change range to 0
@@ -65,7 +69,7 @@ export class Skill {
             }
         }
 
-        return new Skill("slime", undefined, ElementSignature.buildNeutral(), target, cost, effect, "slime");
+        return new Skill("slime", undefined, ElementSignature.buildNeutral(), target, cost, effect, undefined, "slime");
     }
 
     static rest(): Skill {
@@ -79,7 +83,7 @@ export class Skill {
             }
         }
 
-        return new Skill("rest", SkillType.REST, ElementSignature.buildNeutral(), target, cost, effect, "rest");
+        return new Skill("rest", SkillType.REST, ElementSignature.buildNeutral(), target, cost, effect, undefined, "rest");
     }
 
     static attackAction(name: string, element: ElementSignature, damage: number, range: number, actionCost: number, energyCost): Skill {
@@ -99,7 +103,7 @@ export class Skill {
             }
         }
 
-        return new Skill(name,SkillType.ATTACK, element, target, cost, effect, name);
+        return new Skill(name,SkillType.ATTACK, element, target, cost, effect, undefined, name);
     }
 
 }

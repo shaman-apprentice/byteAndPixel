@@ -65,6 +65,12 @@ export class Monster extends GuiElem {
         return this._position;
     }
 
+    moveImage(x: number, y: number) {
+        // used in animation to temporarly move the image without changing its position
+        // this is overwritten by changing the position
+        this.pixiElem.position.set(x,y + Monster.displayOffset);
+    }
+
     private createSprite() {
         const sprite = PIXI.Sprite.from("Assets/Images/Monster/" + this.name + ".png");
         sprite.anchor.set(0.5, 0.5);

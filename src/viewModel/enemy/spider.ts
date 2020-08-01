@@ -30,7 +30,8 @@ export class Spider extends Enemy {
         , new SkillAction(this, stepPosition, Skill.walk())];
     
         //Does the first action possible
-        const result = actions.find(action => action.execute());
+        const result = actions.find(action => action.canExecute());
+        result?.execute();
         if (!result) {
             this.actionPoints.current = 0;
         }
