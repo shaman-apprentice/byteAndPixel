@@ -9,6 +9,10 @@ export class ActionScheduler {
         this.actions.push(action);
     }
 
+    static scheduleBefore(action: Action) {
+        this.actions.unshift(action);
+    }
+
     static work(delta: number) {
         while (!this.current && this.actions.length > 0) {
             this.current = this.actions.shift();
