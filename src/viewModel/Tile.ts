@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 
 import { TileData } from "./utils/map";
-import { GuiElem } from "./ui/GuiElem";
+import { GuiElem } from "./GeneralAbstracts/GuiElem";
 import { tileSize, Position } from "./Position";
 import { tileSelected, tileClicked, tileHover } from "controller/Input";
 import { ElementSignature } from './utils/Element';

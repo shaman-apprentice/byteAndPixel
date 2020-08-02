@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { GuiElem } from "./GuiElem";
+import { GuiElem } from "../GeneralAbstracts/GuiElem";
 import { width } from '../../index';
 
 export class Design extends GuiElem{

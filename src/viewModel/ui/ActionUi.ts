@@ -3,7 +3,7 @@ import { GameState } from "GameState";
 import { StateChangeEvent } from "controller/events/StateChangeEvent";
 import { SelectedMonsterChangedEvent } from "controller/events/SelectedMonsterChangedEvent";
 import { ActionSelectionEvent } from 'controller/events/ActionSelectionEvent';
-import { GuiElem } from './GuiElem';
+import { GuiElem } from '../GeneralAbstracts/GuiElem';
 
 export class ActionUI extends GuiElem {
     pixiElem: PIXI.Text;
@@ -12,7 +12,7 @@ export class ActionUI extends GuiElem {
     constructor() {
         super();
         this.pixiElem = new PIXI.Text("Walk");
-        this.pixiElem.position.set(400,530);
+        this.pixiElem.position.set(400,10);
         GameState.emitter.addEventListener(StateChangeEvent.type, () => { this.clearActionSelection()});
         GameState.emitter.addEventListener(SelectedMonsterChangedEvent.type, () => { this.clearActionSelection()});
         GameState.emitter.addEventListener(ActionSelectionEvent.type, () => { this.showSelectedAction()});

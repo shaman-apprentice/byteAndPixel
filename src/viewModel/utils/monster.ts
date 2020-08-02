@@ -41,7 +41,7 @@ export const monsterAtMousePosition = (): Monster => {
   return monsterAtPosition(position);
 }
 
-export const monsterAtPosition = (position: Position): Monster => {
+export const monsterAtPosition = (position: Position): Monster | undefined => {
   const monsterAtPosition = GameState.monsters.getEntries().find(entry => position.isEqual(entry.value.position));
   return monsterAtPosition?.value;
 }

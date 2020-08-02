@@ -1,17 +1,19 @@
 import * as PIXI from 'pixi.js';
 
-import { SelectedMonsterInfo } from './SelectedMonsterInfo';
+import { SelectedMonsterInfo } from './MonsterInfo/SelectedMonsterInfo';
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../../GameState';
-import { EndTurnButton } from './EndTurnButton';
+import { EndTurnButton } from './buttons/EndTurnButton';
 import { tileSize} from '../Position';
 import { MonsterAddEvent } from '../../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../../controller/events/MonsterRemoveEvent';
 import { Monster } from '../Monster';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 import { Design } from './Design';
-import { HoverMonsterInfo } from "./HoverMonsterInfo";
+import { HoverMonsterInfo } from "./MonsterInfo/HoverMonsterInfo";
 import { ActionUI } from './ActionUi';
+import { HideButton } from './buttons/HideButton';
+import { ActiveMonsterInfo } from './MonsterInfo/ActiveMonsterInfo';
 
 export class Ui {
     boardContainer: PIXI.Container;
@@ -49,10 +51,10 @@ export class Ui {
     private createStatusContainer() {
         const statusContainer = new PIXI.Container();
 
-        statusContainer.addChild(new SelectedMonsterInfo().pixiElem);
-        statusContainer.addChild(new HoverMonsterInfo().pixiElem);
+        statusContainer.addChild(new ActiveMonsterInfo().pixiElem); 
         statusContainer.addChild(new EndTurnButton().pixiElem);
         statusContainer.addChild(new ActionUI().pixiElem);
+        statusContainer.addChild(new HideButton().pixiElem);
 
         return statusContainer;
     }
