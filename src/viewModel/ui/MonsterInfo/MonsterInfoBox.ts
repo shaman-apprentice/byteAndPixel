@@ -7,7 +7,6 @@ import { HideButton } from '../buttons/HideButton';
 import { GameState } from 'GameState';
 import { InfoHideEvent } from 'controller/events/InfoHideEvent';
 import { MoreInfoButton } from '../buttons/MoreInfoButton';
-import { SkillTreeInfoBox} from './SkillTreeInfoBox';
 
 export class MonsterInfoBox extends GuiElemBg {
 
@@ -27,13 +26,7 @@ export class MonsterInfoBox extends GuiElemBg {
     this.bmstextBox = this.createTextBox({xpos:-width/4+20,ypos:0.5});
     this.monsterPic = this.createSprite();
     this.isHidden = false;
-    this.SkillTreeButton = new MoreInfoButton(
-      {newpath:"brownButton",newwidth:200, newheight: 50},
-      {newxpos:width-100,newypos:10},
-      new SkillTreeInfoBox().pixiElem
-    );
     this.pixiElem.addChild(this.textBox, this.nameBox, this.bmstextBox, this.monsterPic);
-    this.pixiElem.addChild(this.SkillTreeButton.pixiElem);
   }
 
   private createTextBox({xpos, ypos}:{xpos:number, ypos:number}) {
