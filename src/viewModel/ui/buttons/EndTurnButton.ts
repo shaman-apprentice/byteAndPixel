@@ -6,9 +6,6 @@ import { StateChangeEvent } from '../../../controller/events/StateChangeEvent';
 import { Button } from '../../GeneralAbstracts/Button';
 
 export class EndTurnButton extends Button {
-  pixiElem: PIXI.Container;
-  pixiElemBg: PIXI.DisplayObject;
-  button: PIXI.Text;
 
   constructor() {
     super({path: "brownButton", width: 200, height: 50},{xpos:680, ypos:40});
@@ -16,7 +13,7 @@ export class EndTurnButton extends Button {
     GameState.emitter.addEventListener(StateChangeEvent.type, () => this.update())
   }
 
-  protected update() {
+  private update() {
     this.button.text = "End Turn " + GameState.turn;
   }
 

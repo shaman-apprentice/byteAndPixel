@@ -3,12 +3,11 @@ import { GuiElem } from "./GuiElem";
 
 export abstract class GuiElemBg extends GuiElem {
   pixiElem: PIXI.Container;
-  pixiElemBg: PIXI.DisplayObject;
 
   constructor({path, width, height}: { path: string; width: number; height: number; }) {
     super();
     this.pixiElem = new PIXI.Container();
-    this.pixiElemBg = this.pixiElem.addChild(this.createBackground({path: path, width: width, height: height}))
+    this.pixiElem.addChild(this.createBackground({path: path, width: width, height: height}))
 
   }
 

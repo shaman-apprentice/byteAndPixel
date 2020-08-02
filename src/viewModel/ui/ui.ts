@@ -12,7 +12,8 @@ import { MapMoveEvent } from 'controller/events/MapMoveEvent';
 import { Design } from './Design';
 import { HoverMonsterInfo } from "./MonsterInfo/HoverMonsterInfo";
 import { ActionUI } from './ActionUi';
-import { hideButton } from './buttons/hideButton';
+import { HideButton } from './buttons/HideButton';
+import { ActiveMonsterInfo } from './MonsterInfo/ActiveMonsterInfo';
 
 export class Ui {
     boardContainer: PIXI.Container;
@@ -50,11 +51,10 @@ export class Ui {
     private createStatusContainer() {
         const statusContainer = new PIXI.Container();
 
-        statusContainer.addChild(new SelectedMonsterInfo().pixiElem);
-        statusContainer.addChild(new HoverMonsterInfo().pixiElem);
+        statusContainer.addChild(new ActiveMonsterInfo().pixiElem); 
         statusContainer.addChild(new EndTurnButton().pixiElem);
         statusContainer.addChild(new ActionUI().pixiElem);
-        statusContainer.addChild(new hideButton().pixiElem);
+        statusContainer.addChild(new HideButton().pixiElem);
 
         return statusContainer;
     }
