@@ -6,7 +6,6 @@ import {width,height} from 'index';
 import { HideButton } from '../buttons/HideButton';
 import { GameState } from 'GameState';
 import { InfoHideEvent } from 'controller/events/InfoHideEvent';
-import { MoreInfoButton } from '../buttons/MoreInfoButton';
 
 export class MonsterInfoBox extends GuiElemBg {
 
@@ -16,7 +15,6 @@ export class MonsterInfoBox extends GuiElemBg {
   monsterPic: PIXI.Sprite;
   hideButton: HideButton;
   isHidden: boolean;
-  SkillTreeButton: MoreInfoButton;
 
   constructor() {
     super({path: "BgBox", width: width, height:150});
