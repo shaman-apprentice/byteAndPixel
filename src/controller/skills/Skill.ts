@@ -6,7 +6,7 @@ import { Position } from "../../viewModel/Position";
 import { Monster } from 'viewModel/Monster';
 import { tileAtPosition, monsterAtPosition } from 'viewModel/utils/monster';
 import { GameState } from 'GameState';
-import { SkillAnimation, MoveAnimation } from 'controller/actions/Animation';
+import { SkillAnimation, MoveAnimation, AttackAnimation } from 'controller/actions/Animation';
 
 export enum SkillType {
     MOVE, CLEANSE, ATTACK, REST
@@ -102,8 +102,9 @@ export class Skill {
                 }
             }
         }
+        const animation = new AttackAnimation();
 
-        return new Skill(name,SkillType.ATTACK, element, target, cost, effect, undefined, name);
+        return new Skill(name,SkillType.ATTACK, element, target, cost, effect, animation, name);
     }
 
 }

@@ -71,6 +71,11 @@ export class Monster extends GuiElem {
         this.pixiElem.position.set(x,y + Monster.displayOffset);
     }
 
+    resetImage() {
+        const dc = this.position.toDisplayCoords();
+        this.pixiElem.position.set(dc.x, dc.y + Monster.displayOffset);
+    }
+
     private createSprite() {
         const sprite = PIXI.Sprite.from("Assets/Images/Monster/" + this.name + ".png");
         sprite.anchor.set(0.5, 0.5);
