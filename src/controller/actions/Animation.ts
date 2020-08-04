@@ -1,9 +1,12 @@
+import * as Sound from 'pixi-sound'
+
 import { Monster } from "viewModel/Monster";
 import { Position } from "../../viewModel/Position";
 import { monsterAtPosition } from "viewModel/utils/monster";
 
 export interface SkillAnimation {
     duration: number;
+    onStart(monster: Monster, target: Position);
     animate(monster: Monster, target: Position, progress: number);
     onFinish(monster: Monster, target: Position);
 }
@@ -14,12 +17,16 @@ export class MoveAnimation implements SkillAnimation {
         const { x, y } = interpolate(monster.position.toDisplayCoords(), target.toDisplayCoords(), p)
         monster.moveImage(x, y);
     }
+    onStart(monster: Monster, target: Position) {
+        playSound("step");
+    }
     onFinish(monster: Monster, target: Position) {
         monster.resetImage()
     }
 }
 
 export class AttackAnimation implements SkillAnimation {
+    hit = false;
     duration = 10;
     animate(monster: Monster, target: Position, p: number) {
         const { x, y } = interpolate(monster.position.toDisplayCoords(), target.toDisplayCoords(), (Math.abs(p - 0.5) - 0.5) * -0.2)
@@ -29,7 +36,15 @@ export class AttackAnimation implements SkillAnimation {
             const { x, y } = targetMonster.position.toDisplayCoords();
             const shake = Math.random() * 10;
             targetMonster.moveImage(x + shake, y);
+            if (!this.hit) {
+                this.hit = true;
+                playSound("impact");
+            }
         }
+    }
+    onStart(monster: Monster, target: Position) {
+        this.hit = false;
+        playSound("swing");
     }
     onFinish(monster: Monster, target: Position) {
         monster.resetImage()
@@ -43,4 +58,8 @@ const interpolate = (pos1: { x: number, y: number }, pos2: { x: number, y: numbe
     const deltaY = pos1.y * q + pos2.y * p;
 
     return { x: deltaX, y: deltaY }
+}
+
+const playSound = (name: string) => {
+    Sound.default.play(name);
 }

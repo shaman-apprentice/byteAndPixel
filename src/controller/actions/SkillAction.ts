@@ -30,13 +30,16 @@ export class SkillAction extends Action {
   }
 
   animate(delta: number) {
+    if (this.progress == 0) {
+      this.skill.animation?.onStart(this.attackingMonster, this.target);
+    }
     this.progress += delta;
     if (this.progress > this.targetProgress) {
       this.progress = this.targetProgress;
     }
 
     this.skill.animation?.animate(this.attackingMonster, this.target, this.progress / this.targetProgress)
-    
+
     if (this.progress >= this.targetProgress) {
       this.skill.animation?.onFinish(this.attackingMonster, this.target);
     }

@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js'
+import * as Sound from 'pixi-sound'
 
 import { Application } from 'pixi.js';
 import { Ui } from './viewModel/ui/ui';
@@ -12,6 +13,9 @@ export const height = 600;
 const loader = PIXI.Loader.shared;
 
 loader.add("brownButton", "Assets/Images/brownButton.png").add("BgBox", "Assets/Images/bgbox.png").add("hideButton", "Assets/Images/hideButton.png");
+Sound.default.add("step", "Assets/Sound/step.wav")
+Sound.default.add("swing", "Assets/Sound/swing.wav")
+Sound.default.add("impact", "Assets/Sound/impact.wav")
 
 const app = new Application({
   backgroundColor: 0x1099bb,
