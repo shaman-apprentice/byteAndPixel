@@ -1,41 +1,42 @@
 import * as PIXI from 'pixi.js';
 import {Monster} from "../Monster";
+import {Skill} from "../../controller/skills/Skill"
 import { GameState } from "GameState";
 import {StateChangeEvent} from "../../controller/events/StateChangeEvent";
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 import { Position } from 'viewModel/Position';
 import { GlowFilter } from "@pixi/filter-glow";
+import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
 
-export class ActionUI{
-    container: PIXI.Container;
-    circle: PIXI.Sprite;
+export class ActionUI extends GuiElem{
+    pixiElem: PIXI.Container;
     currentMonster: Monster
     constructor(){
-        this.container = new PIXI.Container();
-        this.circle = PIXI.Sprite.from("Assets/Images/actions/UICircle.png");
+        super();
+        this.pixiElem = new PIXI.Container();
         this.showActions();
         GameState.emitter.addEventListener(StateChangeEvent.type,
             () => { this.showActions(); });
     }
 
     private showActions(){
-        
-        this.currentMonster = GameState.monsters.get(GameState.selectedMonster.id);
-        if(this.currentMonster){
-            this.circle.removeChildren();
-            if(this.currentMonster.friendly){
-                const size = this.currentMonster.skillList.length;
-                for(let i = 0; i < size; i++){
-                    const action: ActionUiElement = new ActionUiElement("Assets/Images/Skills/Bubble.png" , this.currentMonster.skillList[i].name);
-                    action.pixiElem.position.set(this.circle.position.x + 60* Math.cos(i*2*Math.PI/10), this.circle.position.y + 60*Math.sin(i*2*Math.PI/10)) ;
-                    this.circle.addChild(action.pixiElem);
+        if(GameState.selectedMonster == undefined){}
+        else{
+            this.currentMonster = GameState.monsters.get(GameState.selectedMonster.id);
+            if(this.currentMonster){
+                this.pixiElem.removeChildren();
+                if(this.currentMonster.friendly){
+                    const size = this.currentMonster.skillList.length;
+                    for(let i = 0; i < size; i++){
+                        const action: ActionUiElement = new ActionUiElement("Assets/Images/Skills/Bubble.png" , this.currentMonster.skillList[i]);
+                        action.pixiElem.position.set(GameState.selectedMonster.pixiElem.position.x + 70* Math.cos(i*2*Math.PI/10), GameState.selectedMonster.pixiElem.position.y + 70*Math.sin(i*2*Math.PI/10)) ;
+                        this.pixiElem.addChild(action.pixiElem);
+                    }
                 }
-                this.container.addChild(this.circle);
-                this.container.position.set(this.currentMonster.pixiElem.position.x, this.currentMonster.pixiElem.position.y);
             }
-        }
-        else {
-            this.container.visible = false;
+            else {
+                this.pixiElem.visible = false;
+            }
         }
     }
 }
@@ -44,15 +45,15 @@ class ActionUiElement{
     pic: PIXI.Sprite;
     button: PIXI.Text;
 
-    constructor(picture:string, text:string){
+    constructor(picture:string, text:Skill){
         this.pixiElem = new PIXI.Container();
         this.pic = PIXI.Sprite.from(picture);
         this.pic.scale.set(0.4, 0.4);
-        this.button = new PIXI.Text(text);
+        this.button = new PIXI.Text(text.name);
 
         this.button.interactive = true;
         this.button.buttonMode = true;
-        //this.button.on("click", ()=> new AttackAction().execute());
+        this.button.on("click", ()=> {GameState.selectedAction = text;});
         this.button.position.set(this.pic.position.x + 25, this.pic.position.y - 5);
         this.pixiElem.addChild(this.pic);
         this.pixiElem.addChild(this.button);
