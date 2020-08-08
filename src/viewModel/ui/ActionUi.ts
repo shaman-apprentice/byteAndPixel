@@ -1,35 +1,36 @@
 import * as PIXI from 'pixi.js';
-import {Monster} from "../Monster";
-import {Skill} from "../../controller/skills/Skill"
+import { Monster } from "../Monster";
+import { Skill } from "../../controller/skills/Skill"
 import { GameState } from "GameState";
-import {StateChangeEvent} from "../../controller/events/StateChangeEvent";
+import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
-import { Position } from 'viewModel/Position';
 import { GlowFilter } from "@pixi/filter-glow";
 import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
+import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 
-export class ActionUI extends GuiElem{
+export class ActionUI extends GuiElem {
     pixiElem: PIXI.Container;
     currentMonster: Monster
-    constructor(){
+    constructor() {
         super();
         this.pixiElem = new PIXI.Container();
         this.showActions();
         GameState.emitter.addEventListener(StateChangeEvent.type,
             () => { this.showActions(); });
+        GameState.emitter.addEventListener(SelectedMonsterChangedEvent.type, () => { this.showActions(); })
     }
 
-    private showActions(){
-        if(GameState.selectedMonster == undefined){}
-        else{
+    private showActions() {
+        if (GameState.selectedMonster == undefined) { }
+        else {
             this.currentMonster = GameState.monsters.get(GameState.selectedMonster.id);
-            if(this.currentMonster){
+            if (this.currentMonster) {
                 this.pixiElem.removeChildren();
-                if(this.currentMonster.friendly){
+                if (this.currentMonster.friendly) {
                     const size = this.currentMonster.skillList.length;
-                    for(let i = 0; i < size; i++){
-                        const action: ActionUiElement = new ActionUiElement("Assets/Images/Skills/Bubble.png" , this.currentMonster.skillList[i]);
-                        action.pixiElem.position.set(GameState.selectedMonster.pixiElem.position.x + 70* Math.cos(i*2*Math.PI/10), GameState.selectedMonster.pixiElem.position.y + 70*Math.sin(i*2*Math.PI/10)) ;
+                    for (let i = 0; i < size; i++) {
+                        const action: ActionUiElement = new ActionUiElement("Assets/Images/Skills/Bubble.png", this.currentMonster.skillList[i]);
+                        action.pixiElem.position.set(GameState.selectedMonster.pixiElem.position.x + 70 * Math.cos(i * 2 * Math.PI / 10), GameState.selectedMonster.pixiElem.position.y + 70 * Math.sin(i * 2 * Math.PI / 10));
                         this.pixiElem.addChild(action.pixiElem);
                     }
                 }
@@ -40,12 +41,12 @@ export class ActionUI extends GuiElem{
         }
     }
 }
-class ActionUiElement{
+class ActionUiElement {
     pixiElem: PIXI.Container;
     pic: PIXI.Sprite;
     button: PIXI.Text;
 
-    constructor(picture:string, text:Skill){
+    constructor(picture: string, text: Skill) {
         this.pixiElem = new PIXI.Container();
         this.pic = PIXI.Sprite.from(picture);
         this.pic.scale.set(0.4, 0.4);
@@ -53,12 +54,12 @@ class ActionUiElement{
 
         this.button.interactive = true;
         this.button.buttonMode = true;
-        this.button.on("click", ()=> {GameState.selectedAction = text;});
+        this.button.on("click", () => { GameState.selectedAction = text; });
         this.button.position.set(this.pic.position.x + 25, this.pic.position.y - 5);
         this.pixiElem.addChild(this.pic);
         this.pixiElem.addChild(this.button);
 
-        GameState.emitter.addEventListener(MouseHoverEvent.type, () =>{
+        GameState.emitter.addEventListener(MouseHoverEvent.type, () => {
             this.checkMenuHover();
         });
     }
@@ -70,16 +71,16 @@ class ActionUiElement{
         else{
             this.onHoverEnd();
         }*/
-        this.pixiElem.on('mouseover', ()=>{
+        this.pixiElem.on('mouseover', () => {
             this.onHover();
         });
     }
-    private onHover(){
+    private onHover() {
         this.pixiElem.filters = [(new GlowFilter({ distance: 10, outerStrength: 2, innerStrength: 0, color: 0x99ff99, quality: 0.2 }))];
         console.log("Mouseover");
     }
 
-    private onHoverEnd(){
+    private onHoverEnd() {
         this.pixiElem.filters = [];
     }
 }
