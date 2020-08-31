@@ -51,7 +51,9 @@ const moveInDirection = (delta: Position) => {
     const skill = monster.skillByType(SkillType.MOVE);
     if (skill) {
         const action = new SkillAction(monster, monster.position.add(delta), skill);
-        action.schedule();
+        if (action.canExecute()) {
+            action.schedule();
+        }
     }
 }
 
@@ -61,6 +63,8 @@ const rest = () => {
     const skill = monster.skillByType(SkillType.REST);
     if (skill) {
         const action = new SkillAction(monster, monster.position, skill);
-        action.schedule();
+        if (action.canExecute()) {
+            action.schedule();
+        }
     }
 }
