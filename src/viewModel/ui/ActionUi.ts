@@ -3,7 +3,6 @@ import { Monster } from "../Monster";
 import { Skill } from "../../controller/skills/Skill"
 import { GameState } from "GameState";
 import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
-import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 import { GlowFilter } from "@pixi/filter-glow";
 import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
@@ -55,22 +54,15 @@ class ActionUiElement {
         this.button.interactive = true;
         this.button.buttonMode = true;
         this.button.on("click", () => { GameState.selectedAction = text; });
+        this.button.on("mouseover", () => { this.onHover(); });
+        this.button.on("mouseout", () => { this.onHoverExit(); });
         this.button.position.set(this.pic.position.x + 25, this.pic.position.y - 5);
         this.pixiElem.addChild(this.pic);
         this.pixiElem.addChild(this.button);
 
-        GameState.emitter.addEventListener(MouseHoverEvent.type, () => {
-            this.checkMenuHover();
-        });
+
     }
     private checkMenuHover() {
-        /*var pos = GameState.mousePosition.toDisplayCoords();
-        if(pos.x == this.pixiElem.position.x && pos.y == this.pixiElem.position.y){
-            this.onHover();
-        }
-        else{
-            this.onHoverEnd();
-        }*/
         this.pixiElem.on('mouseover', () => {
             this.onHover();
         });
@@ -78,6 +70,11 @@ class ActionUiElement {
     private onHover() {
         this.pixiElem.filters = [(new GlowFilter({ distance: 10, outerStrength: 2, innerStrength: 0, color: 0x99ff99, quality: 0.2 }))];
         console.log("Mouseover");
+    }
+
+    private onHoverExit() {
+        this.pixiElem.filters = [];
+        console.log("MouseOut");
     }
 
     private onHoverEnd() {
