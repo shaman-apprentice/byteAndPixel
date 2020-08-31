@@ -15,12 +15,8 @@ export const decideAction = (position: Position) => {
     const selectedMonster = GameState.selectedMonster;
     var selectedSkill = GameState.selectedAction;
 
-    if (!selectedMonster || !selectedMonster.friendly) {
+    if (!selectedMonster || !selectedMonster.friendly || !selectedSkill) {
         return;
-    }
-
-    if (!selectedSkill) {
-        selectedSkill = selectedMonster.skillByType(SkillType.MOVE);
     }
 
     const action = new SkillAction(selectedMonster, position, selectedSkill);

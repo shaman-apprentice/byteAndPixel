@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { Monster } from "../Monster";
-import { Skill } from "../../controller/skills/Skill"
+import { Skill, SkillType } from "../../controller/skills/Skill"
 import { GameState } from "GameState";
 import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
 import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
@@ -14,14 +14,22 @@ export class ActionUI extends GuiElem {
         super();
         this.pixiElem = new PIXI.Container();
         this.showActions();
-        GameState.emitter.addEventListener(StateChangeEvent.type,
-            () => { this.showActions(); });
-        GameState.emitter.addEventListener(SelectedMonsterChangedEvent.type, () => { this.showActions(); })
+        GameState.emitter.addEventListener(StateChangeEvent.type, () => {
+            this.selectMove();
+            this.showActions();
+        });
+        GameState.emitter.addEventListener(SelectedMonsterChangedEvent.type, () => {
+            this.selectMove();
+            this.showActions();
+        })
+    }
+
+    private selectMove() {
+        GameState.selectedAction = GameState.selectedMonster?.skillByType(SkillType.MOVE);
     }
 
     private showActions() {
-        if (GameState.selectedMonster == undefined) { }
-        else {
+        if (GameState.selectedMonster) {
             this.currentMonster = GameState.monsters.get(GameState.selectedMonster.id);
             if (this.currentMonster) {
                 this.pixiElem.removeChildren();
@@ -40,6 +48,7 @@ export class ActionUI extends GuiElem {
         }
     }
 }
+
 class ActionUiElement extends GuiElem {
     pixiElem: PIXI.Container;
     pic: PIXI.Sprite;

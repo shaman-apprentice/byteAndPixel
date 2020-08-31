@@ -111,16 +111,6 @@ export class Monster extends GuiElem {
         return [Skills.defaultAttack(), Skill.walk(), Skill.cleanse(), Skill.rest()];
     }
 
-    addFilter(filter: PIXI.Filter) {
-        if (!this.pixiElem.filters?.includes(filter)) {
-            this.pixiElem.filters.push(filter);
-        }
-    }
-
-    removeFilter(filter: PIXI.Filter) {
-        this.pixiElem.filters = this.pixiElem.filters?.filter((a) => a !== filter);
-    }
-
     learnSkill(skill: Skill) {
         if (!(this.skillList.map((s) => s.name).includes(skill.name))) {
             this.skillList.push(skill);
