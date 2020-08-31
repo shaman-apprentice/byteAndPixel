@@ -27,7 +27,7 @@ export const decideAction = (position: Position) => {
 }
 
 export const tileClicked = (position: Position) => {
-    decideAction(position)?.schedule();
+    decideAction(position)?.execute();
 }
 
 export const tileHover = (position: Position) => {

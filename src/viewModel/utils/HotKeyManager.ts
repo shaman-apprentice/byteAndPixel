@@ -52,7 +52,7 @@ const moveInDirection = (delta: Position) => {
     if (skill) {
         const action = new SkillAction(monster, monster.position.add(delta), skill);
         if (action.canExecute()) {
-            action.schedule();
+            action.execute();
         }
     }
 }
@@ -64,7 +64,7 @@ const rest = () => {
     if (skill) {
         const action = new SkillAction(monster, monster.position, skill);
         if (action.canExecute()) {
-            action.schedule();
+            action.execute();
         }
     }
 }

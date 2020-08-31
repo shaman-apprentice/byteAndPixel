@@ -11,6 +11,7 @@ export class SkillAction extends Action {
 
   doAction() {
     this.skill.cost.pay(this.attackingMonster);
+    this.skill.animation?.animate(this.attackingMonster, this.target);
     this.skill.effect.applyEffect(this.attackingMonster, this.target);
   }
 
@@ -25,29 +26,8 @@ export class SkillAction extends Action {
     this.attackingMonster = attackingMonster;
     this.target = target;
     this.skill = skill;
-    this.targetProgress = skill.animation?.duration ?? 0;
+    this.targetProgress = skill.animation?.frames ?? 0;
     this.progress = 0;
   }
-
-  animate(delta: number) {
-    if (this.progress == 0) {
-      this.skill.animation?.onStart(this.attackingMonster, this.target);
-    }
-    this.progress += delta;
-    if (this.progress > this.targetProgress) {
-      this.progress = this.targetProgress;
-    }
-
-    this.skill.animation?.animate(this.attackingMonster, this.target, this.progress / this.targetProgress)
-
-    if (this.progress >= this.targetProgress) {
-      this.skill.animation?.onFinish(this.attackingMonster, this.target);
-    }
-  }
-
-  finished() {
-    return this.progress >= this.targetProgress;
-  }
-
 
 }

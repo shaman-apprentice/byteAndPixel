@@ -1,14 +1,9 @@
 import { StateChangeEvent } from "../events/StateChangeEvent";
-import { ActionScheduler } from "./ActionScheduler";
 
 export abstract class Action {
 
     protected progress: number;
     protected targetProgress: number;
-
-    schedule() {
-        ActionScheduler.schedule(this);
-    }
 
     execute() {
         if (!this.canExecute()) {
@@ -16,6 +11,7 @@ export abstract class Action {
         }
         this.doAction();
         StateChangeEvent.dispatch();
+        return true;
     }
 
     protected doAction() {

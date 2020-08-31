@@ -23,7 +23,6 @@ export class StartTurnAction extends Action {
       
       if (monster.friendly) {
         this.handlehappiness(monster);
-  
         this.handleexperiencePoints(monster);
       }
     });
