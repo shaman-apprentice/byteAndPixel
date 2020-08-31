@@ -3,9 +3,9 @@ import { Monster } from "../Monster";
 import { Skill } from "../../controller/skills/Skill"
 import { GameState } from "GameState";
 import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
-import { GlowFilter } from "@pixi/filter-glow";
 import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
+import { hoverGlow, selectionGlow } from 'viewModel/utils/filters';
 
 export class ActionUI extends GuiElem {
     pixiElem: PIXI.Container;
@@ -40,44 +40,48 @@ export class ActionUI extends GuiElem {
         }
     }
 }
-class ActionUiElement {
+class ActionUiElement extends GuiElem {
     pixiElem: PIXI.Container;
     pic: PIXI.Sprite;
     button: PIXI.Text;
+    skill: Skill;
 
-    constructor(picture: string, text: Skill) {
+    constructor(picture: string, skill: Skill) {
+        super();
+        this.skill = skill;
         this.pixiElem = new PIXI.Container();
+        this.pixiElem.filters = [];
         this.pic = PIXI.Sprite.from(picture);
         this.pic.scale.set(0.4, 0.4);
-        this.button = new PIXI.Text(text.name);
+        this.button = new PIXI.Text(skill.name);
 
         this.button.interactive = true;
         this.button.buttonMode = true;
-        this.button.on("click", () => { GameState.selectedAction = text; });
+        this.button.on("click", () => { GameState.selectedAction = skill; });
         this.button.on("mouseover", () => { this.onHover(); });
         this.button.on("mouseout", () => { this.onHoverExit(); });
         this.button.position.set(this.pic.position.x + 25, this.pic.position.y - 5);
         this.pixiElem.addChild(this.pic);
         this.pixiElem.addChild(this.button);
+        GameState.emitter.addEventListener("ActionSelectionEvent", () => this.markSelectedAction());
 
+        this.markSelectedAction();
 
     }
-    private checkMenuHover() {
-        this.pixiElem.on('mouseover', () => {
-            this.onHover();
-        });
-    }
+
     private onHover() {
-        this.pixiElem.filters = [(new GlowFilter({ distance: 10, outerStrength: 2, innerStrength: 0, color: 0x99ff99, quality: 0.2 }))];
-        console.log("Mouseover");
+        this.addFilter(hoverGlow());
     }
 
     private onHoverExit() {
-        this.pixiElem.filters = [];
-        console.log("MouseOut");
+        this.removeFilter(hoverGlow());
     }
 
-    private onHoverEnd() {
-        this.pixiElem.filters = [];
+    private markSelectedAction() {
+        if (GameState.selectedAction && this.skill.name == GameState.selectedAction.name) {
+            this.addFilter(selectionGlow());
+        } else {
+            this.removeFilter(selectionGlow());
+        }
     }
 }

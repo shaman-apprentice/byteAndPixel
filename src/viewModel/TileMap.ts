@@ -7,11 +7,12 @@ import { HashMap } from 'utils/HashMap';
 import { Tile } from './Tile';
 import { ElementSignature } from './utils/Element';
 
-export class TileMap implements GuiElem {
+export class TileMap extends GuiElem {
   pixiElem: PIXI.Container;
   tiles: HashMap<Position, Tile>;
 
   constructor(size: number) {
+    super();
     const mapData = createMapData(size);
     this.pixiElem = new PIXI.Container();
 

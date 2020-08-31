@@ -6,7 +6,7 @@ import { tileSize, Position } from "./Position";
 import { tileSelected, tileClicked, tileHover } from "controller/Input";
 import { ElementSignature } from './utils/Element';
 
-export class Tile implements GuiElem {
+export class Tile extends GuiElem {
     pixiElem: PIXI.Container;
     private terrain: PIXI.Sprite;
     private slime: PIXI.Sprite;
@@ -25,6 +25,7 @@ export class Tile implements GuiElem {
     }
   
     constructor(tileData: TileData) {
+      super();
       this._slimed = tileData.slimed;
       this.position = tileData.position;
       this.elementSignature = tileData.elements;
