@@ -3,9 +3,9 @@ import { AiAction } from './AiAction';
 import { StartTurnAction } from './StartTurnAction';
 export class EndTurnAction extends Action {
 
-  protected doAction() {
-    new AiAction().execute();
-    new StartTurnAction().execute();
+  protected async doAction() {
+    await new AiAction().execute();
+    await new StartTurnAction().execute();
   }
 
 }

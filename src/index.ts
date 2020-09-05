@@ -5,7 +5,6 @@ import { Application } from 'pixi.js';
 import { Ui } from './viewModel/ui/ui';
 import { handleKeyPress } from 'viewModel/utils/HotKeyManager';
 import { GameState } from 'GameState';
-import { ActionScheduler } from 'controller/actions/ActionScheduler';
 
 export const width = 800;
 export const height = 600;
@@ -41,10 +40,6 @@ loader.onComplete.add(() => {
   app.stage.addChild(ui.statusContainer);
 
   GameState.selectedMonster = GameState.monsters.getValues()[0];
-})
-
-app.ticker.add((time) => {
-  ActionScheduler.work(time);
 })
 
 

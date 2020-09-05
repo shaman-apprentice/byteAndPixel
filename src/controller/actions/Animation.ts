@@ -7,14 +7,14 @@ import { wait } from 'utils/time';
 
 export interface SkillAnimation {
     frames: number;
-    animate(monster: Monster, target: Position);
+    animate: (monster: Monster, target: Position) => Promise<void>;
 }
 
 export class MoveAnimation implements SkillAnimation {
     frames = 20;
-    animate(monster: Monster, target: Position) {
+    async animate(monster: Monster, target: Position) {
         for (let frame = 0; frame < this.frames; frame++) {
-            wait().then();
+            await wait();
 
             if (frame == 0) {
                 playSound("step");
@@ -31,10 +31,10 @@ export class MoveAnimation implements SkillAnimation {
 export class AttackAnimation implements SkillAnimation {
     frames = 20;
     halfFrames = Math.floor(this.frames / 2);
-    animate(monster: Monster, target: Position) {
+    async animate(monster: Monster, target: Position) {
         const targetMonster = monsterAtPosition(target);
         for (let frame = 0; frame < this.frames; frame++) {
-            wait().then();
+            await wait();
 
             if (frame == 0) {
                 playSound("swing");

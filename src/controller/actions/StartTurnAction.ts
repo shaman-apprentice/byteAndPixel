@@ -7,25 +7,26 @@ import { SkillType } from 'controller/skills/Skill';
 
 export class StartTurnAction extends Action {
 
-  protected doAction() {
+  protected async doAction() {
     GameState.turn += 1;
 
-    GameState.monsters.getValues().forEach(monster => {
+    for (let monster of GameState.monsters.getValues()) {
+
       //use up remaining action points for rest action
-      new SkillAction(monster, monster.position, monster.skillByType(SkillType.REST)).execute()
-      
+      await new SkillAction(monster, monster.position, monster.skillByType(SkillType.REST)).execute()
+
       if (GameState.turn - monster.lastFight > 2) {
         monster.hitPoints.add(1);
       }
 
       monster.actionPoints.setToMax();
       monster.energy.current += 2;
-      
+
       if (monster.friendly) {
         this.handlehappiness(monster);
         this.handleexperiencePoints(monster);
       }
-    });
+    };
   }
 
   private handleexperiencePoints(monster: Monster) {

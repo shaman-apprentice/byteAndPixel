@@ -5,16 +5,16 @@ export abstract class Action {
     protected progress: number;
     protected targetProgress: number;
 
-    execute() {
+    async execute() {
         if (!this.canExecute()) {
             return false;
         }
-        this.doAction();
+        await this.doAction();
         StateChangeEvent.dispatch();
         return true;
     }
 
-    protected doAction() {
+    protected async doAction() {
 
     }
 

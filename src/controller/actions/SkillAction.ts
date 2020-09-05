@@ -9,9 +9,9 @@ export class SkillAction extends Action {
   target: Position;
   skill: Skill;
 
-  doAction() {
+  async doAction() {
     this.skill.cost.pay(this.attackingMonster);
-    this.skill.animation?.animate(this.attackingMonster, this.target);
+    await this.skill.animation?.animate(this.attackingMonster, this.target);
     this.skill.effect.applyEffect(this.attackingMonster, this.target);
   }
 

@@ -4,12 +4,12 @@ import { Enemy } from "viewModel/enemy/enemy";
 
 export class AiAction extends Action {
 
-    protected doAction() {
-        GameState.monsters.getValues().filter(monster => monster instanceof Enemy).map(monster => monster as Enemy).forEach(monster => {
+    protected async doAction() {
+        const monsters = GameState.monsters.getValues().filter(monster => monster instanceof Enemy) as Enemy[];
+        for (let monster of monsters) {
             while(monster.actionPoints.current > 0) {
-                monster.aiAction().execute();
+                await monster.aiAction().execute();
             }
-        })
+        }
     }
-
 }
