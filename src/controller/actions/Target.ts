@@ -1,22 +1,22 @@
-import { Position } from "../../viewModel/Position";
-import { Monster } from "viewModel/Monster";
 import { monsterAtPosition, tileAtPosition } from "viewModel/utils/monster";
 import { distance } from "viewModel/utils/map";
 import { GameState } from "GameState";
+import { Monster } from "model/Monster";
+import { TilePosition } from "model/TilePosition";
 
 export interface Target {
-    validTarget(subject: Monster, position: Position): boolean;
+    validTarget(subject: Monster, position: TilePosition): boolean;
 }
 
 export class CombinedTarget implements Target {
     onMap: Target = {
-        validTarget: (subject: Monster, position: Position): boolean => {
+        validTarget: (subject: Monster, position: TilePosition): boolean => {
             return GameState.map.tiles.get(position) != undefined;
         }
     }
 
     targets: Target[] = [this.onMap];
-    validTarget(subject: Monster, position: Position): boolean {
+    validTarget(subject: Monster, position: TilePosition): boolean {
         return this.targets.every(target => target.validTarget(subject, position));
     }
 
@@ -27,7 +27,7 @@ export class CombinedTarget implements Target {
 
     emptyTarget(): CombinedTarget {
         return this.add({
-            validTarget: (subject: Monster, position: Position): boolean => {
+            validTarget: (subject: Monster, position: TilePosition): boolean => {
                 return !monsterAtPosition(position);
             }
         });
@@ -35,7 +35,7 @@ export class CombinedTarget implements Target {
 
     enemyTarget(): CombinedTarget {
         return this.add({
-            validTarget: (subject: Monster, position: Position): boolean => {
+            validTarget: (subject: Monster, position: TilePosition): boolean => {
                 const target = monsterAtPosition(position);
                 return target && target.friendly != subject.friendly;
             }
@@ -45,7 +45,7 @@ export class CombinedTarget implements Target {
 
     inRange(maxDistance: number): CombinedTarget {
         return this.add({
-            validTarget: (subject: Monster, position: Position): boolean => {
+            validTarget: (subject: Monster, position: TilePosition): boolean => {
                 return distance(subject.position, position) <= maxDistance;
             }
         })
@@ -53,7 +53,7 @@ export class CombinedTarget implements Target {
 
     slimeStatus(slimed: boolean): CombinedTarget {
         return this.add({
-            validTarget: (subject: Monster, position: Position): boolean => {
+            validTarget: (subject: Monster, position: TilePosition): boolean => {
                 return tileAtPosition(position).slimed == slimed;
             }
         })
@@ -61,7 +61,7 @@ export class CombinedTarget implements Target {
 
     self(): Target {
         return this.add({
-            validTarget: (subject: Monster, position: Position): boolean => {
+            validTarget: (subject: Monster, position: TilePosition): boolean => {
                 return subject.position.isEqual(position);
             }
         })

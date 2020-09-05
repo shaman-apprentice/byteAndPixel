@@ -1,11 +1,11 @@
 import * as PIXI from 'pixi.js';
-import { Monster } from "../Monster";
 import { Skill, SkillType } from "../../controller/skills/Skill"
 import { GameState } from "GameState";
 import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
 import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { hoverGlow, selectionGlow } from 'viewModel/utils/filters';
+import { Monster } from 'model/Monster';
 
 export class ActionUI extends GuiElem {
     pixiElem: PIXI.Container;
@@ -96,7 +96,7 @@ class ActionUiElement extends GuiElem {
         this.text.visible = true;
         this.addFilter(hoverGlow());
     }
-    
+
     private onHoverExit() {
         this.text.visible = false;
         this.removeFilter(hoverGlow());

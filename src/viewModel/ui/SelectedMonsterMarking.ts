@@ -4,8 +4,9 @@ import { GameState } from '../../GameState'
 import { GuiElem } from '../GeneralAbstracts/GuiElem';
 import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
 import { selectionGlow } from '../utils/filters';
-import { Monster } from '../Monster';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
+import { Monster } from 'model/Monster';
+import { Ui } from './ui';
 
 export class SelectedMonsterMarking extends GuiElem {
   pixiElem: PIXI.Sprite;
@@ -40,10 +41,10 @@ export class SelectedMonsterMarking extends GuiElem {
   }
 
   private mark(monster: Monster) {
-    monster?.addFilter(selectionGlow());
+    Ui.getMonsterView(monster)?.addFilter(selectionGlow());
   }
-
+  
   private unmark(monster: Monster) {
-    monster?.removeFilter(selectionGlow());
+    Ui.getMonsterView(monster)?.removeFilter(selectionGlow());
   }
 }

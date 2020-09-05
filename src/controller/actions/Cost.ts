@@ -1,4 +1,4 @@
-import { Monster } from "viewModel/Monster";
+import { Monster } from "model/Monster";
 
 export interface Cost {
     canPay(monster: Monster): boolean;

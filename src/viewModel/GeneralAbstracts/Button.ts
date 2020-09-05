@@ -1,8 +1,5 @@
 import * as PIXI from 'pixi.js';
 
-import { EndTurnAction } from '../../controller/actions/EndTurnAction';
-import { GameState } from '../../GameState';
-import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
 import { GuiElemBg } from '../GeneralAbstracts/GuiElemBg';
 
 export abstract class Button extends GuiElemBg {

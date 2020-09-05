@@ -2,11 +2,11 @@ import { ElementSignature } from '../../viewModel/utils/Element';
 import { Cost, CombinedCost, EnergyCost } from 'controller/actions/Cost';
 import { Effect } from 'controller/actions/Effect';
 import { Target, CombinedTarget } from 'controller/actions/Target';
-import { Position } from "../../viewModel/Position";
-import { Monster } from 'viewModel/Monster';
 import { tileAtPosition, monsterAtPosition } from 'viewModel/utils/monster';
 import { GameState } from 'GameState';
 import { SkillAnimation, MoveAnimation, AttackAnimation } from 'controller/actions/Animation';
+import { TilePosition } from 'model/TilePosition';
+import { Monster } from 'model/Monster';
 
 export enum SkillType {
     MOVE, CLEANSE, ATTACK, REST
@@ -37,7 +37,7 @@ export class Skill {
         const target: Target = new CombinedTarget().emptyTarget().inRange(1);
         const cost = CombinedCost.of(1, 4);
         const effect = {
-            applyEffect: (subject: Monster, target: Position) => {
+            applyEffect: (subject: Monster, target: TilePosition) => {
                 subject.position = target;
             }
         }
@@ -51,7 +51,7 @@ export class Skill {
         const target: Target = new CombinedTarget().slimeStatus(true).inRange(1);
         const cost = CombinedCost.of(1, 4, 10);
         const effect = {
-            applyEffect: (subject: Monster, target: Position) => {
+            applyEffect: (subject: Monster, target: TilePosition) => {
                 tileAtPosition(target).slimed = false;
             }
         }
@@ -64,7 +64,7 @@ export class Skill {
         const target: Target = new CombinedTarget().slimeStatus(false).inRange(1);
         const cost = CombinedCost.of(1, 4);
         const effect = {
-            applyEffect: (subject: Monster, target: Position) => {
+            applyEffect: (subject: Monster, target: TilePosition) => {
                 tileAtPosition(target).slimed = true;
             }
         }
@@ -76,7 +76,7 @@ export class Skill {
         const target: Target = new CombinedTarget().self();
         const cost = EnergyCost.all();
         const effect = {
-            applyEffect: (subject: Monster, target: Position) => {
+            applyEffect: (subject: Monster, target: TilePosition) => {
                 const scale = subject.actionPoints.current;
                 subject.energy.add(scale * 5);
                 subject.actionPoints.setToMin();
@@ -90,7 +90,7 @@ export class Skill {
         const target: Target = new CombinedTarget().enemyTarget().inRange(range);
         const cost = CombinedCost.of(actionCost, energyCost);
         const effect = {
-            applyEffect: (subject: Monster, target: Position) => {
+            applyEffect: (subject: Monster, target: TilePosition) => {
                 const targetMonster = monsterAtPosition(target);
                 targetMonster.takeDamage(damage);
                 subject.lastFight = GameState.turn;

@@ -34,12 +34,10 @@ app.renderer.plugins.interaction.autoPreventDefault = true;
 
 loader.load();
 loader.onComplete.add(() => {
-  const ui = new Ui();
-  app.stage.addChild(ui.boardContainer);
-  app.stage.addChild(ui.middleGroundContainer);
-  app.stage.addChild(ui.statusContainer);
+  Ui.build();
+  app.stage.addChild(Ui.boardContainer);
+  app.stage.addChild(Ui.middleGroundContainer);
+  app.stage.addChild(Ui.statusContainer);
 
   GameState.selectedMonster = GameState.monsters.getValues()[0];
 })
-
-

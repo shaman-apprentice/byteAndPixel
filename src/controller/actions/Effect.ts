@@ -1,7 +1,7 @@
-import { Monster } from "viewModel/Monster";
+import { Monster } from "model/Monster";
+import { TilePosition } from "model/TilePosition";
 
-import { Position } from "../../viewModel/Position";
 
 export interface Effect {
-    applyEffect(monster: Monster, target: Position);
+    applyEffect(monster: Monster, target: TilePosition);
 }

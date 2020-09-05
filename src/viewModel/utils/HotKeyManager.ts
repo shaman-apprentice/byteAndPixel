@@ -2,7 +2,7 @@ import { MapMoveEvent } from "controller/events/MapMoveEvent";
 import { GameState } from "GameState";
 import { SkillType } from "controller/skills/Skill";
 import { SkillAction } from "controller/actions/SkillAction";
-import { Position } from "../Position";
+import { TilePosition } from "model/TilePosition";
 
 export const handleKeyPress = (key: string) => {
     switch (key) {
@@ -26,12 +26,12 @@ export const handleKeyPress = (key: string) => {
         case "9": selectSkillByTyoe(SkillType.ATTACK, 8); break;
         case "0": selectSkillByTyoe(SkillType.ATTACK, 9); break;
         // directly execute action
-        case "w": moveInDirection(Position.NORTH_WEST); break;
-        case "e": moveInDirection(Position.NORTH_EAST); break;
-        case "a": moveInDirection(Position.WEST); break;
-        case "d": moveInDirection(Position.EAST); break;
-        case "y": moveInDirection(Position.SOUTH_WEST); break;
-        case "x": moveInDirection(Position.SOUTH_EAST); break;
+        case "w": moveInDirection(TilePosition.NORTH_WEST); break;
+        case "e": moveInDirection(TilePosition.NORTH_EAST); break;
+        case "a": moveInDirection(TilePosition.WEST); break;
+        case "d": moveInDirection(TilePosition.EAST); break;
+        case "y": moveInDirection(TilePosition.SOUTH_WEST); break;
+        case "x": moveInDirection(TilePosition.SOUTH_EAST); break;
         case " ": rest(); break;
     }
 }
@@ -45,7 +45,7 @@ const selectSkillByTyoe = (skilltype: SkillType, index: number = 0) => {
     }
 }
 
-const moveInDirection = (delta: Position) => {
+const moveInDirection = (delta: TilePosition) => {
     const monster = GameState.selectedMonster;
     if (!monster) { return; }
     const skill = monster.skillByType(SkillType.MOVE);

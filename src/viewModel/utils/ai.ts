@@ -1,8 +1,8 @@
-import { Monster } from "../Monster";
-import { Position } from "../Position";
 import { distance } from "./map";
+import { Monster } from "model/Monster";
+import { TilePosition } from "model/TilePosition";
 
-export const closestMonster = (position: Position, monsters: Monster[]): Monster => {
+export const closestMonster = (position: TilePosition, monsters: Monster[]): Monster => {
     var closest = undefined;
     var minDistance = Number.MAX_VALUE;
 

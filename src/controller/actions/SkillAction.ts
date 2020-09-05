@@ -1,12 +1,12 @@
-import { Position } from "../../viewModel/Position";
 import { Action } from "./Action";
-import { Monster } from "../../viewModel/Monster";
 import { Skill } from "controller/skills/Skill";
+import { TilePosition } from "model/TilePosition";
+import { Monster } from "model/Monster";
 
 export class SkillAction extends Action {
 
   attackingMonster: Monster;
-  target: Position;
+  target: TilePosition;
   skill: Skill;
 
   async doAction() {
@@ -21,7 +21,7 @@ export class SkillAction extends Action {
     && this.skill.cost.canPay(this.attackingMonster);
   }
 
-  constructor(attackingMonster: Monster, target: Position, skill: Skill) {
+  constructor(attackingMonster: Monster, target: TilePosition, skill: Skill) {
     super();
     this.attackingMonster = attackingMonster;
     this.target = target;

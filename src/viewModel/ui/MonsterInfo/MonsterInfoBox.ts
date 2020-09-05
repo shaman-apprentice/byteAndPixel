@@ -1,9 +1,10 @@
 import * as PIXI from 'pixi.js';
 
 import { GuiElemBg } from 'viewModel/GeneralAbstracts/GuiElemBg';
-import { Monster } from 'viewModel/Monster';
 import { width } from '../../../index';
 import { HideButton } from '../buttons/hideButton';
+import { Monster } from 'model/Monster';
+import { Ui } from '../ui';
 
 export class MonsterInfoBox extends GuiElemBg {
 
@@ -49,6 +50,6 @@ export class MonsterInfoBox extends GuiElemBg {
     this.textBox.text = `action-points: ${monster.actionPoints.current}/${monster.actionPoints.max} \nenergy: ${monster.energy.current}/${monster.energy.max} \nhit-points: ${monster.hitPoints.current}/${monster.hitPoints.max} \nhappiness: ${monster.happiness.current}/${monster.happiness.max} \nxp: ${monster.experiencePoints.current}/${monster.experiencePoints.max}`;
     this.nameBox.text = `name: ${monster.name} \n`;
     this.bmstextBox.text = `Element: \nBody: \nMind: \nSoul: \n`;
-    this.monsterPic.texture = monster.pixiElem.texture;
+    this.monsterPic.texture = Ui.getMonsterView(monster).pixiElem.texture;
   }
 }

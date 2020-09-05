@@ -1,18 +1,20 @@
 import * as Sound from 'pixi-sound'
 
-import { Monster } from "viewModel/Monster";
-import { Position } from "../../viewModel/Position";
 import { monsterAtPosition } from "viewModel/utils/monster";
 import { wait } from 'utils/time';
+import { TilePosition } from 'model/TilePosition';
+import { Monster } from 'model/Monster';
+import { Ui } from 'viewModel/ui/ui';
 
 export interface SkillAnimation {
     frames: number;
-    animate: (monster: Monster, target: Position) => Promise<void>;
+    animate: (monster: Monster, target: TilePosition) => Promise<void>;
 }
 
 export class MoveAnimation implements SkillAnimation {
     frames = 10;
-    async animate(monster: Monster, target: Position) {
+    async animate(monster: Monster, target: TilePosition) {
+        const monsterView = Ui.getMonsterView(monster);
         for (let frame = 1; frame <= this.frames; frame++) {
             await wait();
 
@@ -20,9 +22,9 @@ export class MoveAnimation implements SkillAnimation {
                 playSound("step");
             }
             const { x, y } = interpolate(monster.position.toDisplayCoords(), target.toDisplayCoords(), frame / this.frames)
-            monster.moveImage(x, y);
-            if (frame == this.frames) {
-                monster.resetImage();
+            monsterView.moveImage(x, y);
+            if (frame == frame - 1) {
+                monsterView.resetImage();
             }
         }
     }
@@ -31,8 +33,10 @@ export class MoveAnimation implements SkillAnimation {
 export class AttackAnimation implements SkillAnimation {
     frames = 14;
     halfFrames = Math.floor(this.frames / 2);
-    async animate(monster: Monster, target: Position) {
+    async animate(monster: Monster, target: TilePosition) {
         const targetMonster = monsterAtPosition(target);
+        const monsterView = Ui.getMonsterView(monster);
+        const targetView = Ui.getMonsterView(targetMonster);
         for (let frame = 1; frame <= this.frames; frame++) {
             await wait();
 
@@ -40,18 +44,18 @@ export class AttackAnimation implements SkillAnimation {
                 playSound("swing");
             }
             const { x, y } = interpolate(monster.position.toDisplayCoords(), target.toDisplayCoords(), ((- Math.abs((frame - this.halfFrames) / this.frames)) + 0.5) * 0.2);
-            monster.moveImage(x, y);
+            monsterView.moveImage(x, y);
             if (frame == this.halfFrames) {
                 playSound("impact");
             }
             if (frame > this.halfFrames) {
                 const { x, y } = targetMonster.position.toDisplayCoords();
                 const shake = Math.random() * 10;
-                targetMonster.moveImage(x + shake, y);
+                targetView.moveImage(x + shake, y);
             }
             if (frame == this.frames) {
-                monster.resetImage();
-                monsterAtPosition(target)?.resetImage();
+                monsterView.resetImage();
+                targetView.resetImage();
             }
         }
     }

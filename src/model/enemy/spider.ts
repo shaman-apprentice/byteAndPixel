@@ -1,9 +1,7 @@
 import { Enemy } from "./enemy";
 import { GameState } from "GameState";
-import { Position } from "../Position";
 import { spiderStats } from "viewModel/utils/monster";
-import { closestMonster } from "../utils/ai";
-import { Monster } from "viewModel/Monster";
+import { closestMonster } from "../../viewModel/utils/ai";
 import { firstStep } from "viewModel/utils/map";
 import { Action } from "controller/actions/Action";
 import { SkillAction } from "controller/actions/SkillAction";
@@ -11,6 +9,8 @@ import { Skill, SkillType } from "controller/skills/Skill";
 import { Target, CombinedTarget } from "controller/actions/Target";
 import { CombinedCost } from "controller/actions/Cost";
 import { ElementSignature } from "viewModel/utils/Element";
+import { Monster } from "model/Monster";
+import { TilePosition } from "model/TilePosition";
 
 export class Spider extends Enemy {
     aiAction: () => Action = () => {
@@ -35,7 +35,7 @@ export class Spider extends Enemy {
         return result ? result : new SkillAction(this, this.position, this.skillByType(SkillType.REST))
     }
 
-    static spawn(position: Position) {
+    static spawn(position: TilePosition) {
         const monster = new Spider("spider", position, spiderStats)
         GameState.addMonster(monster);
     }
@@ -44,7 +44,7 @@ export class Spider extends Enemy {
         const target: Target = new CombinedTarget().emptyTarget().inRange(1);
         const cost = CombinedCost.of(1);
         const effect = {
-            applyEffect: (subject: Monster, target: Position) => {
+            applyEffect: (subject: Monster, target: TilePosition) => {
                 Spider.spawn(target);
                 GameState.map.tiles.get(target).slimed = true;
             }

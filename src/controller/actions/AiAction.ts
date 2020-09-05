@@ -1,6 +1,6 @@
 import { Action } from "./Action";
 import { GameState } from "GameState";
-import { Enemy } from "viewModel/enemy/enemy";
+import { Enemy } from "model/enemy/enemy";
 
 export class AiAction extends Action {
 

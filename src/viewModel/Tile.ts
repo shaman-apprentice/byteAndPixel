@@ -2,9 +2,9 @@ import * as PIXI from 'pixi.js'
 
 import { TileData } from "./utils/map";
 import { GuiElem } from "./GeneralAbstracts/GuiElem";
-import { tileSize, Position } from "./Position";
 import { tileSelected, tileClicked, tileHover } from "controller/Input";
 import { ElementSignature } from './utils/Element';
+import { TilePosition, tileSize } from 'model/TilePosition';
 
 export class Tile extends GuiElem {
     pixiElem: PIXI.Container;
@@ -12,7 +12,7 @@ export class Tile extends GuiElem {
     private slime: PIXI.Sprite;
   
     private _slimed: boolean;
-    position: Position;
+    position: TilePosition;
     elementSignature: ElementSignature;
   
     set slimed(slimed: boolean) {

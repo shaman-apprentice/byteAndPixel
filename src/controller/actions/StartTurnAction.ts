@@ -1,9 +1,9 @@
 import { GameState } from '../../GameState'
 import { Action } from './Action';
-import { Monster } from 'viewModel/Monster';
 import { Skills } from 'viewModel/utils/skills';
 import { SkillAction } from './SkillAction';
 import { SkillType } from 'controller/skills/Skill';
+import { Monster } from 'model/Monster';
 
 export class StartTurnAction extends Action {
 
