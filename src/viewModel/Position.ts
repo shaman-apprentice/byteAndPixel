@@ -1,6 +1,6 @@
 export const tileSize: number = 64;
-const displayTileSizeX: number = tileSize;
-const displayTileSizeY: number = tileSize * 0.75;
+export const displayTileSizeX: number = tileSize;
+export const displayTileSizeY: number = tileSize * 0.75;
 
 export class Position {
     constructor(public x: number, public y: number) { }

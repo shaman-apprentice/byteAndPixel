@@ -86,7 +86,7 @@ export class Skill {
         return new Skill("rest", SkillType.REST, ElementSignature.buildNeutral(), target, cost, effect, undefined, "rest");
     }
 
-    static attackAction(name: string, element: ElementSignature, damage: number, range: number, actionCost: number, energyCost): Skill {
+    static attackAction(name: string, element: ElementSignature, damage: number, range: number, actionCost: number, energyCost, icon: string): Skill {
         const target: Target = new CombinedTarget().enemyTarget().inRange(range);
         const cost = CombinedCost.of(actionCost, energyCost);
         const effect = {
@@ -104,7 +104,7 @@ export class Skill {
         }
         const animation = new AttackAnimation();
 
-        return new Skill(name,SkillType.ATTACK, element, target, cost, effect, animation, name);
+        return new Skill(name,SkillType.ATTACK, element, target, cost, effect, animation, icon);
     }
 
 }

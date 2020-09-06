@@ -6,6 +6,7 @@ import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
 import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { hoverGlow, selectionGlow } from 'viewModel/utils/filters';
+import { tileSize, displayTileSizeX, displayTileSizeY } from 'viewModel/Position';
 
 export class ActionUI extends GuiElem {
     pixiElem: PIXI.Container;
@@ -36,8 +37,9 @@ export class ActionUI extends GuiElem {
                 if (this.currentMonster.friendly) {
                     const size = this.currentMonster.skillList.length;
                     for (let i = 0; i < size; i++) {
-                        const action: ActionUiElement = new ActionUiElement("Assets/Images/Skills/Bubble.png", this.currentMonster.skillList[i]);
-                        action.pixiElem.position.set(GameState.selectedMonster.pixiElem.position.x + 70 * Math.cos(i * 2 * Math.PI / 10), GameState.selectedMonster.pixiElem.position.y + 70 * Math.sin(i * 2 * Math.PI / 10));
+                        const { x, y } = this.toDisplayCoordinates(GameState.selectedMonster, i);
+                        const action: ActionUiElement = new ActionUiElement(this.currentMonster.skillList[i]);
+                        action.pixiElem.position.set(x, y);
                         this.pixiElem.addChild(action.pixiElem);
                     }
                 }
@@ -47,31 +49,44 @@ export class ActionUI extends GuiElem {
             }
         }
     }
+
+    private toDisplayCoordinates(monster: Monster, ringPosition: number) {
+        const { x, y } = monster.position.toDisplayCoords();
+        const { x: deltaX, y: deltaY } = this.ringDeltaDisplayPosition(ringPosition);
+        return { x: x + deltaX, y: y + deltaY };
+    }
+
+    private ringDeltaDisplayPosition(ringPosition: number) {
+        return { x: 60 * Math.cos(ringPosition * 2 * Math.PI / 10) + displayTileSizeX / 2, y: 60 * Math.sin(ringPosition * 2 * Math.PI / 10) + displayTileSizeY / 2 }
+    }
 }
 
 class ActionUiElement extends GuiElem {
     pixiElem: PIXI.Container;
-    pic: PIXI.Sprite;
-    button: PIXI.Text;
     skill: Skill;
+    text: PIXI.Text;
+    direction: { x: number, y: number };
 
-    constructor(picture: string, skill: Skill) {
+    constructor(skill: Skill) {
         super();
         this.skill = skill;
         this.pixiElem = new PIXI.Container();
         this.pixiElem.filters = [];
-        this.pic = PIXI.Sprite.from(picture);
-        this.pic.scale.set(0.4, 0.4);
-        this.button = new PIXI.Text(skill.name);
-
-        this.button.interactive = true;
-        this.button.buttonMode = true;
-        this.button.on("click", () => { GameState.selectedAction = skill; });
-        this.button.on("mouseover", () => { this.onHover(); });
-        this.button.on("mouseout", () => { this.onHoverExit(); });
-        this.button.position.set(this.pic.position.x + 25, this.pic.position.y - 5);
-        this.pixiElem.addChild(this.pic);
-        this.pixiElem.addChild(this.button);
+        const icon = PIXI.Sprite.from("Assets/Images/Icons/" + skill.icon + ".png");
+        const border = PIXI.Sprite.from("Assets/Images/Icons/circle border.png");
+        this.text = new PIXI.Text(skill.name);
+        icon.anchor.set(0.5);
+        border.anchor.set(0.5);
+        this.text.anchor.set(0.5);
+        this.text.visible = false;
+        this.pixiElem.addChild(border);
+        this.pixiElem.addChild(icon);
+        this.pixiElem.addChild(this.text);
+        this.pixiElem.interactive = true;
+        this.pixiElem.buttonMode = true;
+        this.pixiElem.on("click", () => { GameState.selectedAction = skill; });
+        this.pixiElem.on("mouseover", () => { this.onHover(); });
+        this.pixiElem.on("mouseout", () => { this.onHoverExit(); });
         GameState.emitter.addEventListener("ActionSelectionEvent", () => this.markSelectedAction());
 
         this.markSelectedAction();
@@ -79,10 +94,12 @@ class ActionUiElement extends GuiElem {
     }
 
     private onHover() {
+        this.text.visible = true;
         this.addFilter(hoverGlow());
     }
-
+    
     private onHoverExit() {
+        this.text.visible = false;
         this.removeFilter(hoverGlow());
     }
 
