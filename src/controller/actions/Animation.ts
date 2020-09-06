@@ -11,17 +11,17 @@ export interface SkillAnimation {
 }
 
 export class MoveAnimation implements SkillAnimation {
-    frames = 20;
+    frames = 10;
     async animate(monster: Monster, target: Position) {
-        for (let frame = 0; frame < this.frames; frame++) {
+        for (let frame = 1; frame <= this.frames; frame++) {
             await wait();
 
-            if (frame == 0) {
+            if (frame == 1) {
                 playSound("step");
             }
             const { x, y } = interpolate(monster.position.toDisplayCoords(), target.toDisplayCoords(), frame / this.frames)
             monster.moveImage(x, y);
-            if (frame == frame - 1) {
+            if (frame == this.frames) {
                 monster.resetImage();
             }
         }
@@ -29,17 +29,17 @@ export class MoveAnimation implements SkillAnimation {
 }
 
 export class AttackAnimation implements SkillAnimation {
-    frames = 20;
+    frames = 14;
     halfFrames = Math.floor(this.frames / 2);
     async animate(monster: Monster, target: Position) {
         const targetMonster = monsterAtPosition(target);
-        for (let frame = 0; frame < this.frames; frame++) {
+        for (let frame = 1; frame <= this.frames; frame++) {
             await wait();
 
-            if (frame == 0) {
+            if (frame == 1) {
                 playSound("swing");
             }
-            const { x, y } = interpolate(monster.position.toDisplayCoords(), target.toDisplayCoords(), Math.abs(this.halfFrames - frame) / (5 * this.frames));
+            const { x, y } = interpolate(monster.position.toDisplayCoords(), target.toDisplayCoords(), ((- Math.abs((frame - this.halfFrames) / this.frames)) + 0.5) * 0.2);
             monster.moveImage(x, y);
             if (frame == this.halfFrames) {
                 playSound("impact");
@@ -49,7 +49,7 @@ export class AttackAnimation implements SkillAnimation {
                 const shake = Math.random() * 10;
                 targetMonster.moveImage(x + shake, y);
             }
-            if (frame == frame - 1) {
+            if (frame == this.frames) {
                 monster.resetImage();
                 monsterAtPosition(target)?.resetImage();
             }
