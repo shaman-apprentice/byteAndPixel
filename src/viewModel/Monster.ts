@@ -111,10 +111,12 @@ export class Monster extends GuiElem {
         return [Skills.defaultAttack(), Skill.walk(), Skill.cleanse(), Skill.rest()];
     }
 
-    learnSkill(skill: Skill) {
+    learnSkill(skill: Skill): boolean {
         if (!(this.skillList.map((s) => s.name).includes(skill.name))) {
             this.skillList.push(skill);
+            return true;
         }
+        return false;
     }
 
     skillByType(skilltype: SkillType, index : number = 0) : Skill {

@@ -32,8 +32,8 @@ export class StartTurnAction extends Action {
   private handleexperiencePoints(monster: Monster) {
     if (monster.experiencePoints.current == monster.experiencePoints.max) {
       monster.experiencePoints.current = 0;
-      monster.learnSkill(Skills.baseSkills.get(monster.elements.getElement()));
-
+      const skills = Skills.skillsByElement.get(monster.elements.getElement());
+      skills.find(skill => monster.learnSkill(skill));
     } else {
       monster.experiencePoints.current += 1;
     }

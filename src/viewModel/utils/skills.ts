@@ -3,10 +3,10 @@ import { Skill } from "../../controller/skills/Skill"
 import { Element, ElementSignature } from "./Element";
 
 export class Skills {
-    
+
     static skills: HashMap<string, Skill> = Skills.initSkills();
-    static baseSkills: HashMap<Element, Skill> = Skills.initBaseSkills();
-    
+    static skillsByElement: HashMap<Element, Skill[]> = Skills.initSkillsByElement();
+
     private static initSkills() {
         const map = new HashMap<string, Skill>(k => k)
         const skills = [
@@ -26,20 +26,20 @@ export class Skills {
         return map;
     }
 
-    private static buildSkill(name: string, element : ElementSignature, damage: number, energy: number, action: number, icon: string) : Skill {
+    private static buildSkill(name: string, element: ElementSignature, damage: number, energy: number, action: number, icon: string): Skill {
         return Skill.attackAction(name, element, damage, 1, action, energy, icon);
     }
-    
-    private static initBaseSkills() {
-        const map = new HashMap<Element, Skill>(k => k.toString());
-        map.set(Element.Earth, this.skills.get("Throw Stone"));
-        map.set(Element.Fire, this.skills.get("Small Flame"));
-        map.set(Element.Ice, this.skills.get("Snowflake"));
-        map.set(Element.Nature, this.skills.get("Breeze"));
-        map.set(Element.Metal, this.skills.get("Flying Screw"));
+
+    private static initSkillsByElement() {
+        const map = new HashMap<Element, Skill[]>(k => k.toString());
+        map.set(Element.Earth, [this.skills.get("Throw Stone"), this.skills.get("Stonefist")]);
+        map.set(Element.Fire, [this.skills.get("Small Flame"), this.skills.get("Fireball")]);
+        map.set(Element.Ice, [this.skills.get("Snowflake"), this.skills.get("Frost")]);
+        map.set(Element.Nature, [this.skills.get("Breeze"), this.skills.get("Vines")]);
+        map.set(Element.Metal, [this.skills.get("Flying Screw"), this.skills.get("Ironfist")]);
         return map;
     }
-    
+
     static defaultAttack(): Skill {
         return this.skills.get("default");
     }
