@@ -68,7 +68,14 @@ export class Monster extends GuiElem {
     moveImage(x: number, y: number) {
         // used in animation to temporarly move the image without changing its position
         // this is overwritten by changing the position
-        this.pixiElem.position.set(x,y + Monster.displayOffset);
+        this.pixiElem.position.set(x, y + Monster.displayOffset);
+    }
+
+    takeDamage(damage: number) {
+        this.hitPoints.sub(damage);
+        if (this.hitPoints.current <= 0) {
+            GameState.removeMonster(this);
+        }
     }
 
     resetImage() {
@@ -119,7 +126,7 @@ export class Monster extends GuiElem {
         return false;
     }
 
-    skillByType(skilltype: SkillType, index : number = 0) : Skill {
+    skillByType(skilltype: SkillType, index: number = 0): Skill {
         return this.skillList.filter((skill) => skill.type == skilltype)[index];
     }
 }

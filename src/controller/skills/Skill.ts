@@ -92,14 +92,9 @@ export class Skill {
         const effect = {
             applyEffect: (subject: Monster, target: Position) => {
                 const targetMonster = monsterAtPosition(target);
-                targetMonster.hitPoints.sub(damage);
+                targetMonster.takeDamage(damage);
                 subject.lastFight = GameState.turn;
                 targetMonster.lastFight = GameState.turn;
-                
-                //TODO: move this die nonsense inside the monster class
-                if (targetMonster.hitPoints.current <= 0) {
-                    GameState.removeMonster(targetMonster);
-                }
             }
         }
         const animation = new AttackAnimation();
