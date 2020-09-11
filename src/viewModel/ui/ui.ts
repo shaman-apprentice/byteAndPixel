@@ -41,6 +41,7 @@ export class Ui {
         boardContainer.addChild(GameState.map.pixiElem);
         boardContainer.addChild(new SelectedMonsterMarking().pixiElem);
         boardContainer.addChild(this.monsterContainer);
+        boardContainer.addChild(new ActionUI().pixiElem);
 
         boardContainer.position.set(tileSize / 2, tileSize / 2);
         return boardContainer;
@@ -51,7 +52,6 @@ export class Ui {
 
         statusContainer.addChild(new ActiveMonsterInfo().pixiElem); 
         statusContainer.addChild(new EndTurnButton().pixiElem);
-        statusContainer.addChild(new ActionUI().pixiElem);
         statusContainer.addChild(new HideButton().pixiElem);
 
         return statusContainer;

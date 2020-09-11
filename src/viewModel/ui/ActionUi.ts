@@ -57,7 +57,7 @@ export class ActionUI extends GuiElem {
     }
 
     private ringDeltaDisplayPosition(ringPosition: number) {
-        return { x: 60 * Math.cos(ringPosition * 2 * Math.PI / 10) + displayTileSizeX / 2, y: 60 * Math.sin(ringPosition * 2 * Math.PI / 10) + displayTileSizeY / 2 }
+        return { x: 60 * Math.cos(ringPosition * 2 * Math.PI / 10), y: 60 * Math.sin(ringPosition * 2 * Math.PI / 10) }
     }
 }
 
