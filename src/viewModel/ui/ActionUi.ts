@@ -6,7 +6,6 @@ import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
 import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { hoverGlow, selectionGlow } from 'viewModel/utils/filters';
-import { tileSize, displayTileSizeX, displayTileSizeY } from 'viewModel/Position';
 
 export class ActionUI extends GuiElem {
     pixiElem: PIXI.Container;

@@ -4,13 +4,11 @@ import { GuiElem } from "../GeneralAbstracts/GuiElem";
 import { width } from '../../index';
 
 export class Design extends GuiElem{
-    name:string;
     pixiElem: PIXI.Sprite;
     
 
-    constructor (name: string, baseDesign: string){
+    constructor (baseDesign: string){
         super();
-        this.name = name;
         this.pixiElem = PIXI.Sprite.from(baseDesign);
         
         var scale = 0.8;

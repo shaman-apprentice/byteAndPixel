@@ -60,7 +60,7 @@ export class Ui {
     private createMiddleGroundContainer(){
         const middleGroundContainer = new PIXI.Container();
 
-        middleGroundContainer.addChild(new Design("test", "Assets/Images/Ranke.png").pixiElem);
+        middleGroundContainer.addChild(new Design("Assets/Images/Ranke.png").pixiElem);
 
         return middleGroundContainer;
     }
