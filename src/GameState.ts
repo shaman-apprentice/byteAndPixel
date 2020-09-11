@@ -28,8 +28,8 @@ export class GameState {
   static removeMonster(monster: Monster) {
     GameState.monsters.delete(monster.id);
     MonsterRemoveEvent.dispatch(monster);
-    if (GameState.selectedMonster == monster.id) {
-      GameState.selectedMonster = GameState.monsters.getValues().find(candiate => candiate.friendly && candiate.id != monster.id)?.id ?? -1
+    if (GameState.selectedMonster?.id == monster.id) {
+      GameState.selectedMonster = GameState.monsters.getValues().find(candiate => candiate.friendly && candiate.id != monster.id)
     }
   }
 
