@@ -15,8 +15,16 @@ const remoteTargetDir = '/byteAndPixel';
     
     await sftp.rmdir(remoteTargetDir, true);
     await uploadFiles(sftp);
-  }
-  finally {
+  } catch (error) { // "Unhandled promise rejections" do still exit the process with `0` in node 12. Therefore force exit here with `!= 0` 
+    try {
+      sftp.end();
+    } catch (sftpEndError) {
+      console.error('Error closing sftp client:', sftpEndError);
+    }
+
+    console.error(error);
+    process.exit(1);
+  } finally {
     sftp.end();
   }
 })();
