@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 import { Skill, SkillType } from "../../controller/skills/Skill"
 import { GameState } from "GameState";
 import { StateChangeEvent } from "../../controller/events/StateChangeEvent";
-import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
+import { GuiElem } from 'view/GeneralAbstracts/GuiElem';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { hoverGlow, selectionGlow } from 'viewModel/utils/filters';
 import { Monster } from 'model/Monster';

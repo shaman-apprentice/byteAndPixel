@@ -2,13 +2,13 @@ import * as PIXI from 'pixi.js';
 
 import { SelectedMonsterMarking } from './SelectedMonsterMarking';
 import { GameState } from '../../GameState';
-import { EndTurnButton } from './buttons/EndTurnButton';
+import { EndTurnButton } from '../../view/ui/buttons/EndTurnButton';
 import { MonsterAddEvent } from '../../controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from '../../controller/events/MonsterRemoveEvent';
 import { MapMoveEvent } from 'controller/events/MapMoveEvent';
-import { ActiveMonsterInfo } from './MonsterInfo/ActiveMonsterInfo';
+import { ActiveMonsterInfo } from '../../view/ui/MonsterInfo/ActiveMonsterInfo';
 import { ActionUI } from './ActionUi';
-import { HideButton } from './buttons/hideButton';
+import { HideButton } from '../../view/ui/buttons/hideButton';
 import { Design } from './Design';
 import { tileSize } from 'model/TilePosition';
 import { MonsterView } from 'view/MonsterView';

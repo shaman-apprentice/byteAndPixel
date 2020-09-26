@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
 
 import { createMapData, neighbors as getNeighbors } from './utils/map'
-import { GuiElem } from './GeneralAbstracts/GuiElem';
+import { GuiElem } from '../view/GeneralAbstracts/GuiElem';
 import { HashMap } from 'utils/HashMap';
 import { Tile } from './Tile';
 import { ElementSignature } from './utils/Element';

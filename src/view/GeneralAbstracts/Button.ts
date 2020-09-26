@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import { GuiElemBg } from '../GeneralAbstracts/GuiElemBg';
+import { GuiElemBg } from './GuiElemBg';
 
 export abstract class Button extends GuiElemBg {
 

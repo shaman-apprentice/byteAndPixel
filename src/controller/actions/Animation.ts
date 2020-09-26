@@ -4,7 +4,7 @@ import { monsterAtPosition } from "viewModel/utils/monster";
 import { wait } from 'utils/time';
 import { TilePosition } from 'model/TilePosition';
 import { Monster } from 'model/Monster';
-import { Ui } from 'viewModel/ui/ui';
+import { Ui } from 'view/ui/ui';
 
 export interface SkillAnimation {
     frames: number;

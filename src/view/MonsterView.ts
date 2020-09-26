@@ -1,5 +1,5 @@
 import * as PIXI from 'pixi.js';
-import { GuiElem } from 'viewModel/GeneralAbstracts/GuiElem';
+import { GuiElem } from 'view/GeneralAbstracts/GuiElem';
 import { GameState } from 'GameState';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 import { StateChangeEvent } from 'controller/events/StateChangeEvent';

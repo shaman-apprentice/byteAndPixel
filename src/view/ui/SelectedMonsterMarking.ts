@@ -1,12 +1,12 @@
 import * as PIXI from 'pixi.js'
 
 import { GameState } from '../../GameState'
-import { GuiElem } from '../GeneralAbstracts/GuiElem';
+import { GuiElem } from '../../view/GeneralAbstracts/GuiElem';
 import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
-import { selectionGlow } from '../utils/filters';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { Monster } from 'model/Monster';
 import { Ui } from './ui';
+import { selectionGlow } from 'viewModel/utils/filters';
 
 export class SelectedMonsterMarking extends GuiElem {
   pixiElem: PIXI.Sprite;

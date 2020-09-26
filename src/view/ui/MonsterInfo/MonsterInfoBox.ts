@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js';
 
-import { GuiElemBg } from 'viewModel/GeneralAbstracts/GuiElemBg';
+import { GuiElemBg } from 'view/GeneralAbstracts/GuiElemBg';
 import { width } from '../../../index';
 import { HideButton } from '../buttons/hideButton';
 import { Monster } from 'model/Monster';
-import { Ui } from '../ui';
+import { Ui } from '../../../view/ui/ui';
 
 export class MonsterInfoBox extends GuiElemBg {
 
