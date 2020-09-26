@@ -1,10 +1,10 @@
 import * as PIXI from 'pixi.js'
 
-import { createMapData, neighbors as getNeighbors } from './utils/map'
+import { createMapData, neighbors as getNeighbors } from '../controller/map'
 import { GuiElem } from '../view/GeneralAbstracts/GuiElem';
 import { HashMap } from 'utils/HashMap';
 import { Tile } from './Tile';
-import { ElementSignature } from './utils/Element';
+import { ElementSignature } from '../model/Element';
 import { TilePosition } from 'model/TilePosition';
 
 export class TileMap extends GuiElem {

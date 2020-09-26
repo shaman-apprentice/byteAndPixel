@@ -3,7 +3,7 @@ import * as Sound from 'pixi-sound'
 
 import { Application } from 'pixi.js';
 import { Ui } from './view/ui/ui';
-import { handleKeyPress } from 'viewModel/utils/HotKeyManager';
+import { handleKeyPress } from 'controller/HotKeyManager';
 import { GameState } from 'GameState';
 
 export const width = 800;

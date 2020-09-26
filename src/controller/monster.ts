@@ -1,11 +1,11 @@
-import { GameState } from "../../GameState";
 import { HashMap } from "utils/HashMap";
-import { Element, ElementSignature } from "./Element";
 import { Spider } from "model/enemy/spider";
 import { Cave } from "model/enemy/cave";
 import { Tile } from "viewModel/Tile";
 import { TilePosition } from "model/TilePosition";
 import { Monster, MonsterStats } from "model/Monster";
+import { GameState } from "GameState";
+import { Element, ElementSignature } from "model/Element";
 
 export const monsterMap = (): HashMap<number, Monster> => {
   const map = new HashMap<number, Monster>(k => String(k));

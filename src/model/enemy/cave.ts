@@ -1,6 +1,6 @@
 import { Enemy } from "./enemy";
 import { GameState } from "GameState";
-import { neighbors } from "viewModel/utils/map";
+import { neighbors } from "controller/map";
 import { Action } from "controller/actions/Action";
 import { SkillAction } from "controller/actions/SkillAction";
 import { SkillType } from "controller/skills/Skill";

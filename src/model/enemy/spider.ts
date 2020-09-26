@@ -1,16 +1,16 @@
 import { Enemy } from "./enemy";
 import { GameState } from "GameState";
-import { spiderStats } from "viewModel/utils/monster";
-import { closestMonster } from "../../viewModel/utils/ai";
-import { firstStep } from "viewModel/utils/map";
+import { closestMonster } from "../../controller/ai";
+import { firstStep } from "controller/map";
 import { Action } from "controller/actions/Action";
 import { SkillAction } from "controller/actions/SkillAction";
 import { Skill, SkillType } from "controller/skills/Skill";
 import { Target, CombinedTarget } from "controller/actions/Target";
 import { CombinedCost } from "controller/actions/Cost";
-import { ElementSignature } from "viewModel/utils/Element";
+import { ElementSignature } from "model/Element";
 import { Monster } from "model/Monster";
 import { TilePosition } from "model/TilePosition";
+import { spiderStats } from "controller/monster";
 
 export class Spider extends Enemy {
     aiAction: () => Action = () => {

@@ -4,7 +4,7 @@ import { GameState } from 'GameState';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 import { StateChangeEvent } from 'controller/events/StateChangeEvent';
 import { Monster } from 'model/Monster';
-import { hoverGlow, actionGlow } from 'viewModel/utils/filters';
+import { hoverGlow, actionGlow } from 'view/utils/filters';
 
 export class MonsterView extends GuiElem {
     private static displayOffset = -6;

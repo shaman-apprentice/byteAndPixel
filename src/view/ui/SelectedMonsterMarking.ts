@@ -6,7 +6,7 @@ import { StateChangeEvent } from '../../controller/events/StateChangeEvent';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { Monster } from 'model/Monster';
 import { Ui } from './ui';
-import { selectionGlow } from 'viewModel/utils/filters';
+import { selectionGlow } from 'view/utils/filters';
 
 export class SelectedMonsterMarking extends GuiElem {
   pixiElem: PIXI.Sprite;

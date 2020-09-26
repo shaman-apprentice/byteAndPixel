@@ -1,12 +1,12 @@
-import { ElementSignature } from '../../viewModel/utils/Element';
+import { ElementSignature } from '../../model/Element';
 import { Cost, CombinedCost, EnergyCost } from 'controller/actions/Cost';
 import { Effect } from 'controller/actions/Effect';
 import { Target, CombinedTarget } from 'controller/actions/Target';
-import { tileAtPosition, monsterAtPosition } from 'viewModel/utils/monster';
 import { GameState } from 'GameState';
 import { SkillAnimation, MoveAnimation, AttackAnimation } from 'controller/actions/Animation';
 import { TilePosition } from 'model/TilePosition';
 import { Monster } from 'model/Monster';
+import { monsterAtPosition, tileAtPosition } from 'controller/monster';
 
 export enum SkillType {
     MOVE, CLEANSE, ATTACK, REST

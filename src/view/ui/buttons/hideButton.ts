@@ -1,5 +1,3 @@
-import * as PIXI from 'pixi.js';
-
 import { Button } from '../../GeneralAbstracts/Button';
 import { InfoHideEvent } from 'controller/events/InfoHideEvent';
 import { width } from '../../../index';

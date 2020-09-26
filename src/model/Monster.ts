@@ -1,8 +1,8 @@
 import { Skill, SkillType } from "controller/skills/Skill";
-import { ValueWithRange } from "viewModel/utils/ValueWithRange";
-import { ElementSignature } from "viewModel/utils/Element";
+import { ValueWithRange } from "model/ValueWithRange";
+import { ElementSignature } from "model/Element";
 import { TilePosition } from "./TilePosition";
-import { Skills } from "viewModel/utils/skills";
+import { Skills } from "controller/skills";
 import { GameState } from "GameState";
 
 export class Monster {

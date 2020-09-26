@@ -1,6 +1,6 @@
 import { GameState } from '../../GameState'
 import { Action } from './Action';
-import { Skills } from 'viewModel/utils/skills';
+import { Skills } from 'controller/skills';
 import { SkillAction } from './SkillAction';
 import { SkillType } from 'controller/skills/Skill';
 import { Monster } from 'model/Monster';

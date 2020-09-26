@@ -1,8 +1,8 @@
 import { MonsterInfoBox } from './MonsterInfoBox';
 import { GameState } from 'GameState';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
-import { monsterAtMousePosition } from 'viewModel/utils/monster';
 import { InfoHideEvent } from 'controller/events/InfoHideEvent';
+import { monsterAtMousePosition } from 'controller/monster';
 export class HoverMonsterInfo extends MonsterInfoBox {
 
     textBox: PIXI.Text;

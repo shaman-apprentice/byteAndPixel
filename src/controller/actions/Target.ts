@@ -1,5 +1,5 @@
-import { monsterAtPosition, tileAtPosition } from "viewModel/utils/monster";
-import { distance } from "viewModel/utils/map";
+import { distance } from "controller/map";
+import { monsterAtPosition, tileAtPosition } from "controller/monster";
 import { GameState } from "GameState";
 import { Monster } from "model/Monster";
 import { TilePosition } from "model/TilePosition";

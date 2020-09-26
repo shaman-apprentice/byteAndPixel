@@ -1,5 +1,5 @@
 import { HashMap } from "utils/HashMap";
-import { ElementSignature } from "./Element";
+import { ElementSignature } from "../model/Element";
 import { TilePosition } from "model/TilePosition";
 
 class TerrainType {

@@ -1,5 +1,4 @@
 import { TileMap } from './viewModel/TileMap';
-import { getInitialMonsters } from './viewModel/utils/monster';
 import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from 'controller/events/MonsterRemoveEvent';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
@@ -8,6 +7,7 @@ import { ActionSelectionEvent } from 'controller/events/ActionSelectionEvent';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { TilePosition } from 'model/TilePosition';
 import { Monster } from 'model/Monster';
+import { getInitialMonsters } from 'controller/monster';
 
 export class GameState {
   public static emitter = new EventTarget();

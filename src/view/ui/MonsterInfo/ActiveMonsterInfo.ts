@@ -3,8 +3,8 @@ import { GameState } from "GameState";
 import { InfoHideEvent } from "controller/events/InfoHideEvent";
 import { SelectedMonsterChangedEvent } from "controller/events/SelectedMonsterChangedEvent";
 import { MouseHoverEvent } from "controller/events/MouseHoverEvent";
-import { monsterAtMousePosition } from "viewModel/utils/monster";
 import { StateChangeEvent } from "controller/events/StateChangeEvent";
+import { monsterAtMousePosition } from "controller/monster";
 
 export class ActiveMonsterInfo extends MonsterInfoBox{
     

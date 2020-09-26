@@ -1,6 +1,6 @@
 import { HashMap } from "utils/HashMap";
-import { Skill } from "../../controller/skills/Skill"
-import { Element, ElementSignature } from "./Element";
+import { Skill } from "./skills/Skill"
+import { Element, ElementSignature } from "../model/Element";
 
 export class Skills {
 

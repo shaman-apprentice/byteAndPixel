@@ -1,7 +1,7 @@
-import { monsterAtPosition } from "../viewModel/utils/monster";
 import { GameState } from "../GameState";
 import { SkillAction } from "./actions/SkillAction";
 import { TilePosition } from "model/TilePosition";
+import { monsterAtPosition } from "./monster";
 
 export const tileSelected = (position: TilePosition) => {
     const monsterToBeSelected = monsterAtPosition(position);
