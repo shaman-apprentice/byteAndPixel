@@ -1,4 +1,4 @@
-import { TileMap } from './viewModel/TileMap';
+import { TileMap } from './model/TileMap';
 import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from 'controller/events/MonsterRemoveEvent';
 import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';

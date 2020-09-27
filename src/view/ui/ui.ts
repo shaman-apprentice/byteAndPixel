@@ -14,10 +14,12 @@ import { tileSize } from 'model/TilePosition';
 import { MonsterView } from 'view/MonsterView';
 import { Monster } from 'model/Monster';
 import { HashMap } from 'utils/HashMap';
+import { TileMapView } from './TileMapView';
 
 export class Ui {
     static emitter = Ui.initialize();
     static monsters: HashMap<Monster, MonsterView>  = new HashMap<Monster, MonsterView>((monster: Monster) => monster ? monster.id.toString() : undefined);
+    static tileMapView: TileMapView;
     static boardContainer: PIXI.Container = new PIXI.Container();
     static statusContainer: PIXI.Container  = new PIXI.Container();
     static monsterContainer: PIXI.Container = new PIXI.Container();;
@@ -46,8 +48,9 @@ export class Ui {
 
     private static createBoardContainer() {
         this.boardContainer = new PIXI.Container();
+        this.tileMapView = new TileMapView(GameState.map);
 
-        this.boardContainer.addChild(GameState.map.pixiElem);
+        this.boardContainer.addChild(this.tileMapView.pixiElem);
         this.boardContainer.addChild(new SelectedMonsterMarking().pixiElem);
         this.boardContainer.addChild(this.monsterContainer);
         this.boardContainer.addChild(new ActionUI().pixiElem);

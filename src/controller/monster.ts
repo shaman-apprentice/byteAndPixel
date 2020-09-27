@@ -1,7 +1,7 @@
 import { HashMap } from "utils/HashMap";
 import { Spider } from "model/enemy/spider";
 import { Cave } from "model/enemy/cave";
-import { Tile } from "viewModel/Tile";
+import { Tile } from "model/Tile";
 import { TilePosition } from "model/TilePosition";
 import { Monster, MonsterStats } from "model/Monster";
 import { GameState } from "GameState";
