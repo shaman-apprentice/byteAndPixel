@@ -2,6 +2,7 @@ import { GameState } from "../GameState";
 import { SkillAction } from "./actions/SkillAction";
 import { TilePosition } from "model/TilePosition";
 import { monsterAtPosition } from "./monster";
+import { ViewState } from "ViewState";
 
 export const tileSelected = (position: TilePosition) => {
     const monsterToBeSelected = monsterAtPosition(position);
@@ -12,7 +13,7 @@ export const tileSelected = (position: TilePosition) => {
 
 export const decideAction = (position: TilePosition) => {
     const selectedMonster = GameState.selectedMonster;
-    var selectedSkill = GameState.selectedAction;
+    var selectedSkill = ViewState.selectedAction;
 
     if (!selectedMonster || !selectedMonster.friendly || !selectedSkill) {
         return;
@@ -31,5 +32,5 @@ export const tileClicked = (position: TilePosition) => {
 }
 
 export const tileHover = (position: TilePosition) => {
-    GameState.mousePosition = position;
+    ViewState.mousePosition = position;
 }

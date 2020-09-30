@@ -5,6 +5,7 @@ import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
 import { StateChangeEvent } from 'controller/events/StateChangeEvent';
 import { Monster } from 'model/Monster';
 import { hoverGlow, actionGlow } from 'view/utils/filters';
+import { ViewState } from 'ViewState';
 
 export class MonsterView extends GuiElem {
     private static displayOffset = -6;
@@ -48,7 +49,7 @@ export class MonsterView extends GuiElem {
     }
 
     private checkHover() {
-        if (GameState.mousePosition.isEqual(this.model.position)) {
+        if (ViewState.mousePosition.isEqual(this.model.position)) {
             this.onHover();
         } else {
             this.onHoverEnd();

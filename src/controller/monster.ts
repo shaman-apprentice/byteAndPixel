@@ -6,6 +6,7 @@ import { TilePosition } from "model/TilePosition";
 import { Monster, MonsterStats } from "model/Monster";
 import { GameState } from "GameState";
 import { Element, ElementSignature } from "model/Element";
+import { ViewState } from "ViewState";
 
 export const monsterMap = (): HashMap<number, Monster> => {
   const map = new HashMap<number, Monster>(k => String(k));
@@ -34,7 +35,7 @@ export const getInitialMonsters = (): HashMap<number, Monster> => {
 }
 
 export const monsterAtMousePosition = (): Monster => {
-  const position = GameState.mousePosition;
+  const position = ViewState.mousePosition;
   if (!position) {
     return undefined;
   }

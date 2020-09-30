@@ -6,6 +6,7 @@ import { GuiElem } from 'view/GeneralAbstracts/GuiElem';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { hoverGlow, selectionGlow } from 'view/utils/filters';
 import { Monster } from 'model/Monster';
+import { ViewState } from 'ViewState';
 
 export class ActionUI extends GuiElem {
     pixiElem: PIXI.Container;
@@ -25,7 +26,7 @@ export class ActionUI extends GuiElem {
     }
 
     private selectMove() {
-        GameState.selectedAction = GameState.selectedMonster?.skillByType(SkillType.MOVE);
+        ViewState.selectedAction = GameState.selectedMonster?.skillByType(SkillType.MOVE);
     }
 
     private showActions() {
@@ -83,7 +84,7 @@ class ActionUiElement extends GuiElem {
         this.pixiElem.addChild(this.text);
         this.pixiElem.interactive = true;
         this.pixiElem.buttonMode = true;
-        this.pixiElem.on("click", () => { GameState.selectedAction = skill; });
+        this.pixiElem.on("click", () => { ViewState.selectedAction = skill; });
         this.pixiElem.on("mouseover", () => { this.onHover(); });
         this.pixiElem.on("mouseout", () => { this.onHoverExit(); });
         GameState.emitter.addEventListener("ActionSelectionEvent", () => this.markSelectedAction());
@@ -103,7 +104,7 @@ class ActionUiElement extends GuiElem {
     }
 
     private markSelectedAction() {
-        if (GameState.selectedAction && this.skill.name == GameState.selectedAction.name) {
+        if (ViewState.selectedAction && this.skill.name == ViewState.selectedAction.name) {
             this.addFilter(selectionGlow());
         } else {
             this.removeFilter(selectionGlow());

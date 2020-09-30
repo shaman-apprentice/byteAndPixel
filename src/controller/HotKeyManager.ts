@@ -3,6 +3,7 @@ import { GameState } from "GameState";
 import { SkillType } from "controller/skills/Skill";
 import { SkillAction } from "controller/actions/SkillAction";
 import { TilePosition } from "model/TilePosition";
+import { ViewState } from "ViewState";
 
 export const handleKeyPress = (key: string) => {
     switch (key) {
@@ -41,7 +42,7 @@ const selectSkillByTyoe = (skilltype: SkillType, index: number = 0) => {
     if (!monster) { return; }
     const skill = monster.skillByType(skilltype, index);
     if (skill) {
-        GameState.selectedAction = skill;
+        ViewState.selectedAction = skill;
     }
 }
 

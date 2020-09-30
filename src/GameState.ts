@@ -1,11 +1,7 @@
 import { TileMap } from './model/TileMap';
 import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from 'controller/events/MonsterRemoveEvent';
-import { MouseHoverEvent } from 'controller/events/MouseHoverEvent';
-import { Skill } from 'controller/skills/Skill';
-import { ActionSelectionEvent } from 'controller/events/ActionSelectionEvent';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
-import { TilePosition } from 'model/TilePosition';
 import { Monster } from 'model/Monster';
 import { getInitialMonsters } from 'controller/monster';
 
@@ -16,8 +12,6 @@ export class GameState {
   public static monsters = getInitialMonsters();
   public static turn = 1;
   private static _selectedMonster = undefined;
-  private static _mousePosition : TilePosition = undefined;
-  private static _selectedAction : Skill = undefined;
 
 
   static addMonster(monster: Monster) {
@@ -42,23 +36,6 @@ export class GameState {
     SelectedMonsterChangedEvent.dispatch(monster);
   }
 
-  static get mousePosition() {
-    return this._mousePosition;
-  }
-
-  static set mousePosition(position: TilePosition) {
-    this._mousePosition = position;
-    MouseHoverEvent.dispatch(position);
-  }
-
-  static get selectedAction() {
-    return this._selectedAction;
-  }
-
-  static set selectedAction(skill: Skill) {
-    this._selectedAction = skill;
-    ActionSelectionEvent.dispatch(skill);
-  }
 
 
 }
