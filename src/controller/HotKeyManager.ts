@@ -5,7 +5,7 @@ import { SkillAction } from "controller/actions/SkillAction";
 import { TilePosition } from "model/TilePosition";
 import { ViewState } from "ViewState";
 
-export const handleKeyPress = (key: string) => {
+export const handleKeyPress = (key: string, shift: boolean, ctrl: boolean) => {
     switch (key) {
         // move Camera over map
         case "ArrowLeft": MapMoveEvent.dispatch({ x: 40, y: 0 }); break;
@@ -33,6 +33,9 @@ export const handleKeyPress = (key: string) => {
         case "d": moveInDirection(TilePosition.EAST); break;
         case "y": moveInDirection(TilePosition.SOUTH_WEST); break;
         case "x": moveInDirection(TilePosition.SOUTH_EAST); break;
+        // load/save
+        case "c" : if (ctrl) GameState.save(); break;
+        case "v" : if (ctrl) GameState.load(); break;
         case " ": rest(); break;
     }
 }

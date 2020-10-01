@@ -26,10 +26,11 @@ export class Ui {
     static middleGroundContainer: PIXI.Container = new PIXI.Container();
 
     static build () {
-        this.boardContainer.destroy({children: true})
-        this.statusContainer.destroy({children: true})
-        this.monsterContainer.destroy({children: true})
-        this.middleGroundContainer.destroy({children: true})
+        this.boardContainer.removeChildren();
+        this.statusContainer.removeChildren();
+        this.monsterContainer.removeChildren();
+        this.middleGroundContainer.removeChildren();
+        this.monsters.deleteAll();
 
         this.createMonsterContainer();
         this.createBoardContainer();
@@ -47,7 +48,6 @@ export class Ui {
     }
 
     private static createBoardContainer() {
-        this.boardContainer = new PIXI.Container();
         this.tileMapView = new TileMapView(GameState.map);
 
         this.boardContainer.addChild(this.tileMapView.pixiElem);
@@ -59,22 +59,16 @@ export class Ui {
     }
 
     private static createStatusContainer() {
-        this.statusContainer = new PIXI.Container();
-
         this.statusContainer.addChild(new ActiveMonsterInfo().pixiElem); 
         this.statusContainer.addChild(new EndTurnButton().pixiElem);
         this.statusContainer.addChild(new HideButton().pixiElem);
     }
 
     private static createMiddleGroundContainer(){
-        this.middleGroundContainer = new PIXI.Container();
-
         this.middleGroundContainer.addChild(new Design("Assets/Images/Ranke.png").pixiElem);
     }
 
     private static createMonsterContainer() {
-        this.monsterContainer = new PIXI.Container();
-
         GameState.monsters.forEach(monster => this.addMonster(monster))
     }
 

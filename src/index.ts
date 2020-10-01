@@ -27,7 +27,7 @@ app.view.addEventListener('contextmenu', event => {
   event.preventDefault();
 }, false);
 
-document.addEventListener('keydown', (event) => { handleKeyPress(event.key) });
+document.addEventListener('keydown', (event) => { handleKeyPress(event.key, event.shiftKey, event.ctrlKey) });
 
 
 app.renderer.plugins.interaction.autoPreventDefault = true;
