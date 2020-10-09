@@ -1,13 +1,9 @@
 export class ValueWithRange {
 
-    private _current: number;
-    private _min: number;
-    private _max: number;
+    constructor(private _max: number, private _current: number = _max, private _min: number = 0) { }
 
-    constructor(max: number, current: number = max, min: number = 0) {
-        this._current = current;
-        this._max = max;
-        this._min = min;
+    deepClone() {
+        return new ValueWithRange(this.max, this.current, this.min);
     }
 
     get current() {

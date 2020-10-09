@@ -8,28 +8,35 @@ import { GameState } from "GameState";
 import { Element, ElementSignature } from "model/Element";
 import { ViewState } from "ViewState";
 
-export const monsterMap = (): HashMap<number, Monster> => {
-  const map = new HashMap<number, Monster>(k => String(k));
-  return map;
+export class Monsters extends HashMap<number, Monster> {
+  constructor() {
+    super((id => id.toString()));
+  }
+
+  deepClone() {
+    const clone : Monsters = new Monsters();
+    this.getEntries().forEach(monster => clone.set(monster.key, monster.value.deepClone()));
+    return clone;
+  }
 }
 
-export const getInitialMonsters = (): HashMap<number, Monster> => {
-  const appleman = new Monster('appleman', new TilePosition(2, 2), applemanStats);
-  const flammie = new Monster('flammie', new TilePosition(4, 1), flammieStats);
-  const penguin = new Monster('penguin', new TilePosition(1, 1), penguinStats);
-  const watchhog = new Monster('watchhog', new TilePosition(1, 4), watchhogStats);
-  const danjii = new Monster('danjii', new TilePosition(2, 3), danjiiStats);
-  const blorb = new Monster('blorb', new TilePosition(5, 3), blorbStats);
-  const snorx = new Monster('snorx', new TilePosition(5, 2), snorxStats);
-  const leefa = new Monster('leefa', new TilePosition(0, 0), leefaStats);
-  const coffy = new Monster('coffy', new TilePosition(0, 3), coffyStats);
-  const spider = new Spider('spider', new TilePosition(6, 5), spiderStats);
-  const kyromon = new Monster('kyromon', new TilePosition(0, 1), kyromonStats);
-  const cave = new Cave('cave', new TilePosition(6, 6), caveStats);
-  const cave2 = new Cave('cave', new TilePosition(11, 6), caveStats);
-  const cave3 = new Cave('cave', new TilePosition(6, 11), caveStats);
+export const getInitialMonsters = (): Monsters => {
+  const appleman = Monster.fromStats('appleman', new TilePosition(2, 2), applemanStats);
+  const flammie = Monster.fromStats('flammie', new TilePosition(4, 1), flammieStats);
+  const penguin = Monster.fromStats('penguin', new TilePosition(1, 1), penguinStats);
+  const watchhog = Monster.fromStats('watchhog', new TilePosition(1, 4), watchhogStats);
+  const danjii = Monster.fromStats('danjii', new TilePosition(2, 3), danjiiStats);
+  const blorb = Monster.fromStats('blorb', new TilePosition(5, 3), blorbStats);
+  const snorx = Monster.fromStats('snorx', new TilePosition(5, 2), snorxStats);
+  const leefa = Monster.fromStats('leefa', new TilePosition(0, 0), leefaStats);
+  const coffy = Monster.fromStats('coffy', new TilePosition(0, 3), coffyStats);
+  const spider = Spider.fromStats('spider', new TilePosition(6, 5), spiderStats);
+  const kyromon = Monster.fromStats('kyromon', new TilePosition(0, 1), kyromonStats);
+  const cave = Cave.fromStats('cave', new TilePosition(6, 6), caveStats);
+  const cave2 = Cave.fromStats('cave', new TilePosition(11, 6), caveStats);
+  const cave3 = Cave.fromStats('cave', new TilePosition(6, 11), caveStats);
   const monsters = [appleman, flammie, penguin, watchhog, spider, cave, cave2, cave3];
-  const map = new HashMap<number, Monster>(k => String(k));
+  const map = new Monsters();
   monsters.forEach(monster => map.set(monster.id, monster));
   return map;
 }

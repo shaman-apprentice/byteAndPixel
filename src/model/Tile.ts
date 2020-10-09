@@ -3,17 +3,18 @@ import { ElementSignature } from './Element';
 import { TilePosition } from 'model/TilePosition';
 
 export class Tile {
-    
-    position: TilePosition;
-    terrainName: string;
-    slimed: boolean;
-    elementSignature: ElementSignature;
 
-    constructor(tileData: TileData) {
-      this.slimed = tileData.slimed;
-      this.position = tileData.position;
-      this.elementSignature = tileData.elements;
-      this.terrainName = tileData.name;
-    }
+  constructor(public position: TilePosition,
+    public terrainName: string,
+    public slimed: boolean,
+    public elementSignature: ElementSignature) { }
 
+  public static fromTileData(tileData: TileData) {
+    return new Tile(tileData.position, tileData.name, tileData.slimed, tileData.elements)
   }
+
+  deepClone() {
+    return new Tile(this.position.deepClone(), this.terrainName, this.slimed, this.elementSignature.deepClone())
+  }
+
+}

@@ -13,24 +13,19 @@ export enum SkillType {
 }
 
 export class Skill {
-    name: string;
-    type: SkillType;
-    elements: ElementSignature;
-    target: Target;
-    cost: Cost;
-    effect: Effect;
-    animation: SkillAnimation;
-    icon: string;
 
-    constructor(name: string, type: SkillType, element: ElementSignature, target: Target, cost: Cost, effect: Effect, animation: SkillAnimation, icon: string) {
-        this.name = name;
-        this.type = type;
-        this.elements = element;
-        this.cost = cost;
-        this.effect = effect;
-        this.target = target;
-        this.animation = animation;
-        this.icon = icon;
+    constructor(
+        public name: string,
+        public type: SkillType,
+        public elements: ElementSignature,
+        public target: Target,
+        public cost: Cost,
+        public effect: Effect,
+        public animation: SkillAnimation,
+        public icon: string) { }
+
+    public deepClone() {
+        return new Skill(this.name, this.type, this.elements.deepClone(), this.target, this.cost, this.effect, this.animation, this.icon)
     }
 
     static walk(): Skill {

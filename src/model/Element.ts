@@ -3,18 +3,15 @@ export enum Element {
 }
 
 export class ElementSignature {
-    earth: number;
-    fire: number;
-    ice: number;
-    nature: number;
-    metal: number;
+    constructor(
+        public earth: number,
+        public fire: number,
+        public ice: number,
+        public nature: number,
+        public metal: number) { }
 
-    constructor(earth: number, fire: number, ice: number, nature: number, metal: number) {
-        this.earth = earth;
-        this.fire = fire;
-        this.ice = ice;
-        this.nature = nature;
-        this.metal = metal;
+    public deepClone() {
+        return new ElementSignature(this.earth, this.fire, this.ice, this.nature, this.metal);
     }
 
     add(other: ElementSignature) : ElementSignature {

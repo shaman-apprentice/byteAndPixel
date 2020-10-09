@@ -4,25 +4,21 @@ import { MonsterAddEvent } from 'controller/events/MonsterAddEvent';
 import { MonsterRemoveEvent } from 'controller/events/MonsterRemoveEvent';
 import { SelectedMonsterChangedEvent } from 'controller/events/SelectedMonsterChangedEvent';
 import { Monster } from 'model/Monster';
-import { getInitialMonsters } from 'controller/monster';
-import { HashMap } from 'utils/HashMap';
+import { getInitialMonsters, Monsters } from 'controller/monster';
 import { Ui } from "view/ui/ui";
+import { StateChangeEvent } from "controller/events/StateChangeEvent";
 
 export class GameState {
-  private static _instance: GameState = new GameState(new TileMap(16), getInitialMonsters(), 1, undefined);
+  private static _instance: GameState = new GameState(TileMap.randomInitialization(16), getInitialMonsters(), 1, undefined, undefined);
   private static _saveState = undefined;
   public static emitter = new EventTarget();
 
-  private _map: TileMap;
-  private _monsters: HashMap<number, Monster>;
-  private _turn: number;
-  private _selectedMonster: Monster;
-
-  constructor(map: TileMap, monsters: HashMap<number, Monster>, turn: number, selectedMonster: Monster) {
-    this._map = map;
-    this._monsters = monsters;
-    this._turn = turn;
-    this._selectedMonster = selectedMonster;
+  constructor(
+    private _map: TileMap,
+    private _monsters: Monsters,
+    private _turn: number,
+    private _selectedMonster: Monster,
+    private _prevState: GameState) {
   }
 
   static set map(map: TileMap) {
@@ -33,7 +29,7 @@ export class GameState {
     return GameState._instance._map;
   }
 
-  static set monsters(monsters: HashMap<number, Monster>) {
+  static set monsters(monsters: Monsters) {
     GameState._instance._monsters = monsters;
   }
 
@@ -71,19 +67,36 @@ export class GameState {
     }
   }
 
+  static cloneState() {
+    const current = GameState._instance;
+    const clonedMap = current._map.deepClone();
+    const clonedMonster = current._monsters.deepClone();
+    const clonedSelectedMonster = clonedMonster.get(current._selectedMonster.id);
+    return new GameState(clonedMap, clonedMonster, current._turn, clonedSelectedMonster, current._prevState)
+  }
+
   static save() {
-    //const current = GameState._instance;
-    //const clonedMap = current._map.clone();
-    //const clonedMonster = current._monsters.clone();
-    //const clonedSelectedMonster = clonedMonster.get(current._selectedMonster.id);
-    //GameState._saveState = new GameState(clonedMap, clonedMonster, current._turn, clonedSelectedMonster )
-    console.log("save");
+    GameState._saveState = GameState.cloneState();
+  }
+
+  static load() {
+    this.loadState(GameState._saveState);
+  }
+
+  static saveUndoPoint() {
+    GameState._instance._prevState =  GameState.cloneState();
+  }
+
+  static undo() {
+    this.loadState(GameState._instance._prevState);
   }
   
-  static load() {
-    //GameState._instance = GameState._saveState;
-    console.log("load");
-    Ui.build();
+  static loadState(state: GameState) {
+    if (state) {
+      GameState._instance = state;
+      Ui.build();
+      StateChangeEvent.dispatch();
+    }
   }
 
 }

@@ -8,9 +8,10 @@ import { Skill, SkillType } from "controller/skills/Skill";
 import { Target, CombinedTarget } from "controller/actions/Target";
 import { CombinedCost } from "controller/actions/Cost";
 import { ElementSignature } from "model/Element";
-import { Monster } from "model/Monster";
+import { Monster, MonsterStats } from "model/Monster";
 import { TilePosition } from "model/TilePosition";
 import { spiderStats } from "controller/monster";
+import { ValueWithRange } from "model/ValueWithRange";
 
 export class Spider extends Enemy {
     aiAction: () => Action = () => {
@@ -24,23 +25,50 @@ export class Spider extends Enemy {
         return this.singleAction(targetMonster);
     }
 
-    singleAction(targetMonster: Monster) : Action {
+    static fromStats(name: string, position: TilePosition, baseStats: MonsterStats) {
+        const id = Monster.idCounter++;
+        const elements = baseStats.elements;
+        const actionPoints = new ValueWithRange(baseStats.actionPoints);
+        const energy = new ValueWithRange(baseStats.energy)
+        const hitPoints = new ValueWithRange(baseStats.hp);
+        const experiencePoints = new ValueWithRange(5, 0);
+        const happiness = new ValueWithRange(100, 50);
+        const skillList = Monster.getBaseSkills();
+        const lastFight = 0;
+
+        return new Spider(id, name, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position);
+    }
+
+    deepClone(): Spider {
+        const elements = this.elements.deepClone();
+        const actionPoints = this.actionPoints.deepClone();
+        const energy = this.energy.deepClone();
+        const hitPoints = this.hitPoints.deepClone();
+        const happiness = this.happiness.deepClone();
+        const experiencePoints = this.experiencePoints.deepClone();
+        const skillList = this.skillList.map(skill => skill.deepClone());
+        const position = this.position.deepClone();
+
+        return new Spider(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position);
+    }
+
+    singleAction(targetMonster: Monster): Action {
         const stepPosition = this.position.add(firstStep(this.position, targetMonster.position))
         const actions: Action[] = [new SkillAction(this, stepPosition, this.skillList[0])
             , new SkillAction(this, stepPosition, Skill.slime())
-        , new SkillAction(this, stepPosition, Skill.walk())];
-    
+            , new SkillAction(this, stepPosition, Skill.walk())];
+
         //Does the first action possible
         const result = actions.find(action => action.canExecute());
         return result ? result : new SkillAction(this, this.position, this.skillByType(SkillType.REST))
     }
 
     static spawn(position: TilePosition) {
-        const monster = new Spider("spider", position, spiderStats)
+        const monster = Spider.fromStats("spider", position, spiderStats)
         GameState.addMonster(monster);
     }
 
-    static spawnAction() : Skill {
+    static spawnAction(): Skill {
         const target: Target = new CombinedTarget().emptyTarget().inRange(1);
         const cost = CombinedCost.of(1);
         const effect = {

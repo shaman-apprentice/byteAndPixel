@@ -6,38 +6,53 @@ import { Skills } from "controller/skills";
 import { GameState } from "GameState";
 
 export class Monster {
-    
-    private static idCounter = 0;
-    public readonly id: number;
-    name: string;
-    elements: ElementSignature;
-    actionPoints: ValueWithRange;
-    energy: ValueWithRange;
-    hitPoints: ValueWithRange;
-    happiness: ValueWithRange;
-    friendly: boolean;
-    lastFight: number = 0;
-    experiencePoints: ValueWithRange;
-    skillList: Skill[];
-    position: TilePosition;
+    protected static idCounter = 0;
 
-    constructor(name: string, position: TilePosition, baseStats: MonsterStats, friendly: boolean = true) {
-        this.id = Monster.idCounter++;
-        this.name = name;
-        this.friendly = friendly;
-        this.position = position;
-        this.elements = baseStats.elements;
-        this.actionPoints = new ValueWithRange(baseStats.actionPoints);
-        this.energy = new ValueWithRange(baseStats.energy)
-        this.hitPoints = new ValueWithRange(baseStats.hp);
-        this.experiencePoints = new ValueWithRange(5, 0);
-        this.happiness = new ValueWithRange(100, 50);
-        this.skillList = this.getBaseSkills();
+    constructor(
+        public readonly id: number,
+        public name: string,
+        public elements: ElementSignature,
+        public actionPoints: ValueWithRange,
+        public energy: ValueWithRange,
+        public hitPoints: ValueWithRange,
+        public happiness: ValueWithRange,
+        public friendly: boolean,
+        public lastFight: number,
+        public experiencePoints: ValueWithRange,
+        public skillList: Skill[],
+        public position: TilePosition) { }
+
+    public static fromStats(name: string, position: TilePosition, baseStats: MonsterStats, friendly: boolean = true) {
+        const id = Monster.idCounter++;
+        const elements = baseStats.elements;
+        const actionPoints = new ValueWithRange(baseStats.actionPoints);
+        const energy = new ValueWithRange(baseStats.energy)
+        const hitPoints = new ValueWithRange(baseStats.hp);
+        const experiencePoints = new ValueWithRange(5, 0);
+        const happiness = new ValueWithRange(100, 50);
+        const skillList = Monster.getBaseSkills();
+        const lastFight = 0;
+
+        return new Monster(id, name, elements, actionPoints, energy, hitPoints, happiness, friendly, lastFight, experiencePoints, skillList, position)
     }
 
-    private getBaseSkills() {
+    protected static getBaseSkills() {
         return [Skills.defaultAttack(), Skill.walk(), Skill.cleanse(), Skill.rest()];
     }
+
+    deepClone(): Monster {
+        const elements = this.elements.deepClone();
+        const actionPoints = this.actionPoints.deepClone();
+        const energy = this.energy.deepClone();
+        const hitPoints = this.hitPoints.deepClone();
+        const happiness = this.happiness.deepClone();
+        const experiencePoints = this.experiencePoints.deepClone();
+        const skillList = this.skillList.map(skill => skill.deepClone());
+        const position = this.position.deepClone();
+
+        return new Monster(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position);
+    }
+
 
     learnSkill(skill: Skill) {
         if (!(this.skillList.map((s) => s.name).includes(skill.name))) {
@@ -45,7 +60,7 @@ export class Monster {
         }
     }
 
-    skillByType(skilltype: SkillType, index : number = 0) : Skill {
+    skillByType(skilltype: SkillType, index: number = 0): Skill {
         return this.skillList.filter((skill) => skill.type == skilltype)[index];
     }
 

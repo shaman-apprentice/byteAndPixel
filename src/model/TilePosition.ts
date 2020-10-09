@@ -28,6 +28,10 @@ export class TilePosition {
         return new TilePosition(this.x - other.x, this.y - other.y);
     }
 
+    deepClone() {
+        return new TilePosition(this.x, this.y);
+    }
+
     public static STAY: TilePosition = new TilePosition(0, 0);
     public static WEST: TilePosition = new TilePosition(-1, 0);
     public static EAST: TilePosition = new TilePosition(1, 0);

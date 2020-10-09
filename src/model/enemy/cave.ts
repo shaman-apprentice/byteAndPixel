@@ -5,10 +5,12 @@ import { Action } from "controller/actions/Action";
 import { SkillAction } from "controller/actions/SkillAction";
 import { SkillType } from "controller/skills/Skill";
 import { Spider } from "./spider";
+import { MonsterStats, Monster } from "model/Monster";
+import { TilePosition } from "model/TilePosition";
+import { ValueWithRange } from "model/ValueWithRange";
 
 export class Cave extends Enemy {
     cooldown = 0;
-
 
     aiAction: () => Action = () => {
         this.cooldown = ((this.cooldown + 1) % 3)
@@ -17,6 +19,33 @@ export class Cave extends Enemy {
             action = this.spawnAction();
         }
         return action ? action : new SkillAction(this, this.position, this.skillByType(SkillType.REST))
+    }
+
+    deepClone(): Cave {
+        const elements = this.elements.deepClone();
+        const actionPoints = this.actionPoints.deepClone();
+        const energy = this.energy.deepClone();
+        const hitPoints = this.hitPoints.deepClone();
+        const happiness = this.happiness.deepClone();
+        const experiencePoints = this.experiencePoints.deepClone();
+        const skillList = this.skillList.map(skill => skill.deepClone());
+        const position = this.position.deepClone();
+
+        return new Cave(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position);
+    }
+    
+    static fromStats(name: string, position: TilePosition, baseStats: MonsterStats) {
+        const id = Monster.idCounter++;
+        const elements = baseStats.elements;
+        const actionPoints = new ValueWithRange(baseStats.actionPoints);
+        const energy = new ValueWithRange(baseStats.energy)
+        const hitPoints = new ValueWithRange(baseStats.hp);
+        const experiencePoints = new ValueWithRange(5, 0);
+        const happiness = new ValueWithRange(100, 50);
+        const skillList = Monster.getBaseSkills();
+        const lastFight = 0;
+
+        return new Cave(id, name, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position);
     }
 
     spawnAction() : Action {

@@ -36,6 +36,7 @@ export const handleKeyPress = (key: string, shift: boolean, ctrl: boolean) => {
         // load/save
         case "c" : if (ctrl) GameState.save(); break;
         case "v" : if (ctrl) GameState.load(); break;
+        case "z" : if (ctrl) GameState.undo(); break;
         case " ": rest(); break;
     }
 }
