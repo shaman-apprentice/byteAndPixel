@@ -11,7 +11,14 @@ import { StateChangeEvent } from "controller/events/StateChangeEvent";
 export class GameState {
   private static _instance: GameState = new GameState(TileMap.randomInitialization(16), getInitialMonsters(), 1, undefined, undefined);
   private static _saveState = undefined;
-  public static emitter = new EventTarget();
+  public static emitter = GameState.createEmitter();
+  private static createEmitter() {
+    const emitter = new EventTarget();
+    emitter.addEventListener(StateChangeEvent.type, () => {
+      GameState.monsters.forEach(monster => monster.onStateChange());
+    })
+    return emitter;
+  }
 
   constructor(
     private _map: TileMap,

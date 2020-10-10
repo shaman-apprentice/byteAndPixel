@@ -28,15 +28,19 @@ export class Spider extends Enemy {
     static fromStats(name: string, position: TilePosition, baseStats: MonsterStats) {
         const id = Monster.idCounter++;
         const elements = baseStats.elements;
-        const actionPoints = new ValueWithRange(baseStats.actionPoints);
-        const energy = new ValueWithRange(baseStats.energy)
-        const hitPoints = new ValueWithRange(baseStats.hp);
+        const actionPoints = new ValueWithRange(1, 1);
         const experiencePoints = new ValueWithRange(5, 0);
         const happiness = new ValueWithRange(100, 50);
         const skillList = Monster.getBaseSkills();
         const lastFight = 0;
+        const body = baseStats.body;
+        const mind = baseStats.mind;
+        const soul = baseStats.soul;
 
-        return new Spider(id, name, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position);
+        const energy = new ValueWithRange(Monster.calculateEnergy(soul))
+        const hitPoints = new ValueWithRange(Monster.calculateHp(body));
+
+        return new Spider(id, name, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position, body, mind, soul);
     }
 
     deepClone(): Spider {
@@ -49,7 +53,7 @@ export class Spider extends Enemy {
         const skillList = this.skillList.map(skill => skill.deepClone());
         const position = this.position.deepClone();
 
-        return new Spider(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position);
+        return new Spider(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul);
     }
 
     singleAction(targetMonster: Monster): Action {

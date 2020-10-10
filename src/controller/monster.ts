@@ -58,16 +58,16 @@ export const tileAtPosition = (position: TilePosition): Tile => {
   return GameState.map.tiles.get(position);
 }
 
-const danjiiStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 8, 85, 2);
-const blorbStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 10, 65, 2);
-const snorxStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice, 2), 6, 55, 2);
-const leefaStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 3), 3, 45, 3);
-const coffyStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Metal), 8, 100, 2);
-const kyromonStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice, 2), 10, 60, 2);
-const applemanStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature), 8, 50, 2);
-const flammieStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Fire), 6, 55, 2);
-const penguinStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice), 7, 60, 2);
-const watchhogStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Earth), 10, 120, 1);
+const danjiiStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 5, 3, 7);
+const blorbStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 3, 5, 7);
+const snorxStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice, 2), 3, 7, 5);
+const leefaStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 3), 5, 5, 5);
+const coffyStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Metal), 3, 4, 8);
+const kyromonStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice, 2), 4, 6, 6);
+const applemanStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature), 4, 4, 6);
+const flammieStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Fire), 3, 8, 4);
+const penguinStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice), 6, 4, 5);
+const watchhogStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Earth), 8, 3, 4);
 
-export const spiderStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 3, 100, 1);
-const caveStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 10, 100, 1);
+export const spiderStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 2, 2, 2);
+const caveStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 5, 5, 5);

@@ -20,20 +20,26 @@ export class Monster {
         public lastFight: number,
         public experiencePoints: ValueWithRange,
         public skillList: Skill[],
-        public position: TilePosition) { }
+        public position: TilePosition,
+        public body: number,
+        public mind: number,
+        public soul: number) { }
 
     public static fromStats(name: string, position: TilePosition, baseStats: MonsterStats, friendly: boolean = true) {
         const id = Monster.idCounter++;
         const elements = baseStats.elements;
-        const actionPoints = new ValueWithRange(baseStats.actionPoints);
-        const energy = new ValueWithRange(baseStats.energy)
-        const hitPoints = new ValueWithRange(baseStats.hp);
+        const actionPoints = new ValueWithRange(2, 2);
         const experiencePoints = new ValueWithRange(5, 0);
         const happiness = new ValueWithRange(100, 50);
         const skillList = Monster.getBaseSkills();
         const lastFight = 0;
-
-        return new Monster(id, name, elements, actionPoints, energy, hitPoints, happiness, friendly, lastFight, experiencePoints, skillList, position)
+        const body = baseStats.body;
+        const mind = baseStats.mind;
+        const soul = baseStats.soul;
+        
+        const energy = new ValueWithRange(Monster.calculateEnergy(soul))
+        const hitPoints = new ValueWithRange(Monster.calculateHp(body));
+        return new Monster(id, name, elements, actionPoints, energy, hitPoints, happiness, friendly, lastFight, experiencePoints, skillList, position, body, mind, soul)
     }
 
     protected static getBaseSkills() {
@@ -50,7 +56,7 @@ export class Monster {
         const skillList = this.skillList.map(skill => skill.deepClone());
         const position = this.position.deepClone();
 
-        return new Monster(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position);
+        return new Monster(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul);
     }
 
 
@@ -70,20 +76,66 @@ export class Monster {
             GameState.removeMonster(this);
         }
     }
+
+    onTurnStart() {
+        this.handlePassivHeal();
+
+        this.actionPoints.setToMax();
+        this.energy.current += 2;
+
+        if (this.friendly) {
+            this.handlehappiness();
+            this.handleexperiencePoints();
+        }
+    }
+
+    onStateChange() {
+        this.hitPoints.max = Monster.calculateHp(this.body);
+        this.energy.max = Monster.calculateEnergy(this.soul);
+    }
+
+    static calculateHp(body: number) {
+        return 5 + body;
+    }
+
+    static calculateEnergy(soul: number) {
+        return 30 + 5 * soul;
+    }
+
+    private handlePassivHeal() {
+        if (GameState.turn - this.lastFight > 2) {
+            this.hitPoints.add(1);
+        }
+    }
+
+    private handleexperiencePoints() {
+        if (this.experiencePoints.current == this.experiencePoints.max) {
+            this.experiencePoints.current = 0;
+            const skills = Skills.skillsByElement.get(this.elements.getElement());
+            skills.find(skill => this.learnSkill(skill));
+        } else {
+            this.experiencePoints.current += 1;
+        }
+    }
+
+    private handlehappiness() {
+        const elementalNeighborhood = GameState.map.getElementsInNeighborhood(this.position);
+        const unsatisfied = this.elements.sub(elementalNeighborhood).magnitude()
+        if (unsatisfied > 0) {
+            this.happiness.current -= unsatisfied;
+        } else {
+            this.happiness.current += 2;
+        }
+    }
+
 }
 
 export class MonsterStats {
-    elements: ElementSignature;
-    hp: number;
-    energy: number;
-    actionPoints: number;
-    xp: number;
-
-    constructor(elements: ElementSignature, hp: number, energy: number, actionPoints: number) {
-        this.elements = elements;
-        this.hp = hp;
-        this.energy = energy;
-        this.actionPoints = actionPoints;
+    constructor(
+        public elements: ElementSignature,
+        public body: number,
+        public mind: number,
+        public soul: number) {
     }
 }
 

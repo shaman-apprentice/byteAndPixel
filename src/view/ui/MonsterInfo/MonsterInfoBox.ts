@@ -49,7 +49,7 @@ export class MonsterInfoBox extends GuiElemBg {
     }
     this.textBox.text = `action-points: ${monster.actionPoints.current}/${monster.actionPoints.max} \nenergy: ${monster.energy.current}/${monster.energy.max} \nhit-points: ${monster.hitPoints.current}/${monster.hitPoints.max} \nhappiness: ${monster.happiness.current}/${monster.happiness.max} \nxp: ${monster.experiencePoints.current}/${monster.experiencePoints.max}`;
     this.nameBox.text = `name: ${monster.name} \n`;
-    this.bmstextBox.text = `Element: \nBody: \nMind: \nSoul: \n`;
+    this.bmstextBox.text = `Element: \nBody: ${monster.body} \nMind: ${monster.mind} \nSoul: ${monster.soul}\n`;
     this.monsterPic.texture = Ui.getMonsterView(monster).pixiElem.texture;
   }
 }
