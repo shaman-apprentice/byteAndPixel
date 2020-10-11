@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/shaman-apprentice/byteAndPixel.svg?branch=master)](https://travis-ci.org/shaman-apprentice/byteAndPixel)
+[![Build Status](https://travis-ci.com/shaman-apprentice/byteAndPixel.svg?branch=master)](https://travis-ci.com/github/shaman-apprentice/byteAndPixel)
 
 ## How to run locally:
 
