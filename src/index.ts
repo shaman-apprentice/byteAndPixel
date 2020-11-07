@@ -27,6 +27,14 @@ app.view.addEventListener('contextmenu', event => {
   event.preventDefault();
 }, false);
 
+//tell the window to ignore certain keys
+window.addEventListener("keydown", function(e) {
+  //arrow keys
+  if(["ArrowUp", "ArrowLeft", "ArrowRight", "ArrowDown"].indexOf(e.key) > -1) {
+      e.preventDefault();
+  }
+}, false);
+
 document.addEventListener('keydown', (event) => { handleKeyPress(event.key, event.shiftKey, event.ctrlKey) });
 
 
