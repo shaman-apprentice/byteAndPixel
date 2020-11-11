@@ -5,9 +5,10 @@ import { Action } from "controller/actions/Action";
 import { SkillAction } from "controller/actions/SkillAction";
 import { SkillType } from "controller/skills/Skill";
 import { Spider } from "./spider";
-import { MonsterStats, Monster } from "model/Monster";
+import { Monster } from "model/Monster";
 import { TilePosition } from "model/TilePosition";
-import { ValueWithRange } from "model/ValueWithRange";
+import { ValueWithRange } from "model/util/ValueWithRange";
+import { BaseStats } from "model/modifiers";
 
 export class Cave extends Enemy {
     cooldown = 0;
@@ -30,11 +31,12 @@ export class Cave extends Enemy {
         const experiencePoints = this.experiencePoints.deepClone();
         const skillList = this.skillList.map(skill => skill.deepClone());
         const position = this.position.deepClone();
+        const modifiers = this.modifiers.map(mod => mod.deepClone())
 
-        return new Cave(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul);
+        return new Cave(this.id, this.name, this.baseStats, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul, modifiers);
     }
 
-    static fromStats(name: string, position: TilePosition, baseStats: MonsterStats) {
+    static fromStats(name: string, position: TilePosition, baseStats: BaseStats) {
         const id = Monster.idCounter++;
         const elements = baseStats.elements;
         const actionPoints = new ValueWithRange(1, 1);
@@ -46,10 +48,10 @@ export class Cave extends Enemy {
         const mind = baseStats.mind;
         const soul = baseStats.soul;
 
-        const energy = new ValueWithRange(Monster.calculateEnergy(soul))
-        const hitPoints = new ValueWithRange(Monster.calculateHp(body));
+        const energy = new ValueWithRange(baseStats.baseEnergy)
+        const hitPoints = new ValueWithRange(baseStats.baseHitPoints);
 
-        return new Cave(id, name, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position, body, mind, soul);
+        return new Cave(id, name, baseStats, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position, body, mind, soul, []);
     }
 
     spawnAction(): Action {

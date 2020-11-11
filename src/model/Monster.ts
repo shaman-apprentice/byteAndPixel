@@ -1,9 +1,11 @@
 import { Skill, SkillType } from "controller/skills/Skill";
-import { ValueWithRange } from "model/ValueWithRange";
 import { ElementSignature } from "model/Element";
 import { TilePosition } from "./TilePosition";
 import { Skills } from "controller/skills";
 import { GameState } from "GameState";
+import { ValueWithRange } from "./util/ValueWithRange";
+import { Modifier } from "./Modifier";
+import { BaseStats, updateModifiedMonster } from "./modifiers";
 
 export class Monster {
     protected static idCounter = 0;
@@ -11,6 +13,7 @@ export class Monster {
     constructor(
         public readonly id: number,
         public name: string,
+        public readonly baseStats: BaseStats,
         public elements: ElementSignature,
         public actionPoints: ValueWithRange,
         public energy: ValueWithRange,
@@ -23,9 +26,10 @@ export class Monster {
         public position: TilePosition,
         public body: number,
         public mind: number,
-        public soul: number) { }
+        public soul: number,
+        public modifiers: Modifier[]) { }
 
-    public static fromStats(name: string, position: TilePosition, baseStats: MonsterStats, friendly: boolean = true) {
+    public static fromStats(name: string, position: TilePosition, baseStats: BaseStats, friendly: boolean = true) {
         const id = Monster.idCounter++;
         const elements = baseStats.elements;
         const actionPoints = new ValueWithRange(2, 2);
@@ -36,10 +40,10 @@ export class Monster {
         const body = baseStats.body;
         const mind = baseStats.mind;
         const soul = baseStats.soul;
-        
-        const energy = new ValueWithRange(Monster.calculateEnergy(soul))
-        const hitPoints = new ValueWithRange(Monster.calculateHp(body));
-        return new Monster(id, name, elements, actionPoints, energy, hitPoints, happiness, friendly, lastFight, experiencePoints, skillList, position, body, mind, soul)
+
+        const energy = new ValueWithRange(baseStats.baseEnergy)
+        const hitPoints = new ValueWithRange(baseStats.baseHitPoints);
+        return new Monster(id, name, baseStats, elements, actionPoints, energy, hitPoints, happiness, friendly, lastFight, experiencePoints, skillList, position, body, mind, soul, [])
     }
 
     protected static getBaseSkills() {
@@ -55,8 +59,9 @@ export class Monster {
         const experiencePoints = this.experiencePoints.deepClone();
         const skillList = this.skillList.map(skill => skill.deepClone());
         const position = this.position.deepClone();
+        const modifiers = this.modifiers.map(mod => mod.deepClone())
 
-        return new Monster(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul);
+        return new Monster(this.id, this.name, this.baseStats, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul, modifiers);
     }
 
 
@@ -90,16 +95,7 @@ export class Monster {
     }
 
     onStateChange() {
-        this.hitPoints.max = Monster.calculateHp(this.body);
-        this.energy.max = Monster.calculateEnergy(this.soul);
-    }
-
-    static calculateHp(body: number) {
-        return 5 + body;
-    }
-
-    static calculateEnergy(soul: number) {
-        return 30 + 5 * soul;
+        updateModifiedMonster(this);
     }
 
     private handlePassivHeal() {
@@ -129,13 +125,3 @@ export class Monster {
     }
 
 }
-
-export class MonsterStats {
-    constructor(
-        public elements: ElementSignature,
-        public body: number,
-        public mind: number,
-        public soul: number) {
-    }
-}
-

@@ -8,10 +8,11 @@ import { Skill, SkillType } from "controller/skills/Skill";
 import { Target, CombinedTarget } from "controller/actions/Target";
 import { CombinedCost } from "controller/actions/Cost";
 import { ElementSignature } from "model/Element";
-import { Monster, MonsterStats } from "model/Monster";
+import { Monster } from "model/Monster";
 import { TilePosition } from "model/TilePosition";
 import { spiderStats } from "controller/monster";
-import { ValueWithRange } from "model/ValueWithRange";
+import { ValueWithRange } from "model/util/ValueWithRange";
+import { BaseStats } from "model/modifiers";
 
 export class Spider extends Enemy {
     aiAction: () => Action = () => {
@@ -25,7 +26,7 @@ export class Spider extends Enemy {
         return this.singleAction(targetMonster);
     }
 
-    static fromStats(name: string, position: TilePosition, baseStats: MonsterStats) {
+    static fromStats(name: string, position: TilePosition, baseStats: BaseStats) {
         const id = Monster.idCounter++;
         const elements = baseStats.elements;
         const actionPoints = new ValueWithRange(1, 1);
@@ -37,10 +38,10 @@ export class Spider extends Enemy {
         const mind = baseStats.mind;
         const soul = baseStats.soul;
 
-        const energy = new ValueWithRange(Monster.calculateEnergy(soul))
-        const hitPoints = new ValueWithRange(Monster.calculateHp(body));
+        const energy = new ValueWithRange(baseStats.baseEnergy)
+        const hitPoints = new ValueWithRange(baseStats.baseHitPoints);
 
-        return new Spider(id, name, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position, body, mind, soul);
+        return new Spider(id, name, baseStats, elements, actionPoints, energy, hitPoints, happiness, false, lastFight, experiencePoints, skillList, position, body, mind, soul, []);
     }
 
     deepClone(): Spider {
@@ -52,8 +53,9 @@ export class Spider extends Enemy {
         const experiencePoints = this.experiencePoints.deepClone();
         const skillList = this.skillList.map(skill => skill.deepClone());
         const position = this.position.deepClone();
+        const modifiers = this.modifiers.map(mod => mod.deepClone())
 
-        return new Spider(this.id, this.name, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul);
+        return new Spider(this.id, this.name, this.baseStats, elements, actionPoints, energy, hitPoints, happiness, this.friendly, this.lastFight, experiencePoints, skillList, position, this.body, this.mind, this.soul, modifiers);
     }
 
     singleAction(targetMonster: Monster): Action {

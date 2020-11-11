@@ -3,10 +3,11 @@ import { Spider } from "model/enemy/spider";
 import { Cave } from "model/enemy/cave";
 import { Tile } from "model/Tile";
 import { TilePosition } from "model/TilePosition";
-import { Monster, MonsterStats } from "model/Monster";
+import { Monster } from "model/Monster";
 import { GameState } from "GameState";
 import { Element, ElementSignature } from "model/Element";
 import { ViewState } from "ViewState";
+import { BaseStats } from "model/modifiers";
 
 export class Monsters extends HashMap<number, Monster> {
   constructor() {
@@ -14,7 +15,7 @@ export class Monsters extends HashMap<number, Monster> {
   }
 
   deepClone() {
-    const clone : Monsters = new Monsters();
+    const clone: Monsters = new Monsters();
     this.getEntries().forEach(monster => clone.set(monster.key, monster.value.deepClone()));
     return clone;
   }
@@ -38,6 +39,12 @@ export const getInitialMonsters = (): Monsters => {
   const monsters = [appleman, flammie, penguin, watchhog, spider, cave, cave2, cave3];
   const map = new Monsters();
   monsters.forEach(monster => map.set(monster.id, monster));
+  monsters.forEach(monster => {
+    // we want hitpoints and energy to be full at the start of the game but they are subject to modifiers
+    monster.onStateChange();
+    monster.hitPoints.setToMax();
+    monster.energy.setToMax();
+  })
   return map;
 }
 
@@ -58,16 +65,16 @@ export const tileAtPosition = (position: TilePosition): Tile => {
   return GameState.map.tiles.get(position);
 }
 
-const danjiiStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 5, 3, 7);
-const blorbStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 2), 3, 5, 7);
-const snorxStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice, 2), 3, 7, 5);
-const leefaStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature, 3), 5, 5, 5);
-const coffyStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Metal), 3, 4, 8);
-const kyromonStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice, 2), 4, 6, 6);
-const applemanStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Nature), 4, 4, 6);
-const flammieStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Fire), 3, 8, 4);
-const penguinStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Ice), 6, 4, 5);
-const watchhogStats: MonsterStats = new MonsterStats(ElementSignature.build(Element.Earth), 8, 3, 4);
+const danjiiStats: BaseStats = new BaseStats(ElementSignature.build(Element.Nature, 2), 5, 3, 7,);
+const blorbStats: BaseStats = new BaseStats(ElementSignature.build(Element.Nature, 2), 3, 5, 7);
+const snorxStats: BaseStats = new BaseStats(ElementSignature.build(Element.Ice, 2), 3, 7, 5);
+const leefaStats: BaseStats = new BaseStats(ElementSignature.build(Element.Nature, 3), 5, 5, 5);
+const coffyStats: BaseStats = new BaseStats(ElementSignature.build(Element.Metal), 3, 4, 8);
+const kyromonStats: BaseStats = new BaseStats(ElementSignature.build(Element.Ice, 2), 4, 6, 6);
+const applemanStats: BaseStats = new BaseStats(ElementSignature.build(Element.Nature), 4, 4, 6);
+const flammieStats: BaseStats = new BaseStats(ElementSignature.build(Element.Fire), 3, 8, 4);
+const penguinStats: BaseStats = new BaseStats(ElementSignature.build(Element.Ice), 6, 4, 5);
+const watchhogStats: BaseStats = new BaseStats(ElementSignature.build(Element.Earth), 8, 3, 4);
 
-export const spiderStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 2, 2, 2);
-const caveStats: MonsterStats = new MonsterStats(ElementSignature.buildNeutral(), 5, 5, 5);
+export const spiderStats: BaseStats = new BaseStats(ElementSignature.buildNeutral(), 2, 2, 2, 1, 1, 10, 2, 1);
+const caveStats: BaseStats = new BaseStats(ElementSignature.buildNeutral(), 5, 5, 5, 12, 0, 50, 0, 1);
