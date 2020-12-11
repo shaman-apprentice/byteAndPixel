@@ -18,6 +18,7 @@ export class ActionUI extends GuiElem {
         GameState.emitter.addEventListener(StateChangeEvent.type, () => {
             this.selectMove();
             this.showActions();
+            this.pixiElem.removeChildren();
         });
         GameState.emitter.addEventListener(SelectedMonsterChangedEvent.type, () => {
             this.selectMove();
